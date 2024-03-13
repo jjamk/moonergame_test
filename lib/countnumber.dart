@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
-
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 void main() => runApp(CountNumberGameApp());
 
@@ -24,6 +23,11 @@ late stt.SpeechToText _speech;
   bool _isListening = false;
   String _lastWords = 'blank';
 
+  @override
+  void initState() {
+    super.initState();
+    _speech = stt.SpeechToText();
+  }
 
   void _listen() async {
     if (!_isListening) {
@@ -32,15 +36,19 @@ late stt.SpeechToText _speech;
           print('Error: $error');
         },
       );
-      print(available);
+
+      print('Speech initialized: $available');
+      
       if (available) {
         setState(() {
           _isListening = true;
         });
+
         _speech.listen(
           onResult: (result) {
             setState(() {
               _lastWords = result.recognizedWords;
+
               if (_lastWords.toLowerCase() == "one") {
                 _lastWords = "1";
               } else if (result.recognizedWords == "two") {
@@ -79,7 +87,7 @@ late stt.SpeechToText _speech;
             ),
           ),Text(
               _lastWords,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 10),
               textAlign: TextAlign.center,
             ),
             ElevatedButton(
