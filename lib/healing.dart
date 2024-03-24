@@ -28,14 +28,6 @@ class _HealingGameScreenState extends State<HealingGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Image.asset(
-          'assets/images/appbar.png', // AppBar에 표시할 이미지 파일 경로
-          width: 40, // 이미지의 너비 조정
-          height: 40, // 이미지의 높이 조정
-        ),
-        title: Text('STAGE 3'), // AppBar에 표시할 텍스트
-      ),
       body: Stack(
         children: <Widget>[
           // 배경 이미지를 표시하는 컨테이너
