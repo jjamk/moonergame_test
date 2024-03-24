@@ -14,8 +14,7 @@ import 'molegame.dart';
 class NewStage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-        home: new NewStageScreen());
+    return new MaterialApp(home: new NewStageScreen());
   }
 }
 
@@ -29,7 +28,7 @@ class NewStageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
+      body: Stack(
         children: <Widget>[
           // 배경 이미지를 가진 Container
           Container(
@@ -47,7 +46,7 @@ class NewStageScreen extends StatelessWidget {
                 mainAxisSpacing: 8,
                 crossAxisCount: 3,
               ),
-              padding: EdgeInsets.fromLTRB(3,90,3,20),
+              padding: EdgeInsets.fromLTRB(3, 90, 3, 20),
               itemCount: 11,
               itemBuilder: (context, index) {
                 return ElevatedButton(
@@ -62,63 +61,60 @@ class NewStageScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => walkGame()),
                       );
-                    }
-                    else if (index == 2) {
+                    } else if (index == 2) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HealingGameApp()),
+                        MaterialPageRoute(
+                            builder: (context) => HealingGameApp()),
                       );
-                    }
-                    else if (index == 3) {
+                    } else if (index == 3) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExerciseGameApp()),
+                        MaterialPageRoute(
+                            builder: (context) => ExerciseGameApp()),
                       );
-                    }
-                    else if (index == 4) {
+                    } else if (index == 4) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExerciseGameApp()),
+                        MaterialPageRoute(
+                            builder: (context) => ExerciseGameApp()),
                       );
-                    }
-                    else if (index == 5) {
+                    } else if (index == 5) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BreatheGameApp()),
+                        MaterialPageRoute(
+                            builder: (context) => BreatheGameApp()),
                       );
-                    }
-                    else if (index == 6) {
+                    } else if (index == 6) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CountNumberGameApp()),
+                        MaterialPageRoute(
+                            builder: (context) => CountNumberGameApp()),
                       );
-                    }
-                    else if (index == 7) {
+                    } else if (index == 7) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => PianoGameApp()),
                       );
-                    }
-                    else if (index == 8) {
+                    } else if (index == 8) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ColoringGame()),
+                        MaterialPageRoute(
+                            builder: (context) => ExerciseGameApp()),
                       );
-                    }
-                    else if (index == 9) {
+                    } else if (index == 9) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => TakePictureGameApp()),
+                        MaterialPageRoute(
+                            builder: (context) => TakePictureGameApp()),
                       );
-                    }
-                    else if (index == 10) {
+                    } else if (index == 10) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ConversationGameApp()),
+                        MaterialPageRoute(
+                            builder: (context) => ConversationGameApp()),
                       );
                     } else {
-
-                  
                       // 다른 버튼 클릭 시 실행할 액션
                       print('Button $index pressed');
                     }
