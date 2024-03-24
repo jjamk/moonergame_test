@@ -16,6 +16,7 @@ class MoleGame extends StatelessWidget {
 class HeartWidget extends StatelessWidget {
   final int heartsCount;
   HeartWidget(this.heartsCount);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +46,20 @@ class MoleGameScreen extends StatefulWidget {
 class _MoleGameScreenState extends State<MoleGameScreen> {
   int score = 0;
   int hearts = 3;
+  int retry= 0;
   int duration = 10;
   List<bool> moles = List.generate(9, (index) => false);
   Timer? gameTimer;
-  bool isGameActive = true;
+  bool isGameActive = false; // 게임 시작 전 대화 모드로 설정
+  bool isDialogueActive = true; // 대화 상태 표시
+  int dialogueIndex = 0; // 현재 대화 인덱스
+
+  // 대화 스크립트 정의 (여기서는 예시로 간단한 대화만 추가)
+  List<String> dialogues = [
+    "이제 문어 잡을 시간이야. 다른 생물은 잡으면 안 돼.",
+    "잡는 방법은 튀어나오는 문어를 클릭만 하면 돼. 쉽지? 한번 해볼래?",
+    "3번 잘못 잡는다면 문어들이 다 도망가서 다시 잡아야 해.",
+  ];
 
   @override
   void initState() {
@@ -56,7 +67,17 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
     super.initState();
     //myBanner = GoogleAdMob.loadBannerAd();
     //myBanner.load();
-    startGame();
+    //startGame();
+  }
+
+  void nextDialogue() {
+    setState(() {
+      dialogueIndex++;
+      if (dialogueIndex >= dialogues.length) {
+        isDialogueActive = false; // 대화 종료
+        startGame(); // 게임 시작
+      }
+    });
   }
 
   void startGame() {
@@ -64,7 +85,8 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
     setState(() {
       timer.cancel();
       gameTimer = null;
-      isGameActive = false;
+      isGameActive = true;
+      
 
       // 점수가 5 이상인 경우
       if (score >= 5) {
@@ -73,7 +95,7 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
             builder: (context) => GameWinScreen(),
           ),
         );
-      } 
+      }
       // 하트가 0개 이하인 경우
       else if (hearts <= 0) {
         Navigator.of(context).pushReplacement(
@@ -122,6 +144,8 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
       startGame();
     });
   }
+
+  
 
   @override
   void dispose() {
@@ -173,6 +197,28 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
               ),
             ),
           ),
+          //상단 스테이지번호
+          Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150, 
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36, 
+              top: 65,
+              child: Text(
+                '#stage 1',
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, 
+                ),
+              ),
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -206,7 +252,7 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
                 ),
               ],
             ),
-            if (!isGameActive)
+            if (!isGameActive && !isDialogueActive)
               Container(
                   color: Colors.black.withOpacity(0.5),
                   child: Center(
@@ -248,6 +294,28 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
               ],
             ),
           ),
+          if (isDialogueActive) // 대화 창 표시
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.black.withOpacity(0.7),
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      dialogues[dialogueIndex],
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                    ElevatedButton(
+                      onPressed: nextDialogue,
+                      child: Text('다음'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ]
           ),
           ),
