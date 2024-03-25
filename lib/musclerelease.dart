@@ -46,16 +46,20 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             if (verticalDistance > 0 && countdown == 0) {
               // 아래로 이동한 경우 및 5초 동안 누르고 있었을 때
               showNotification('화가 풀렸어요!');
-            }  else if (verticalDistance > 0 && countdown != 0) {
+            }  
+            else if (verticalDistance > 0 && countdown != 0) {
               // 아래로 이동한 경우
               showNotification('아래쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
-            } else if (verticalDistance < 0 && countdown != 0) {
+            } 
+            else if (verticalDistance < 0 && countdown != 0) {
               // 위로 이동한 경우
               showNotification('위쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
-            } else if (horizontalDistance > 0 && countdown != 0) {
+            } 
+            else if (verticalDistance < 10 && horizontalDistance > 0 && countdown != 0) {
               // 오른쪽으로 이동한 경우
               showNotification('오른쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
-            } else if (horizontalDistance < 0 && countdown != 0) {
+            } 
+            else if (horizontalDistance < 0 && countdown != 0) {
               // 왼쪽으로 이동한 경우
               showNotification('왼쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
             }
