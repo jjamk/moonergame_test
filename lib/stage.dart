@@ -52,10 +52,18 @@ class AudioManager {
 class _NewStageScreenState extends State<NewStageScreen> {
   bool isSwitched = true;
   final List<String> buttonNames = [
-    '문어잡기', '산책하기', '상처치료해주기',
-    '근육이완법', '운동하기','심호흡하기',
-    '숫자세기', '자장가','색칠하기',
-    '주의 분산', '대화하기','나만의 스토리'
+    '문어잡기',
+    '산책하기',
+    '상처치료해주기',
+    '근육이완법',
+    '운동하기',
+    '심호흡하기',
+    '숫자세기',
+    '자장가',
+    '색칠하기',
+    '주의 분산',
+    '대화하기',
+    '나만의 스토리'
   ];
 
   @override
@@ -102,11 +110,11 @@ class _NewStageScreenState extends State<NewStageScreen> {
                         context,
                         MaterialPageRoute(builder: (context) => MoleGame()),
                       );
-                    } else if (index == 1) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => walkGame()),
-                      );
+                      // } else if (index == 1) {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(builder: (context) => walkGame()),
+                      //   );
                     } else if (index == 2) {
                       Navigator.push(
                         context,

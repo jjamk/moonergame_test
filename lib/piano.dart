@@ -150,8 +150,8 @@ class _PianoGameState extends State<PianoGameScreen> {
                 child: ElevatedButton(
                   key: mybuttonKey4,
                   onPressed: () {
-                    print("button3 is pressed");
-                    playSound("E");
+                    print("button4 is pressed");
+                    playSound("F");
                     answer.add(4);
                     checkAnswer(answer, selectedSongName);
                   },
@@ -162,7 +162,7 @@ class _PianoGameState extends State<PianoGameScreen> {
                 child: ElevatedButton(
                   key: mybuttonKey5,
                   onPressed: () {
-                    print("button2 is pressed");
+                    print("button5 is pressed");
                     playSound("G");
                     answer.add(5);
                     checkAnswer(answer, selectedSongName);
@@ -174,12 +174,36 @@ class _PianoGameState extends State<PianoGameScreen> {
                 child: ElevatedButton(
                   key: mybuttonKey6,
                   onPressed: () {
-                    print("button3 is pressed");
+                    print("button6 is pressed");
                     playSound("A");
                     answer.add(6);
                     checkAnswer(answer, selectedSongName);
                   },
                   child: Text("라"),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  key: mybuttonKey7,
+                  onPressed: () {
+                    print("button7 is pressed");
+                    playSound("B");
+                    answer.add(7);
+                    checkAnswer(answer, selectedSongName);
+                  },
+                  child: Text("시"),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  key: mybuttonKey8,
+                  onPressed: () {
+                    print("button8 is pressed");
+                    playSound("CC");
+                    answer.add(8);
+                    checkAnswer(answer, selectedSongName);
+                  },
+                  child: Text("높도"),
                 ),
               ),
             ],
@@ -190,15 +214,15 @@ class _PianoGameState extends State<PianoGameScreen> {
             children: [
               Flexible(
                 child: ElevatedButton(
-                    child: Text("서현송"),
+                    child: Text("비행기"),
                     onPressed: () async {
-                      selectedSongName = '서현송';
+                      selectedSongName = '비행기';
                       RenderBox renderbox =
-                          mybuttonKey.currentContext! //mybuttonKey == '도'
+                          mybuttonKey7.currentContext! //mybuttonKey == '시'
                               .findRenderObject() as RenderBox;
                       Offset position = renderbox.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox2 = mybuttonKey4.currentContext!
+                      RenderBox renderbox2 = mybuttonKey3.currentContext!
                           .findRenderObject() as RenderBox;
                       Offset position2 = renderbox2.localToGlobal(Offset.zero);
 
@@ -206,14 +230,21 @@ class _PianoGameState extends State<PianoGameScreen> {
                           .findRenderObject() as RenderBox;
                       Offset position3 = renderbox3.localToGlobal(Offset.zero);
 
+                      RenderBox renderbox4 = mybuttonKey6.currentContext!
+                          .findRenderObject() as RenderBox;
+                      Offset position4 = renderbox3.localToGlobal(Offset.zero);
+
                       double x = position.dx;
-                      double y = position.dy;
+                      double y = position.dy; //시
 
                       double x2 = position2.dx;
-                      double y2 = position2.dy;
+                      double y2 = position2.dy; //미
 
                       double x3 = position3.dx;
-                      double y3 = position3.dy;
+                      double y3 = position3.dy; //솔
+
+                      double x4 = position4.dx;
+                      double y4 = position4.dy; //라
 
                       //print(x);
                       //print(y);
@@ -221,17 +252,17 @@ class _PianoGameState extends State<PianoGameScreen> {
                       await Future.delayed(Duration(milliseconds: 200));
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
+                      pp(x4, y4, answer);
+                      await Future.delayed(Duration(milliseconds: 500));
+                      pp(x3, y3, answer);
+                      await Future.delayed(Duration(milliseconds: 500));
+                      pp(x4, y4, answer);
+                      await Future.delayed(Duration(milliseconds: 500));
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
+                      pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x3, y3, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x3, y3, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
+                      pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                     }),
               ),
@@ -341,7 +372,7 @@ class _PianoGameState extends State<PianoGameScreen> {
       case '수진송':
         checkSujinAnswer(answer);
         break;
-      case '서현송':
+      case '비행기':
         checkSeohyunAnswer(answer);
         break;
       case '진수송':
@@ -353,7 +384,7 @@ class _PianoGameState extends State<PianoGameScreen> {
   }
 
   void checkSujinAnswer(List answer) {
-    List<int> ans = [1, 1, 2, 2, 3, 3, 2];
+    List<int> ans = [7, 6, 5, 6, 7, 7, 7];
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
