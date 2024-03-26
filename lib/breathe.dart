@@ -21,7 +21,6 @@ class BreatheGameScreen extends StatefulWidget {
 
 class _BreatheGameScreenState extends State<BreatheGameScreen> {
   MethodChannel _methodChannel = MethodChannel('microphone');
-
   String _breathStatus = "Not Detecting Breath";
 
   @override
@@ -68,6 +67,28 @@ class _BreatheGameScreenState extends State<BreatheGameScreen> {
               ),
             ),
           ),
+          //상단 스테이지번호
+          Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150, 
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36, 
+              top: 65,
+              child: Text(
+                '#stage 5',
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, 
+                ),
+              ),
+            ),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -4,12 +4,13 @@ import 'package:mooner_interface/conversation.dart';
 import 'package:mooner_interface/countnumber.dart';
 import 'package:mooner_interface/exercise.dart';
 import 'package:mooner_interface/healing.dart';
-import 'package:mooner_interface/maze.dart';
 import 'package:mooner_interface/piano.dart';
 import 'package:mooner_interface/takepicture.dart';
 import 'package:mooner_interface/musclerelease.dart';
 import 'package:mooner_interface/coloring.dart';
 import 'package:mooner_interface/walk.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'molegame.dart';
 
 class NewStage extends StatelessWidget {
@@ -19,13 +20,57 @@ class NewStage extends StatelessWidget {
   }
 }
 
-class NewStageScreen extends StatelessWidget {
+class NewStageScreen extends StatefulWidget {
+  @override
+  _NewStageScreenState createState() => _NewStageScreenState();
+}
+
+// 배경음을 관리하는 클래스
+class AudioManager {
+  static final AudioPlayer _audioPlayer = AudioPlayer();
+  static ValueNotifier<bool> isPlaying = ValueNotifier(true);
+
+  static void toggleBackgroundSound(bool value) {
+    if (value) {
+      _audioPlayer.resume(); // 이전에 이미 load되어 있다고 가정
+      isPlaying.value = true;
+      
+    } else {
+      _audioPlayer.pause();
+      isPlaying.value = false;
+    }
+    print(isPlaying);
+  }
+
+  static void initialize() async {
+    await _audioPlayer.setSourceAsset('audio/bgm_test.mp3');
+    _audioPlayer.setReleaseMode(ReleaseMode.loop);
+    if (isPlaying.value) _audioPlayer.resume();
+  }
+}
+
+class _NewStageScreenState extends State<NewStageScreen> {
+  bool isSwitched = true;
   final List<String> buttonNames = [
     '문어잡기', '산책하기', '상처치료해주기',
     '근육이완법', '운동하기','심호흡하기',
     '숫자세기', '자장가','색칠하기',
     '주의 분산', '대화하기','나만의 스토리'
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    AudioManager.initialize(); // 앱 시작 시 배경음 재생 초기화
+    isSwitched = AudioManager.isPlaying.value;
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    isSwitched = AudioManager.isPlaying.value;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +146,7 @@ class NewStageScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ExerciseGameApp()),
+                            builder: (context) => ColoringGame()),
                       );
                     } else if (index == 9) {
                       Navigator.push(
@@ -137,7 +182,47 @@ class NewStageScreen extends StatelessWidget {
                   icon: Icon(Icons.settings),
                   onPressed: () {
                     // 설정 버튼 클릭 시 실행할 액션
-                    print('Settings button pressed');
+                    showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('음악 설정'),
+              content: SizedBox(
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('배경음'),
+                    ValueListenableBuilder(
+                      valueListenable: AudioManager.isPlaying,
+                      builder: (context, value, child) {
+                        return FlutterSwitch(
+                                  width: 100.0,
+                                  height: 55.0,
+                                  valueFontSize: 25.0,
+                                  toggleSize: 45.0,
+                                  value: isSwitched,
+                                  borderRadius: 30.0,
+                                  padding: 8.0,
+                                  showOnOff: true,
+                                  onToggle: (val) {
+                                    setState(() {
+                        
+                        isSwitched = val;
+                        AudioManager.toggleBackgroundSound(val);
+                        print(val);
+                        print(isSwitched);
+                                    });
+                                  },
+                                );
+                      }
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
                   },
                 ),
               ],
@@ -147,4 +232,7 @@ class NewStageScreen extends StatelessWidget {
       ),
     );
   }
+  
+
 }
+

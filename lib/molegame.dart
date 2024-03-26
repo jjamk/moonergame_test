@@ -211,7 +211,7 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
               left: 36, 
               top: 65,
               child: Text(
-                '#stage 1',
+                '#stage 0',
                 style: TextStyle(
                   fontSize: 18, 
                   fontWeight: FontWeight.bold,

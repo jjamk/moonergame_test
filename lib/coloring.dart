@@ -16,30 +16,30 @@ void main() {
     }
   };
 
-  runApp(const MyApp());
+  runApp(const ColoringGame());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ColoringGame extends StatelessWidget {
+  const ColoringGame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Drawing Test',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(),
+      home: const ColoringGameScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class ColoringGameScreen extends StatefulWidget {
+  const ColoringGameScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ColoringGameScreen> createState() => _ColoringGameScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ColoringGameScreenState extends State<ColoringGameScreen> {
   /// 绘制控制器
   final DrawingController _drawingController = DrawingController();
   // 사용자가 선택한 색상을 저장하는 변수
