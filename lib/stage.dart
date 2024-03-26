@@ -7,8 +7,9 @@ import 'package:mooner_interface/healing.dart';
 import 'package:mooner_interface/maze.dart';
 import 'package:mooner_interface/piano.dart';
 import 'package:mooner_interface/takepicture.dart';
-// import 'package:mooner_interface/coloring.dart';
-// import 'package:mooner_interface/walk.dart';
+import 'package:mooner_interface/musclerelease.dart';
+import 'package:mooner_interface/coloring.dart';
+import 'package:mooner_interface/walk.dart';
 import 'molegame.dart';
 
 class NewStage extends StatelessWidget {
@@ -78,8 +79,8 @@ class NewStageScreen extends StatelessWidget {
                     } else if (index == 3) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => ExerciseGameApp()),
+                        MaterialPageRoute(builder: (context) => MusclereleaseGameApp()),
+
                       );
                     } else if (index == 4) {
                       Navigator.push(
