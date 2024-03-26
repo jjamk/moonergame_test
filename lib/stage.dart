@@ -7,8 +7,8 @@ import 'package:mooner_interface/healing.dart';
 import 'package:mooner_interface/maze.dart';
 import 'package:mooner_interface/piano.dart';
 import 'package:mooner_interface/takepicture.dart';
-import 'package:mooner_interface/coloring.dart';
-import 'package:mooner_interface/walk.dart';
+// import 'package:mooner_interface/coloring.dart';
+// import 'package:mooner_interface/walk.dart';
 import 'molegame.dart';
 
 class NewStage extends StatelessWidget {
@@ -20,10 +20,18 @@ class NewStage extends StatelessWidget {
 
 class NewStageScreen extends StatelessWidget {
   final List<String> buttonNames = [
-    '문어잡기', '산책하기', '상처치료해주기',
-    '근육이완법', '운동하기','심호흡하기',
-    '숫자세기', '자장가','색칠하기',
-    '주의 분산', '대화하기','나만의 스토리'
+    '문어잡기',
+    '산책하기',
+    '상처치료해주기',
+    '근육이완법',
+    '운동하기',
+    '심호흡하기',
+    '숫자세기',
+    '자장가',
+    '색칠하기',
+    '주의 분산',
+    '대화하기',
+    '나만의 스토리'
   ];
   @override
   Widget build(BuildContext context) {
@@ -56,11 +64,11 @@ class NewStageScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => MoleGame()),
                       );
-                    } else if (index == 1) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => walkGame()),
-                      );
+                      // } else if (index == 1) {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(builder: (context) => walkGame()),
+                      //   );
                     } else if (index == 2) {
                       Navigator.push(
                         context,

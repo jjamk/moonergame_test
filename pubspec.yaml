@@ -81,12 +81,18 @@ flutter:
     - assets/images/doodeo.png
     - assets/images/bg_stage.png
     - assets/images/hook.png
-    - assets/images/stage_background.png
+    # - assets/images/stage_background.png
     - assets/audio/A.mp3
+    - assets/audio/B.mp3
     - assets/audio/C.mp3
-    - assets/audio/G.mp3
     - assets/json/animation_example.json
     - assets/json/loading.json
+    - assets/audio/D.mp3
+    - assets/audio/E.mp3
+    - assets/audio/F.mp3
+    - assets/audio/G.mp3
+    - assets/audio/CC.mp3
+  
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
