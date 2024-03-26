@@ -47,6 +47,8 @@ dependencies:
   flutter_state_notifier: ^0.7.3
   scribble: ^0.9.1
   shake: ^2.2.0
+  audioplayers: ^6.0.0
+  flutter_switch: ^0.3.2
 
 
 dev_dependencies:
@@ -99,6 +101,7 @@ flutter:
     - assets/audio/G.mp3
     - assets/audio/CC.mp3
     - assets/images/cat.png
+    - assets/audio/bgm_test.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

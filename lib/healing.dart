@@ -78,6 +78,28 @@ class _HealingGameScreenState extends State<HealingGameScreen> {
               ),
             ),
           ),
+          //상단 스테이지번호
+          Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150, 
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36, 
+              top: 65,
+              child: Text(
+                '#stage 2',
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, 
+                ),
+              ),
+            ),
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
