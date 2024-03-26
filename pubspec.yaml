@@ -38,8 +38,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   simple_animation_progress_bar: ^1.6.0
   assets_audio_player: ^3.1.1
-  lottie: ^2.7.0
+  lottie: ^3.1.0
   speech_to_text: ^6.6.0
+  flutter_svg: ^2.0.10+1
+  path_drawing: ^1.0.1
+  flutter_drawing_board: ^0.7.0+2
+  flutter_state_notifier: ^0.7.3
+  scribble: ^0.9.1
 
 dev_dependencies:
   flutter_test:
@@ -50,7 +55,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -66,7 +71,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/appbar.png
     - assets/images/bend.png
     - assets/images/wound.png
     - assets/images/ointment.png
@@ -83,6 +87,7 @@ flutter:
     - assets/audio/G.mp3
     - assets/json/animation_example.json
     - assets/json/loading.json
+    - assets/images/cat.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
