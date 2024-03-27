@@ -102,6 +102,7 @@ flutter:
     - assets/audio/CC.mp3
     - assets/images/cat.png
     - assets/audio/bgm_test.mp3
+    - assets/images/result_background.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
