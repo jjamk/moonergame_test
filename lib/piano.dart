@@ -218,50 +218,43 @@ class _PianoGameState extends State<PianoGameScreen> {
                     onPressed: () async {
                       selectedSongName = '비행기';
                       RenderBox renderbox =
-                          mybuttonKey7.currentContext! //mybuttonKey == '시'
+                          mybuttonKey3.currentContext! //mybuttonKey == '미'
                               .findRenderObject() as RenderBox;
                       Offset position = renderbox.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox2 = mybuttonKey3.currentContext!
+                      RenderBox renderbox2 = mybuttonKey2.currentContext! //레
                           .findRenderObject() as RenderBox;
                       Offset position2 = renderbox2.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox3 = mybuttonKey5.currentContext!
+                      RenderBox renderbox3 = mybuttonKey5.currentContext! //도
                           .findRenderObject() as RenderBox;
                       Offset position3 = renderbox3.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox4 = mybuttonKey6.currentContext!
-                          .findRenderObject() as RenderBox;
-                      Offset position4 = renderbox3.localToGlobal(Offset.zero);
-
                       double x = position.dx;
-                      double y = position.dy; //시
+                      double y = position.dy; //미
 
                       double x2 = position2.dx;
-                      double y2 = position2.dy; //미
+                      double y2 = position2.dy; //레
 
                       double x3 = position3.dx;
-                      double y3 = position3.dy; //솔
-
-                      double x4 = position4.dx;
-                      double y4 = position4.dy; //라
+                      double y3 = position3.dy; //도
 
                       //print(x);
                       //print(y);
 
-                      await Future.delayed(Duration(milliseconds: 200)); //시
+                      await Future.delayed(Duration(milliseconds: 200)); //미
                       pp(x, y, answer);
-                      await Future.delayed(Duration(milliseconds: 500)); //라
-                      pp(x4, y4, answer);
                       await Future.delayed(Duration(milliseconds: 500)); //솔
-                      pp(x3, y3, answer);
+                      pp(x2, y2, answer);
                       await Future.delayed(Duration(milliseconds: 500)); //라
-                      pp(x4, y4, answer);
+                      pp(x3, y3, answer);
+                      await Future.delayed(Duration(milliseconds: 500)); //시
+                      pp(x2, y2, answer);
                       await Future.delayed(Duration(milliseconds: 500)); //시
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500)); //시
                       pp(x, y, answer);
-                      await Future.delayed(Duration(milliseconds: 500)); //시
+                      await Future.delayed(Duration(milliseconds: 500));
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                     }),
@@ -271,10 +264,10 @@ class _PianoGameState extends State<PianoGameScreen> {
                     child: Text("나비야"),
                     onPressed: () async {
                       selectedSongName = '나비야';
-                      RenderBox renderbox6 =
-                          mybuttonKey6.currentContext! //mybuttonKey == '솔'
+                      RenderBox renderbox5 =
+                          mybuttonKey5.currentContext! //mybuttonKey == '솔'
                               .findRenderObject() as RenderBox;
-                      Offset position = renderbox6.localToGlobal(Offset.zero);
+                      Offset position = renderbox5.localToGlobal(Offset.zero);
 
                       RenderBox renderbox3 = mybuttonKey3.currentContext!
                           .findRenderObject() as RenderBox;
@@ -349,9 +342,9 @@ class _PianoGameState extends State<PianoGameScreen> {
                       //print(y);
 
                       await Future.delayed(Duration(milliseconds: 200));
-                      pp(x, y, answer);
+                      pp(x, y, answer); //솔
                       await Future.delayed(Duration(milliseconds: 500));
-                      pp(x, y, answer);
+                      pp(x, y, answer); //솔
                       await Future.delayed(Duration(milliseconds: 500));
                       pp(x2, y2, answer);
                       await Future.delayed(Duration(milliseconds: 500));
@@ -389,7 +382,7 @@ class _PianoGameState extends State<PianoGameScreen> {
   }
 
   void checkSujinAnswer(List answer) {
-    List<int> ans = [6, 3, 3, 4, 2, 2];
+    List<int> ans = [5, 3, 3, 4, 2, 2];
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
@@ -405,7 +398,7 @@ class _PianoGameState extends State<PianoGameScreen> {
   }
 
   void checkSeohyunAnswer(List answer) {
-    List<int> ans = [7, 6, 5, 6, 7, 7, 7];
+    List<int> ans = [3, 2, 1, 2, 3, 3, 3];
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
@@ -421,7 +414,7 @@ class _PianoGameState extends State<PianoGameScreen> {
   }
 
   void checkJinsuAnswer(List answer) {
-    List<int> ans = [6, 6, 7, 7, 6, 6, 3];
+    List<int> ans = [5, 5, 6, 6, 5, 5, 3];
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
