@@ -10,7 +10,48 @@ class ConversationGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ConversationGameScreen(),
+      home: InitialDialogueScreen(),
+      //home: ConversationGameScreen(),
+    );
+  }
+}
+
+class InitialDialogueScreen extends StatefulWidget {
+  @override
+  _InitialDialogueScreenState createState() => _InitialDialogueScreenState();
+}
+
+class _InitialDialogueScreenState extends State<InitialDialogueScreen> {
+  // 대화 인덱스와 대화 내용
+  int dialogueIndex = 0;
+  List<String> dialogues = [
+    "너무너가 하고싶은 말이 있어 보여.\n 나 전달법을 사용해서 말할 수 있도록 도와주자.",
+  ];
+
+  void nextDialogue() {
+    setState(() {
+      if (dialogueIndex < dialogues.length - 1) {
+        dialogueIndex++;
+      } else {
+        // 모든 대화가 완료되었을 때, 게임 화면으로 전환
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ConversationGameScreen()));
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(dialogues[dialogueIndex], style: TextStyle(fontSize: 24)),
+            SizedBox(height: 20),
+            ElevatedButton(onPressed: nextDialogue, child: Text("시작하기")),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -196,6 +237,28 @@ class _ConversationGameScreenState extends State<ConversationGameScreen> {
               ),
             ),
           ),
+          //상단 스테이지번호
+          Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150, 
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36, 
+              top: 65,
+              child: Text(
+                '#stage 10',
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, 
+                ),
+              ),
+            ),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(
