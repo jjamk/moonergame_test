@@ -103,7 +103,7 @@ class _DialogueGameState extends State<DialogueGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('대화 게임'),
+        title: Text('오프닝'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
