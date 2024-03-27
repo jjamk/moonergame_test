@@ -83,6 +83,28 @@ class _PianoGameState extends State<PianoGameScreen> {
             ),
           ),
         ),
+        //상단 스테이지번호
+        Positioned(
+          left: 0,
+          top: 0,
+          child: Image.asset(
+            'assets/images/stage_background.png',
+            width: 150,
+            height: 150,
+          ),
+        ),
+        Positioned(
+          left: 36,
+          top: 65,
+          child: Text(
+            '#stage 7',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+        ),
         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -128,8 +150,8 @@ class _PianoGameState extends State<PianoGameScreen> {
                 child: ElevatedButton(
                   key: mybuttonKey4,
                   onPressed: () {
-                    print("button3 is pressed");
-                    playSound("E");
+                    print("button4 is pressed");
+                    playSound("F");
                     answer.add(4);
                     checkAnswer(answer, selectedSongName);
                   },
@@ -140,7 +162,7 @@ class _PianoGameState extends State<PianoGameScreen> {
                 child: ElevatedButton(
                   key: mybuttonKey5,
                   onPressed: () {
-                    print("button2 is pressed");
+                    print("button5 is pressed");
                     playSound("G");
                     answer.add(5);
                     checkAnswer(answer, selectedSongName);
@@ -152,12 +174,36 @@ class _PianoGameState extends State<PianoGameScreen> {
                 child: ElevatedButton(
                   key: mybuttonKey6,
                   onPressed: () {
-                    print("button3 is pressed");
+                    print("button6 is pressed");
                     playSound("A");
                     answer.add(6);
                     checkAnswer(answer, selectedSongName);
                   },
                   child: Text("라"),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  key: mybuttonKey7,
+                  onPressed: () {
+                    print("button7 is pressed");
+                    playSound("B");
+                    answer.add(7);
+                    checkAnswer(answer, selectedSongName);
+                  },
+                  child: Text("시"),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  key: mybuttonKey8,
+                  onPressed: () {
+                    print("button8 is pressed");
+                    playSound("CC");
+                    answer.add(8);
+                    checkAnswer(answer, selectedSongName);
+                  },
+                  child: Text("높도"),
                 ),
               ),
             ],
@@ -168,77 +214,84 @@ class _PianoGameState extends State<PianoGameScreen> {
             children: [
               Flexible(
                 child: ElevatedButton(
-                    child: Text("서현송"),
+                    child: Text("비행기"),
                     onPressed: () async {
-                      selectedSongName = '서현송';
+                      selectedSongName = '비행기';
                       RenderBox renderbox =
-                          mybuttonKey.currentContext! //mybuttonKey == '도'
+                          mybuttonKey3.currentContext! //mybuttonKey == '미'
                               .findRenderObject() as RenderBox;
                       Offset position = renderbox.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox2 = mybuttonKey4.currentContext!
+                      RenderBox renderbox2 = mybuttonKey2.currentContext! //레
                           .findRenderObject() as RenderBox;
                       Offset position2 = renderbox2.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox3 = mybuttonKey5.currentContext!
+                      RenderBox renderbox3 = mybuttonKey5.currentContext! //도
                           .findRenderObject() as RenderBox;
                       Offset position3 = renderbox3.localToGlobal(Offset.zero);
 
                       double x = position.dx;
-                      double y = position.dy;
+                      double y = position.dy; //미
 
                       double x2 = position2.dx;
-                      double y2 = position2.dy;
+                      double y2 = position2.dy; //레
 
                       double x3 = position3.dx;
-                      double y3 = position3.dy;
+                      double y3 = position3.dy; //도
 
                       //print(x);
                       //print(y);
 
-                      await Future.delayed(Duration(milliseconds: 200));
+                      await Future.delayed(Duration(milliseconds: 200)); //미
+                      pp(x, y, answer);
+                      await Future.delayed(Duration(milliseconds: 500)); //솔
+                      pp(x2, y2, answer);
+                      await Future.delayed(Duration(milliseconds: 500)); //라
+                      pp(x3, y3, answer);
+                      await Future.delayed(Duration(milliseconds: 500)); //시
+                      pp(x2, y2, answer);
+                      await Future.delayed(Duration(milliseconds: 500)); //시
+                      pp(x, y, answer);
+                      await Future.delayed(Duration(milliseconds: 500)); //시
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                       pp(x, y, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x3, y3, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x3, y3, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                     }),
               ),
               Flexible(
                 child: ElevatedButton(
-                    child: Text("수진송"),
+                    child: Text("나비야"),
                     onPressed: () async {
-                      selectedSongName = '수진송';
-                      RenderBox renderbox =
-                          mybuttonKey.currentContext! //mybuttonKey == '도'
+                      selectedSongName = '나비야';
+                      RenderBox renderbox5 =
+                          mybuttonKey5.currentContext! //mybuttonKey == '솔'
                               .findRenderObject() as RenderBox;
-                      Offset position = renderbox.localToGlobal(Offset.zero);
-
-                      RenderBox renderbox2 = mybuttonKey2.currentContext!
-                          .findRenderObject() as RenderBox;
-                      Offset position2 = renderbox2.localToGlobal(Offset.zero);
+                      Offset position = renderbox5.localToGlobal(Offset.zero);
 
                       RenderBox renderbox3 = mybuttonKey3.currentContext!
                           .findRenderObject() as RenderBox;
-                      Offset position3 = renderbox3.localToGlobal(Offset.zero);
+                      Offset position2 = renderbox3.localToGlobal(Offset.zero);
+
+                      RenderBox renderbox4 = mybuttonKey4.currentContext!
+                          .findRenderObject() as RenderBox;
+                      Offset position3 = renderbox4.localToGlobal(Offset.zero);
+
+                      RenderBox renderbox2 = mybuttonKey2.currentContext!
+                          .findRenderObject() as RenderBox;
+                      Offset position4 = renderbox2.localToGlobal(Offset.zero);
 
                       double x = position.dx;
-                      double y = position.dy;
+                      double y = position.dy; //솔
 
                       double x2 = position2.dx;
-                      double y2 = position2.dy;
+                      double y2 = position2.dy; //미
 
                       double x3 = position3.dx;
-                      double y3 = position3.dy;
+                      double y3 = position3.dy; //파
+
+                      double x4 = position4.dx;
+                      double y4 = position4.dy; //레
 
                       //print(x);
                       //print(y);
@@ -246,64 +299,62 @@ class _PianoGameState extends State<PianoGameScreen> {
                       await Future.delayed(Duration(milliseconds: 200));
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
-                      pp(x, y, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
                       pp(x2, y2, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                       pp(x2, y2, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                       pp(x3, y3, answer);
                       await Future.delayed(Duration(milliseconds: 500));
-                      pp(x3, y3, answer);
+                      pp(x4, y4, answer);
                       await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
+                      pp(x4, y4, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                     }),
               ),
               Flexible(
                 child: ElevatedButton(
-                    child: Text("진수송"),
+                    child: Text("학교종"),
                     onPressed: () async {
-                      selectedSongName = '진수송';
+                      selectedSongName = '학교종';
                       RenderBox renderbox =
-                          mybuttonKey.currentContext! //mybuttonKey == '도'
+                          mybuttonKey5.currentContext! //mybuttonKey == '솔'
                               .findRenderObject() as RenderBox;
                       Offset position = renderbox.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox2 = mybuttonKey4.currentContext!
+                      RenderBox renderbox2 = mybuttonKey6.currentContext! //라
                           .findRenderObject() as RenderBox;
                       Offset position2 = renderbox2.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox3 = mybuttonKey6.currentContext!
+                      RenderBox renderbox3 = mybuttonKey3.currentContext! //미
                           .findRenderObject() as RenderBox;
                       Offset position3 = renderbox3.localToGlobal(Offset.zero);
 
-                      double x = position.dx;
+                      double x = position.dx; //솔
                       double y = position.dy;
 
-                      double x2 = position2.dx;
+                      double x2 = position2.dx; //라
                       double y2 = position2.dy;
 
-                      double x3 = position3.dx;
+                      double x3 = position3.dx; //미
                       double y3 = position3.dy;
 
                       //print(x);
                       //print(y);
 
                       await Future.delayed(Duration(milliseconds: 200));
+                      pp(x, y, answer); //솔
+                      await Future.delayed(Duration(milliseconds: 500));
+                      pp(x, y, answer); //솔
+                      await Future.delayed(Duration(milliseconds: 500));
+                      pp(x2, y2, answer);
+                      await Future.delayed(Duration(milliseconds: 500));
+                      pp(x2, y2, answer);
+                      await Future.delayed(Duration(milliseconds: 500));
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                       pp(x, y, answer);
                       await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
                       pp(x3, y3, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x3, y3, answer);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      pp(x2, y2, answer);
                       await Future.delayed(Duration(milliseconds: 500));
                     }),
               ),
@@ -316,13 +367,13 @@ class _PianoGameState extends State<PianoGameScreen> {
 
   void checkAnswer(List<int> answer, String songName) {
     switch (songName) {
-      case '수진송':
+      case '나비야':
         checkSujinAnswer(answer);
         break;
-      case '서현송':
+      case '비행기':
         checkSeohyunAnswer(answer);
         break;
-      case '진수송':
+      case '학교종':
         checkJinsuAnswer(answer);
         break;
       default:
@@ -331,7 +382,7 @@ class _PianoGameState extends State<PianoGameScreen> {
   }
 
   void checkSujinAnswer(List answer) {
-    List<int> ans = [1, 1, 2, 2, 3, 3, 2];
+    List<int> ans = [5, 3, 3, 4, 2, 2];
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
@@ -347,7 +398,7 @@ class _PianoGameState extends State<PianoGameScreen> {
   }
 
   void checkSeohyunAnswer(List answer) {
-    List<int> ans = [1, 1, 2, 2, 3, 3, 2];
+    List<int> ans = [3, 2, 1, 2, 3, 3, 3];
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
@@ -363,17 +414,91 @@ class _PianoGameState extends State<PianoGameScreen> {
   }
 
   void checkJinsuAnswer(List answer) {
-    List<int> ans = [1, 1, 2, 2, 3, 3, 2];
+    List<int> ans = [5, 5, 6, 6, 5, 5, 3];
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
-        showMessage("잘하셨군요!");
-        print("correct");
+        showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent, // Dialog의 배경을 투명하게 설정
+      child: Container(
+        width: 400,
+        height: 300,
+        decoration: BoxDecoration(
+          // Container의 배경으로 이미지 설정
+          image: DecorationImage(
+            image: AssetImage('assets/images/result_background.png'), // 이미지 파일 경로
+            fit: BoxFit.cover, // 이미지를 Container 크기에 맞게 조정
+          ),
+          borderRadius: BorderRadius.circular(12), // 모서리를 둥글게
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Padding(
+      padding: EdgeInsets.fromLTRB(0,70,0,0), // 패딩 추가
+      child: Text('성공',
+            style: TextStyle(fontSize: 24.0,)),
+    ),
+            
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: Text('닫기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  },
+);
+        //showMessage("잘하셨군요!");
+        //print("correct");
         answer.clear();
       } else {
         answer.clear();
-        showMessage("다시 해보세요");
-        print("Try again");
+        showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent, // Dialog의 배경을 투명하게 설정
+      child: Container(
+        width: 400,
+        height: 300,
+        decoration: BoxDecoration(
+          // Container의 배경으로 이미지 설정
+          image: DecorationImage(
+            image: AssetImage('assets/images/result_background.png'), // 이미지 파일 경로
+            fit: BoxFit.cover, // 이미지를 Container 크기에 맞게 조정
+          ),
+          borderRadius: BorderRadius.circular(12), // 모서리를 둥글게
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Padding(
+      padding: EdgeInsets.fromLTRB(0,70,0,0), // 패딩 추가
+      child: Text('실패',
+            style: TextStyle(fontSize: 24.0,)),
+    ),
+            
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: Text('닫기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  },
+);
+        //showMessage("다시 해보세요");
+        //print("Try again");
       }
     }
   }
@@ -412,8 +537,6 @@ class _PianoGameState extends State<PianoGameScreen> {
         });
   }
 }
-  
-
 
 // class NoteCard extends StatelessWidget {
 //   final String note;

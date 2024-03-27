@@ -80,6 +80,28 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 ),
               ),
             ),
+            //상단 스테이지번호
+          Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150, 
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36, 
+              top: 65,
+              child: Text(
+                '#stage 4',
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, 
+                ),
+              ),
+            ),
             Center(
               child: Image.asset(
                 'assets/images/mooner.png',

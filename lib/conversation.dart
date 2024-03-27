@@ -251,7 +251,7 @@ class _ConversationGameScreenState extends State<ConversationGameScreen> {
               left: 36, 
               top: 65,
               child: Text(
-                '#stage 10',
+                '#stage 9',
                 style: TextStyle(
                   fontSize: 18, 
                   fontWeight: FontWeight.bold,

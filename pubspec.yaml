@@ -49,6 +49,9 @@ dependencies:
   flutter_state_notifier: ^0.7.3
   scribble: ^0.9.1
   shake: ^2.2.0
+  audioplayers: ^6.0.0
+  flutter_switch: ^0.3.2
+
 
 dev_dependencies:
   flutter_test:
@@ -75,9 +78,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/붕대.png
+    - assets/images/상처.png
+    - assets/images/ointmentt.png
+    - assets/images/gralgori-removebg-preview.png
     - assets/images/bend.png
     - assets/images/wound.png
-    - assets/images/ointment.png
     - assets/images/bandage.png
     - assets/images/bg_home_test.png
     - assets/images/bg_stage_test.png
@@ -87,11 +93,18 @@ flutter:
     - assets/images/hook.png
     - assets/images/stage_background.png
     - assets/audio/A.mp3
+    - assets/audio/B.mp3
     - assets/audio/C.mp3
-    - assets/audio/G.mp3
     - assets/json/animation_example.json
     - assets/json/loading.json
+    - assets/audio/D.mp3
+    - assets/audio/E.mp3
+    - assets/audio/F.mp3
+    - assets/audio/G.mp3
+    - assets/audio/CC.mp3
     - assets/images/cat.png
+    - assets/audio/bgm_test.mp3
+    - assets/images/result_background.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
