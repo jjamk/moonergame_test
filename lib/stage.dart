@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mooner_interface/Secret.dart';
 import 'package:mooner_interface/breathe.dart';
 import 'package:mooner_interface/conversation.dart';
 import 'package:mooner_interface/countnumber.dart';
@@ -167,6 +168,12 @@ class _NewStageScreenState extends State<NewStageScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ConversationGameApp()),
+                      );
+                    } else if (index == 11) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SecretGameApp()),
                       );
                     } else {
                       // 다른 버튼 클릭 시 실행할 액션
