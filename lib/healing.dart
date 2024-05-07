@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 void main() => runApp(HealingGameApp());
-
+//휴 드디어 된건가?
 class HealingGameApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _InitialDialogueScreenState extends State<HealingGameScreen> {
     "저리가!\n사람은 믿을 수 없어!",
     "사람이 날 아프게 만들었어!",
     "너무 화가 나",
-    "진짜야?",
+    "진짜야?????",
   ];
 
   // 각 대화별 선택지 설정
@@ -159,7 +159,7 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
   double hookTop = 260; // 낚싯대의 초기 위쪽 위치
 
   List<String> dialogues = [
-    "너무너가 아파하고 있어.\n 치료해주고 너무너가 아프지 않게 도와주자.",
+    "너무너가 아파하고 있어.\n 치료해주고 너무너가 아프지 않게 도와쥬자.",
   ];
 
   @override
