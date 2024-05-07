@@ -150,6 +150,7 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
   bool ointmentApplied = false;
   bool CocaApplied = false;
   bool bb = true;
+  int stars = 3;
 
   Timer? _timer;
   final int _timeLimit = 30;
@@ -230,6 +231,20 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
             ),
           ),
           // 중앙에 플레이어 이미지를 표시
+          Positioned(
+      right: 30,
+      top: 70,
+      child: Row(
+        children: List.generate(
+          stars,
+          (index) => Icon(
+            Icons.star,
+            color: Colors.yellow,
+            size: 30,
+          ),
+        ).toList(),
+      ),
+          ),
           Positioned(
             child: Center(
                 child: Image.asset('assets/images/mooner.png',
@@ -439,7 +454,9 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
                 Navigator.of(context).pop();
                 setState(() {
                   isShowingNotification = false;
+                  if (stars > 0) stars--;
                 });
+                if (stars == 0) resetGame();
               },
               child: Text('확인'),
             ),
@@ -462,7 +479,9 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
                 Navigator.of(context).pop();
                 setState(() {
                   isShowingNotification = false;
+                  if (stars > 0) stars--;
                 });
+                if (stars == 0) resetGame();
               },
               child: Text('확인'),
             ),
