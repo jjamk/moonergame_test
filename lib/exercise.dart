@@ -1,4 +1,96 @@
+// import 'package:flutter/material.dart';
+// import 'package:sensors/sensors.dart';
+
+// void main() => runApp(ExerciseGameApp());
+
+// class ExerciseGameApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: ExerciseGameScreen(),
+//     );
+//   }
+// }
+
+// class ExerciseGameScreen extends StatefulWidget {
+//   @override
+//   _ExerciseGameScreenState createState() => _ExerciseGameScreenState();
+// }
+
+// class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
+//   int exCount = 0; //운동 횟수 = 걸음 수
+//   double threshold = 20.0; // 흔들림을 감지하기 위한 임계값
+//   bool isShaking = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _startListening();
+//   }
+
+//   void _startListening() {
+//     accelerometerEvents.listen((AccelerometerEvent event) {
+//       // 가속도 데이터를 받아와 흔들림 감지
+//       double magnitude = event.x.abs() + event.y.abs() + event.z.abs();
+//       if (magnitude > threshold && !isShaking) {
+//         setState(() {
+//           exCount++;
+//           isShaking = true;
+//         });
+//       } else if (magnitude <= threshold) {
+//         isShaking = false;
+//       }
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Stack(
+//         children: <Widget>[
+//           Container(
+//             decoration: BoxDecoration(
+//               image: DecorationImage(
+//                 image: AssetImage("assets/images/bg_stage.png"),
+//                 fit: BoxFit.cover,
+//               ),
+//             ),
+//           ),
+//           Positioned(
+//             bottom: 50, // 텍스트를 이미지 아래로 50픽셀 올립니다.
+//             left: MediaQuery.of(context).size.width / 2 - 150, // 화면의 가로 중앙에서 텍스트 너비의 절반 만큼 왼쪽으로 이동하여 센터에 배치
+//             child: Column(
+//               children: <Widget>[
+//                 Text(
+//                   '운동 횟수:',
+//                   style: TextStyle(fontSize: 24.0),
+//                 ),
+//                 Text(
+//                   '$exCount',
+//                   style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+//                 ),
+//               ],
+//             ),
+//           ),
+//           Center(
+//             child: Image.asset(
+//               'assets/images/mooner.png',
+//               width: 300,
+//               height: 300,
+//               fit: BoxFit.cover,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:mooner_interface/stage.dart';
 import 'package:sensors/sensors.dart';
 
 void main() => runApp(ExerciseGameApp());
@@ -22,11 +114,14 @@ class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
   int exCount = 0; //운동 횟수 = 걸음 수
   double threshold = 20.0; // 흔들림을 감지하기 위한 임계값
   bool isShaking = false;
+  late Timer _timer;
+  int _countDown = 60;
 
   @override
   void initState() {
     super.initState();
     _startListening();
+    _startTimer();
   }
 
   void _startListening() {
@@ -37,9 +132,33 @@ class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
         setState(() {
           exCount++;
           isShaking = true;
+          if (exCount >= 10) {
+            // exCount가 10 이상이면 타이머를 중지하고 다음 스테이지로 이동
+            _timer.cancel();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GameWinScreen()),
+            );
+          }
         });
       } else if (magnitude <= threshold) {
         isShaking = false;
+      }
+    });
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_countDown == 0) {
+        timer.cancel();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => GameOverScreen()),
+        );
+      } else {
+        setState(() {
+          _countDown--;
+        });
       }
     });
   }
@@ -55,6 +174,14 @@ class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
                 image: AssetImage("assets/images/bg_stage.png"),
                 fit: BoxFit.cover,
               ),
+            ),
+          ),
+          Positioned(
+            top: 20,
+            right: 20,
+            child: Text(
+              '남은 시간: $_countDown 초',
+              style: TextStyle(fontSize: 18, color: Colors.white),
             ),
           ),
           Positioned(
@@ -87,6 +214,64 @@ class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
   }
 }
 
+class GameOverScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '문어가 도망가버렸어요...',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NewStage()),
+                      );              
+              },
+              child: Text('홈으로 돌아가기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class GameWinScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Congratulations!'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '문어의 화가 풀렸어요!',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NewStage()),
+                      );
+              },
+              child: Text('다음 스테이지로...'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 // import 'dart:async';
