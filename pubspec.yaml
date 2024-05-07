@@ -91,6 +91,7 @@ flutter:
     - assets/images/doodeo.png
     - assets/images/bg_stage.png
     - assets/images/hook.png
+    - assets/images/speechbubble.png
     - assets/images/stage_background.png
     - assets/audio/A.mp3
     - assets/audio/B.mp3

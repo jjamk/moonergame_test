@@ -1,92 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:sensors/sensors.dart';
-
-// void main() => runApp(ExerciseGameApp());
-
-// class ExerciseGameApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: ExerciseGameScreen(),
-//     );
-//   }
-// }
-
-// class ExerciseGameScreen extends StatefulWidget {
-//   @override
-//   _ExerciseGameScreenState createState() => _ExerciseGameScreenState();
-// }
-
-// class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
-//   int exCount = 0; //운동 횟수 = 걸음 수
-//   double threshold = 20.0; // 흔들림을 감지하기 위한 임계값
-//   bool isShaking = false;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _startListening();
-//   }
-
-//   void _startListening() {
-//     accelerometerEvents.listen((AccelerometerEvent event) {
-//       // 가속도 데이터를 받아와 흔들림 감지
-//       double magnitude = event.x.abs() + event.y.abs() + event.z.abs();
-//       if (magnitude > threshold && !isShaking) {
-//         setState(() {
-//           exCount++;
-//           isShaking = true;
-//         });
-//       } else if (magnitude <= threshold) {
-//         isShaking = false;
-//       }
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Stack(
-//         children: <Widget>[
-//           Container(
-//             decoration: BoxDecoration(
-//               image: DecorationImage(
-//                 image: AssetImage("assets/images/bg_stage.png"),
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//           ),
-//           Positioned(
-//             bottom: 50, // 텍스트를 이미지 아래로 50픽셀 올립니다.
-//             left: MediaQuery.of(context).size.width / 2 - 150, // 화면의 가로 중앙에서 텍스트 너비의 절반 만큼 왼쪽으로 이동하여 센터에 배치
-//             child: Column(
-//               children: <Widget>[
-//                 Text(
-//                   '운동 횟수:',
-//                   style: TextStyle(fontSize: 24.0),
-//                 ),
-//                 Text(
-//                   '$exCount',
-//                   style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
-//                 ),
-//               ],
-//             ),
-//           ),
-//           Center(
-//             child: Image.asset(
-//               'assets/images/mooner.png',
-//               width: 300,
-//               height: 300,
-//               fit: BoxFit.cover,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -168,12 +79,42 @@ class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
+          // 배경 이미지를 표시하는 컨테이너
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/bg_stage.png"),
                 fit: BoxFit.cover,
               ),
+            ),
+          ),
+          //상단 스테이지번호
+          Positioned(
+            left: 0,
+            top: 0,
+            child: Image.asset(
+              'assets/images/stage_background.png',
+              width: 150,
+              height: 150,
+            ),
+          ),
+          Positioned(
+            left: 36,
+            top: 65,
+            child: Text(
+              '#stage 6',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          // 중앙에 플레이어 이미지를 표시
+          Positioned(
+            child: Center(
+              child: Image.asset('assets/images/mooner.png',
+                  width: 300, height: 300, fit: BoxFit.cover),
             ),
           ),
           Positioned(
@@ -198,14 +139,6 @@ class _ExerciseGameScreenState extends State<ExerciseGameScreen> {
                   style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
                 ),
               ],
-            ),
-          ),
-          Center(
-            child: Image.asset(
-              'assets/images/mooner.png',
-              width: 300,
-              height: 300,
-              fit: BoxFit.cover,
             ),
           ),
         ],
