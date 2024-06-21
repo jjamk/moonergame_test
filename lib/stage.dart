@@ -42,11 +42,11 @@ class AudioManager {
     print(isPlaying);
   }
 
-  // static void initialize() async {
-  //   await _audioPlayer.setSourceAsset('audio/bgm_test.mp3');
-  //   _audioPlayer.setReleaseMode(ReleaseMode.loop);
-  //   if (isPlaying.value) _audioPlayer.resume();
-  // }
+  static void initialize() async {
+    await _audioPlayer.setSourceAsset('audio/bgm_test.mp3');
+    _audioPlayer.setReleaseMode(ReleaseMode.loop);
+    if (isPlaying.value) _audioPlayer.resume();
+  }
 }
 
 class _NewStageScreenState extends State<NewStageScreen> {
@@ -66,12 +66,12 @@ class _NewStageScreenState extends State<NewStageScreen> {
     '나만의 스토리'
   ];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   AudioManager.initialize(); // 앱 시작 시 배경음 재생 초기화
-  //   isSwitched = AudioManager.isPlaying.value;
-  // }
+  @override
+  void initState() {
+    super.initState();
+    AudioManager.initialize(); // 앱 시작 시 배경음 재생 초기화
+    isSwitched = AudioManager.isPlaying.value;
+  }
 
   @override
   void setState(VoidCallback fn) {
