@@ -87,6 +87,8 @@ flutter:
     - assets/images/bandage.png
     - assets/images/bg_home_test.png
     - assets/images/bg_stage_test.png
+    - assets/images/new_bg_stage_test.png #바꾼 배경
+    - assets/images/new_mooner.png #새로운 문어
     - assets/images/mooner.png
     - assets/images/doodeo.png
     - assets/images/bg_stage.png

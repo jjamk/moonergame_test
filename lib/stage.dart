@@ -88,7 +88,7 @@ class _NewStageScreenState extends State<NewStageScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/bg_stage_test.png"),
+                image: AssetImage("assets/images/new_bg_stage_test.png"),
                 fit: BoxFit.cover,
               ),
             ),

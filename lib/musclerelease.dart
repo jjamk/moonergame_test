@@ -637,7 +637,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/bg_stage.png"),
+                  image: AssetImage("assets/images/new_bg_stage_test.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -665,9 +665,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             ),
             Center(
               child: Image.asset(
-                'assets/images/mooner.png',
-                width: 300,
-                height: 300,
+                'assets/images/new_mooner.png',
+                width: 200,
+                height: 270,
                 fit: BoxFit.cover,
               ),
             ),
@@ -703,6 +703,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
+                automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.settings),
