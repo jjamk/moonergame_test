@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 import 'package:mooner_interface/stage.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+
+
 
 void main() => runApp(ExerciseGameApp());
 
@@ -106,6 +110,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
   bool isShaking = false;
   late Timer _timer;
   int _countDown = 30;
+  late AudioPlayer _audioPlayer;
 
   List<String> dialogues = [
     "30초 안에 20개를 채우면 너문어를 진정시킬 수 있어!",
@@ -115,6 +120,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
   @override
   void initState() {
     super.initState();
+    _audioPlayer = AudioPlayer();    
     _startListening();
   }
 
@@ -156,6 +162,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
         setState(() {
           exCount++;
           isShaking = true;
+
+          _audioPlayer.play(AssetSource('audio/boxing.mp3'));
 
           // 운동 횟수에 따라 별 업데이트
           if (exCount >= 20) {
