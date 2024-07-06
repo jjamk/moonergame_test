@@ -9,32 +9,9 @@ class MoleGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+        theme: ThemeData(fontFamily: 'BMJUA'),
         home: new MoleGameScreen());
-  }
-}
-
-class HeartWidget extends StatelessWidget {
-  final int heartsCount;
-  HeartWidget(this.heartsCount);
-  
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(3, (index) {
-        if (index < heartsCount) {
-          return Icon(
-            Icons.favorite,
-            color: Colors.red,
-          );
-        } else {
-          return Icon(
-            Icons.favorite_border,
-            color: Colors.grey,
-          );
-        }
-      }),
-    );
+        
   }
 }
 
@@ -46,8 +23,8 @@ class MoleGameScreen extends StatefulWidget {
 class _MoleGameScreenState extends State<MoleGameScreen> {
   int score = 0;
   int hearts = 3;
-  int retry= 0;
-  int duration = 10;
+  int retry = 0;
+  int duration = 30; // 게임 시간
   List<bool> moles = List.generate(9, (index) => false);
   Timer? gameTimer;
   bool isGameActive = false; // 게임 시작 전 대화 모드로 설정
@@ -63,61 +40,54 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    //myBanner = GoogleAdMob.loadBannerAd();
-    //myBanner.load();
-    //startGame();
   }
 
   void nextDialogue() {
-    setState(() {
-      dialogueIndex++;
-      if (dialogueIndex >= dialogues.length) {
-        isDialogueActive = false; // 대화 종료
-        startGame(); // 게임 시작
-      }
-    });
-  }
-
-  void startGame() {
-    gameTimer = Timer.periodic(Duration(seconds: duration), (timer) {
-    setState(() {
-      timer.cancel();
-      gameTimer = null;
-      isGameActive = true;
-      
-
-      // 점수가 5 이상인 경우
-      if (score >= 5) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => GameWinScreen(),
-          ),
-        );
-      }
-      // 하트가 0개 이하인 경우
-      else if (hearts <= 0) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => GameOverScreen(),
-          ),
-        );
-      }
-      // 하트가 0개 이상인 경우
-      else {
-        decrementHearts();
-      }
-    });
-  });
-
-  Timer.periodic(Duration(seconds: 1), (timer) {
-    if (isGameActive) {
-      spawnMole();
-    } else {
-      timer.cancel();
+  setState(() {
+    dialogueIndex++;
+    if (dialogueIndex >= dialogues.length) {
+      isDialogueActive = false; // 대화 종료
+      isGameActive = true; // 게임 시작
+      startGame();
     }
   });
+}
+
+  void startGame() {
+    if (!isGameActive)
+    {
+      return ;
+    }
+    // 게임 타이머 설정
+    gameTimer = Timer.periodic(Duration(seconds: duration), (timer) {
+      setState(() {
+        timer.cancel();
+        gameTimer = null;
+        isGameActive = false; // 게임 종료
+        // 점수가 5 이상이면 게임 승리
+        if (score >= 5) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => GameWinScreen(),
+            ),
+          );
+        }
+        // 점수가 5 미만이면 하트가 0이 될 때까지 기다림
+        else {
+          waitForHearts();
+        }
+      });
+    });
+
+    // 1초마다 두더지 생성
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (isGameActive) {
+        spawnMole();
+      } else {
+        timer.cancel();
+      }
+    });
   }
 
   void spawnMole() {
@@ -133,47 +103,27 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
     setState(() {
       if (moles[index]) {
         score++;
+      } else {
+        // 클릭을 잘못했을 때 하트 감소
+        decrementHearts();
       }
     });
   }
 
   void restartGame() {
-    setState(() {
-      score = 0;
-      isGameActive = true;
-      startGame();
-    });
-  }
+  setState(() {
+    score = 0;
+    hearts = 3; // 하트 초기화
+    isGameActive = true;
+    startGame();
+  });
+}
 
-  
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    gameTimer?.cancel();
-    //_banner.dispose();
-
-    super.dispose();
-  }
-
-  void incrementScore() {
-    setState(() {
-      score++;
-      if (score >= 5) {
-        // 게임 승리
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => GameWinScreen(),
-          ),
-        );
-      }
-    });
-  }
   void decrementHearts() {
     setState(() {
       hearts--;
       if (hearts == 0) {
-        // 게임 종료
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => GameOverScreen(),
@@ -182,40 +132,59 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
       }
     });
   }
+
+  void waitForHearts() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (hearts == 0) {
+        timer.cancel();
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => GameOverScreen(),
+          ),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    gameTimer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-          child: Stack(
-            alignment: Alignment.center, 
-            children: <Widget>[
-              Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/bg_stage.png"),
-                fit: BoxFit.cover,
+      body: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bg_stage.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          //상단 스테이지번호
-          Positioned(
+            Positioned(
               left: 0,
               top: 0,
               child: Image.asset(
                 'assets/images/stage_background.png',
-                width: 150, 
+                width: 150,
                 height: 150,
               ),
             ),
             Positioned(
-              left: 36, 
+              left: 36,
               top: 65,
               child: Text(
                 '#stage 0',
                 style: TextStyle(
-                  fontSize: 18, 
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, 
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -232,7 +201,8 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
                 GridView.builder(
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
+                    crossAxisCount: 3,
+                  ),
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
@@ -254,75 +224,80 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
             ),
             if (!isGameActive && !isDialogueActive)
               Container(
-                  color: Colors.black.withOpacity(0.5),
-                  child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Game Over\n score: $score',
-                            style: TextStyle(fontSize: 24, color: Colors.white),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              restartGame();
-                            },
-                            child: Text('다시하기'),
-                          )
-                        ]),
-                  )),
-            Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                children: <Widget>[
-                       HeartWidget(hearts),   // 두 번째 아이콘
-                ]),
-              backgroundColor: Colors.transparent, // AppBar 배경을 투명하게 설정
-              elevation: 0, // 그림자 제거
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    // 설정 버튼 클릭 시 실행할 액션
-                    print('Settings button pressed');
-                  },
-                ),
-              ],
-            ),
-          ),
-          if (isDialogueActive) // 대화 창 표시
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.black.withOpacity(0.7),
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      dialogues[dialogueIndex],
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    ElevatedButton(
-                      onPressed: nextDialogue,
-                      child: Text('다음'),
-                    ),
-                  ],
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Game Over\n score: $score',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          restartGame();
+                        },
+                        child: Text('다시하기'),
+                      )
+                    ],
+                  ),
                 ),
               ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AppBar(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    HeartWidget(hearts), // 두 번째 아이콘
+                  ],
+                ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      print('Settings button pressed');
+                    },
+                  ),
+                ],
+              ),
             ),
-          ]
-          ),
-          ),
-          
-          );
+            if (isDialogueActive) // 대화 창 표시
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  color: Colors.black.withOpacity(0.7),
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        dialogues[dialogueIndex],
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      ElevatedButton(
+                        onPressed: nextDialogue,
+                        child: Text('다음'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }
+
 
 class GameOverScreen extends StatelessWidget {
   @override
@@ -379,6 +354,31 @@ class GameWinScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class HeartWidget extends StatelessWidget {
+  final int heartsCount;
+  HeartWidget(this.heartsCount);
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: List.generate(3, (index) {
+        if (index < heartsCount) {
+          return Icon(
+            Icons.favorite,
+            color: Colors.red,
+          );
+        } else {
+          return Icon(
+            Icons.favorite_border,
+            color: Colors.grey,
+          );
+        }
+      }),
     );
   }
 }

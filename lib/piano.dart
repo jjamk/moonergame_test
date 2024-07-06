@@ -10,6 +10,7 @@ class PianoGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'BMJUA'),
       home: PianoGameScreen(),
     );
   }
@@ -384,7 +385,7 @@ class _PianoGameState extends State<PianoGameScreen> {
   void checkSujinAnswer(List answer) {
     List<int> ans = [5, 3, 3, 4, 2, 2];
 
-    if (answer.length == 7) {
+    if (answer.length == 6) {
       if (listEquals(answer, ans)) {
         showMessage("잘하셨군요!");
         print("correct");
