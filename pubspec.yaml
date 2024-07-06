@@ -34,6 +34,7 @@ dependencies:
   image_picker: ^1.0.7
   flutter_sensors: ^1.0.1
   sensors: ^2.0.3
+  flutter_animate: ^2.0.0
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -91,24 +92,30 @@ flutter:
     - assets/images/bandage.png
     - assets/images/bg_home_test.png
     - assets/images/bg_stage_test.png
+    - assets/images/new_bg_stage_test.png #바꾼 배경
+    - assets/images/new_mooner.png #새로운 문어
+    - assets/images/anger_mooner.gif #화난 문어
     - assets/images/mooner.png
     - assets/images/doodeo.png
     - assets/images/bg_stage.png
     - assets/images/hook.png
     - assets/images/speechbubble.png
     - assets/images/stage_background.png
+    - assets/images/result_background.png
+    - assets/images/cat.png
+    - assets/json/animation_example.json
+    - assets/json/loading.json
+
     - assets/audio/A.mp3
     - assets/audio/B.mp3
     - assets/audio/C.mp3
-    - assets/json/animation_example.json
-    - assets/json/loading.json
     - assets/audio/D.mp3
     - assets/audio/E.mp3
     - assets/audio/F.mp3
     - assets/audio/G.mp3
     - assets/audio/CC.mp3
-    - assets/images/cat.png
     - assets/audio/bgm_test.mp3
+    - assets/audio/boxing.mp3
     - assets/images/result_background.png
     - assets/images/bg_secret.png
     - assets/images/scroll_background.png

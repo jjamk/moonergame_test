@@ -13,22 +13,22 @@ class MusclereleaseGameApp extends StatelessWidget {
   }
 }
 
-class HeartWidget extends StatelessWidget {
-  final int heartsCount;
-  HeartWidget(this.heartsCount);
+class StarWidget extends StatelessWidget {
+  final int starsCount;
+  StarWidget(this.starsCount);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: List.generate(3, (index) {
-        if (index < heartsCount) {
+        if (index < starsCount) {
           return Icon(
-            Icons.favorite,
-            color: Colors.red,
+            Icons.star,
+            color: Colors.yellow,
           );
         } else {
           return Icon(
-            Icons.favorite_border,
+            Icons.star_border,
             color: Colors.grey,
           );
         }
@@ -44,21 +44,21 @@ class MusclereleaseGameScreen extends StatefulWidget {
 }
 
 class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
-  int hearts = 3;
   bool isLongPressed = false;
   late Offset _startPosition;
-  late DateTime _longPressStartTime;
   int countdown = 7;
   bool isGameActive = false;
   bool isDialogueActive = true;
   int dialogueIndex = 0;
   Timer? _countdownTimer;
   int successCount = 0; // 성공 횟수
+  int stars = 0; // 별 갯수
+  int failCount = 0; // 실패 횟수
 
   List<String> dialogues = [
     "이제 문어의 꼬인 다리를 풀어줄거야",
     "문어를 7초 동안 누르고 있다가 빠르게 아래로 내리면 돼!",
-    "기회는 3번! 실패하면 문어의 화가 더 날거야.",
+    "기회는 4번! 실패하면 문어의 화가 더 날거야.",
   ];
 
   @override
@@ -84,25 +84,11 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
 
   void restartGame() {
     setState(() {
-      hearts = 3;
       successCount = 0; // 성공 횟수 초기화
+      stars = 0; // 별 갯수 초기화
+      failCount = 0; // 실패 횟수 초기화
       isGameActive = true;
       startGame();
-    });
-  }
-
-  void decrementHearts() {
-    setState(() {
-      hearts--;
-      if (hearts == 0) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => GameOverScreen(),
-          ),
-        );
-      } else {
-        startCountdown();
-      }
     });
   }
 
@@ -150,6 +136,18 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
     );
   }
 
+  void updateStars() {
+    if (successCount >= 4) {
+      stars = 3;
+    } else if (successCount >= 3) {
+      stars = 2;
+    } else if (successCount >= 2) {
+      stars = 1;
+    } else {
+      stars = 0;
+    }
+  }
+
   @override
   void dispose() {
     _countdownTimer?.cancel();
@@ -164,7 +162,6 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
           setState(() {
             isLongPressed = true;
             _startPosition = details.globalPosition;
-            _longPressStartTime = DateTime.now();
             startCountdown();
           });
         },
@@ -177,19 +174,30 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 successCount++;
               });
 
-              if (successCount >= 3) {
+              if (successCount >= 4) {
                 // Move to GameWinScreen
+                updateStars();
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => GameWinScreen(),
+                    builder: (context) => GameWinScreen(stars: stars),
                   ),
                 );
               } else {
+                updateStars();
                 showNotification('성공했어요!');
               }
             } else {
-              decrementHearts();
-              if (hearts > 0) {
+              setState(() {
+                failCount++;
+              });
+
+              if (failCount >= 3) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => GameOverScreen(),
+                  ),
+                );
+              } else {
                 showNotification('7초 동안 누르고 이동해야해요! 다시 한 번 해보세요!');
               }
             }
@@ -205,7 +213,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/bg_stage.png"),
+                  image: AssetImage("assets/images/new_bg_stage_test.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -233,9 +241,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             ),
             Center(
               child: Image.asset(
-                'assets/images/mooner.png',
-                width: 300,
-                height: 300,
+                'assets/images/new_mooner.png',
+                width: 200,
+                height: 270,
                 fit: BoxFit.cover,
               ),
             ),
@@ -259,18 +267,19 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 ),
               ),
             Positioned(
-              top: 0,
-              left: 0,
+              top: 10,
+              left: 50,
               right: 0,
               child: AppBar(
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    HeartWidget(hearts),
+                    StarWidget(stars),
                   ],
                 ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
+                automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.settings),
@@ -305,7 +314,8 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
               ),
             if (isLongPressed)
               Positioned(
-                top: 20.0,
+                top: 50.0,
+                right: 40.0,
                 child: Container(
                   padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
@@ -354,6 +364,9 @@ class GameOverScreen extends StatelessWidget {
 }
 
 class GameWinScreen extends StatelessWidget {
+  final int stars;
+  GameWinScreen({required this.stars});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -368,6 +381,7 @@ class GameWinScreen extends StatelessWidget {
               '화가 풀렸어요',
               style: TextStyle(fontSize: 24.0),
             ),
+            StarWidget(stars),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
