@@ -64,7 +64,7 @@ class _SecretGameAppScreenState extends State<SecretGameAppScreen> {
     String title = 'Default Title';
     String description = 'Default description for the stage.';
     String scrollImage = 'assets/images/bottle.png';
-    String octopusImage = 'assets/images/mooner.png';
+    String octopusImage = 'assets/images/new_mooner.png';
     Widget? nextPage;
 
     switch (index) {

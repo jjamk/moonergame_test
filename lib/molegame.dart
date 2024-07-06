@@ -212,7 +212,7 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
                       },
                       child: Image.asset(
                         moles[index]
-                            ? 'assets/images/mooner.png'
+                            ? 'assets/images/new_mooner.png'
                             : 'assets/images/doodeo.png',
                         fit: BoxFit.cover,
                       ),
