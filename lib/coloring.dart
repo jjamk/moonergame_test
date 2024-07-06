@@ -26,7 +26,7 @@ class ColoringGame extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Drawing Test',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'BMJUA'),
       home: const ColoringGameScreen(),
     );
   }

@@ -5,7 +5,17 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-void main() => runApp(MaterialApp(home: TakePictureGameApp ()));
+void main() => runApp(MaterialApp(home: TakePictureGame ()));
+
+class TakePictureGame extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'BMJUA'),
+      home: TakePictureGameApp(),
+    );
+  }
+}
 
 class TakePictureGameApp extends StatefulWidget {
   @override

@@ -113,7 +113,10 @@ flutter:
     - assets/images/bg_secret.png
     - assets/images/scroll_background.png
     - assets/images/bottle.png
-
+  fonts:
+    - family: BMJUA
+      fonts:
+        - asset: assets/fonts/BMJUA_ttf.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -127,10 +130,7 @@ flutter:
   # example:
   # fonts:
   #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+      
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

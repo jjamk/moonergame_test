@@ -17,7 +17,10 @@ void main() => runApp(SecretGameApp());
 class SecretGameApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: SecretGameAppScreen());
+    
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'BMJUA'),
+      home: SecretGameAppScreen());
   }
 }
 

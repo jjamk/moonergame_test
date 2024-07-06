@@ -17,7 +17,9 @@ import 'molegame.dart';
 class NewStage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(home: new NewStageScreen());
+    return new MaterialApp(
+      theme: ThemeData(fontFamily: 'BMJUA'),
+      home: new NewStageScreen());
   }
 }
 

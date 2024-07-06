@@ -9,7 +9,9 @@ class MoleGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+        theme: ThemeData(fontFamily: 'BMJUA'),
         home: new MoleGameScreen());
+        
   }
 }
 
