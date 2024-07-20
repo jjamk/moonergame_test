@@ -5,9 +5,6 @@ import 'package:sensors/sensors.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-
-
-
 void main() => runApp(ExerciseGameApp());
 
 class ExerciseGameApp extends StatelessWidget {
