@@ -22,7 +22,7 @@ class OctopusImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/mooner.png', //문어 이미지 경로
+      'assets/images/normal_mooner_x.png', //문어 이미지 경로
       fit: BoxFit.contain, // 이미지가 위젯에 맞게 조정
     );
   }
@@ -247,7 +247,7 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
           ),
           Positioned(
             child: Center(
-                child: Image.asset('assets/images/mooner.png',
+                child: Image.asset('assets/images/normal_mooner_x.png',
                     width: 300, height: 300, fit: BoxFit.cover)),
           ),
           // 문어 이미지를 표시하고 사용자가 유리조각을 빼주는 기능 추가
@@ -442,54 +442,105 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
   }
 
   void applyCoca() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('치료'),
-          content: Text('콜라를 부어 너무너가 너무 아파요!'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                setState(() {
-                  isShowingNotification = false;
-                  if (stars > 0) stars--;
-                });
-                if (stars == 0) resetGame();
-              },
-              child: Text('확인'),
+  setState(() {
+    isShowingNotification = true;
+  });
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+        child: Stack(
+          children: [
+            Positioned(
+              left: 20,
+              top: 20,
+              child: Bubble(
+                margin: BubbleEdges.only(top: 10, right: 20),
+                alignment: Alignment.topLeft,
+                nip: BubbleNip.leftTop,
+                color: Color.fromRGBO(255, 255, 255, 1),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '콜라를 부어 너무너가 너무 아파요!',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    isShowingNotification = false;
+                    if (stars > 0) stars--;
+                    if (stars == 0) resetGame();
+                  });
+                },
+                child: Text('확인'),
+              ),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 
-  void applyDoenjang() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('치료'),
-          content: Text('된장을 부어 너무너가 너무 아파요!'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                setState(() {
-                  isShowingNotification = false;
-                  if (stars > 0) stars--;
-                });
-                if (stars == 0) resetGame();
-              },
-              child: Text('확인'),
+void applyDoenjang() {
+  setState(() {
+    isShowingNotification = true;
+  });
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+        child: Stack(
+          children: [
+            Positioned(
+              left: 20,
+              top: 20,
+              child: Bubble(
+                margin: BubbleEdges.only(top: 10, right: 20),
+                alignment: Alignment.topLeft,
+                nip: BubbleNip.leftTop,
+                color: Color.fromRGBO(255, 255, 255, 1),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '된장을 부어 너무너가 너무 아파요!',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    isShowingNotification = false;
+                    if (stars > 0) stars--;
+                    if (stars == 0) resetGame();
+                  });
+                },
+                child: Text('확인'),
+              ),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
+
 
   void applyOintemt() {
     setState(() {
@@ -506,33 +557,59 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
   }
 
   void applyBandage() {
-    // 제한 시간 내에 붕대를 적용한 경우
-    if (_progress > 0) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('너무너'),
-            content: Text('날 치료해줘서 너무 고마고!'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    isShowingNotification = false;
-                  });
-                  incrementScore();
-                },
-                child: Text('다음'),
+  if (_progress > 0) {
+    setState(() {
+      isShowingNotification = true;
+    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+          child: Stack(
+            children: [
+              Positioned(
+                left: 20,
+                top: 20,
+                child: Bubble(
+                  margin: BubbleEdges.only(top: 10, right: 20),
+                  alignment: Alignment.topLeft,
+                  nip: BubbleNip.leftTop,
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '날 치료해줘서 너무 고마워!',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
+                ),
               ),
+              Positioned(
+                bottom: 10,
+                right: 10,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    setState(() {
+                      isShowingNotification = false;
+                    });
+                    incrementScore(); // 게임 점수 증가 및 화면 전환
+                  },
+                  child: Text('다음'),
+                ),
+                  ),
             ],
-          );
-        },
-      );
-    } else {
-      resetGame(); // 제한 시간 내에 붕대를 적용하지 못한 경우, 게임 초기화
-    }
+          ),
+        );
+      },
+    );
+  } else {
+    resetGame(); // 제한 시간 내에 붕대를 적용하지 못한 경우, 게임 초기화
   }
+}
+
+
 
   void resetGame() {
     Navigator.pushReplacement(
@@ -585,25 +662,45 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
       isShowingNotification = true;
     });
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('너무너'),
-          content: Text('이제 내 상처에 연고를 발라주고\n붕대로 감싸줘!'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                setState(() {
-                  isShowingNotification = false;
-                });
-
-                //navigateToMainScreen();
-              },
-              child: Text('알겠어!'),
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+        child: Stack(
+          children: [
+            Positioned(
+              left: 20,
+              top: 20,
+              child: Bubble(
+                margin: BubbleEdges.only(top: 10, right: 20),
+                alignment: Alignment.topLeft,
+                nip: BubbleNip.leftTop,
+                color: Color.fromRGBO(255, 255, 255, 1),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '이제 내 상처에 연고를 발라주고\n붕대로 감싸줘!',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    isShowingNotification = false;
+                  });
+                },
+                child: Text('알겠어!'),
+              ),
             ),
           ],
-        );
+        ),
+      );
       },
     );
   }

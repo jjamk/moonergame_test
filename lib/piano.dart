@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:mooner_interface/healing.dart';
 
 void main() => runApp(PianoGameApp());
 
@@ -10,12 +11,23 @@ class PianoGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'BMJUA'),
       home: PianoGameScreen(),
     );
   }
 }
 
 class PianoGameScreen extends StatefulWidget {
+  @override
+  _InitialDialogueScreenState createState() => _InitialDialogueScreenState();
+}
+class _InitialDialogueScreenState extends State<PianoGameScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
   @override
   _PianoGameState createState() => _PianoGameState();
 }
@@ -106,6 +118,8 @@ class _PianoGameState extends State<PianoGameScreen> {
           ),
         ),
         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          OctopusImage(),
+          SizedBox(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -317,11 +331,11 @@ class _PianoGameState extends State<PianoGameScreen> {
                     onPressed: () async {
                       selectedSongName = '학교종';
                       RenderBox renderbox =
-                          mybuttonKey6.currentContext! //mybuttonKey == '솔'
+                          mybuttonKey5.currentContext! //mybuttonKey == '솔'
                               .findRenderObject() as RenderBox;
                       Offset position = renderbox.localToGlobal(Offset.zero);
 
-                      RenderBox renderbox2 = mybuttonKey7.currentContext! //라
+                      RenderBox renderbox2 = mybuttonKey6.currentContext! //라
                           .findRenderObject() as RenderBox;
                       Offset position2 = renderbox2.localToGlobal(Offset.zero);
 
@@ -418,13 +432,87 @@ class _PianoGameState extends State<PianoGameScreen> {
 
     if (answer.length == 7) {
       if (listEquals(answer, ans)) {
-        showMessage("잘하셨군요!");
-        print("correct");
+        showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent, // Dialog의 배경을 투명하게 설정
+      child: Container(
+        width: 400,
+        height: 300,
+        decoration: BoxDecoration(
+          // Container의 배경으로 이미지 설정
+          image: DecorationImage(
+            image: AssetImage('assets/images/result_background.png'), // 이미지 파일 경로
+            fit: BoxFit.cover, // 이미지를 Container 크기에 맞게 조정
+          ),
+          borderRadius: BorderRadius.circular(12), // 모서리를 둥글게
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Padding(
+      padding: EdgeInsets.fromLTRB(0,70,0,0), // 패딩 추가
+      child: Text('성공',
+            style: TextStyle(fontSize: 24.0,)),
+    ),
+            
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: Text('닫기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  },
+);
+        //showMessage("잘하셨군요!");
+        //print("correct");
         answer.clear();
       } else {
         answer.clear();
-        showMessage("다시 해보세요");
-        print("Try again");
+        showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent, // Dialog의 배경을 투명하게 설정
+      child: Container(
+        width: 400,
+        height: 300,
+        decoration: BoxDecoration(
+          // Container의 배경으로 이미지 설정
+          image: DecorationImage(
+            image: AssetImage('assets/images/result_background.png'), // 이미지 파일 경로
+            fit: BoxFit.cover, // 이미지를 Container 크기에 맞게 조정
+          ),
+          borderRadius: BorderRadius.circular(12), // 모서리를 둥글게
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Padding(
+      padding: EdgeInsets.fromLTRB(0,70,0,0), // 패딩 추가
+      child: Text('실패',
+            style: TextStyle(fontSize: 24.0,)),
+    ),
+            
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: Text('닫기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  },
+);
+        //showMessage("다시 해보세요");
+        //print("Try again");
       }
     }
   }
