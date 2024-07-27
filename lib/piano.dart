@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:mooner_interface/healing.dart';
 
 void main() => runApp(PianoGameApp());
 
@@ -17,6 +18,16 @@ class PianoGameApp extends StatelessWidget {
 }
 
 class PianoGameScreen extends StatefulWidget {
+  @override
+  _InitialDialogueScreenState createState() => _InitialDialogueScreenState();
+}
+class _InitialDialogueScreenState extends State<PianoGameScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
   @override
   _PianoGameState createState() => _PianoGameState();
 }
@@ -107,6 +118,8 @@ class _PianoGameState extends State<PianoGameScreen> {
           ),
         ),
         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          OctopusImage(),
+          SizedBox(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

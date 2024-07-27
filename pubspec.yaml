@@ -115,6 +115,7 @@ flutter:
     - assets/audio/G.mp3
     - assets/audio/CC.mp3
     - assets/audio/bgm_test.mp3
+    - assets/images/normal_mooner_x.png
     - assets/audio/boxing.mp3
     - assets/images/result_background.png
     - assets/images/bg_secret.png
