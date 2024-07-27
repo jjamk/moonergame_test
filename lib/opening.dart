@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'BMJUA'),
       home: DialogueGame(),
     );
   }
@@ -103,7 +104,7 @@ class _DialogueGameState extends State<DialogueGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('대화 게임'),
+        title: Text('오프닝'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

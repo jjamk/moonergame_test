@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart'; //플러터에서 lotti 애니메이션을 표시하기 위한 패키지
 
 void main() => runApp(MusclereleaseGameApp());
 
@@ -8,146 +7,111 @@ class MusclereleaseGameApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'BMJUA'),
       home: MusclereleaseGameScreen(),
+    );
+  }
+}
+
+class StarWidget extends StatelessWidget {
+  final int starsCount;
+  StarWidget(this.starsCount);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: List.generate(3, (index) {
+        if (index < starsCount) {
+          return Icon(
+            Icons.star,
+            color: Colors.yellow,
+          );
+        } else {
+          return Icon(
+            Icons.star_border,
+            color: Colors.grey,
+          );
+        }
+      }),
     );
   }
 }
 
 class MusclereleaseGameScreen extends StatefulWidget {
   @override
-  _MusclereleaseGameScreenState createState() => _MusclereleaseGameScreenState();
+  _MusclereleaseGameScreenState createState() =>
+      _MusclereleaseGameScreenState();
 }
 
 class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   bool isLongPressed = false;
   late Offset _startPosition;
-  int countdown = 5;
+  int countdown = 7;
+  bool isGameActive = false;
+  bool isDialogueActive = true;
+  int dialogueIndex = 0;
+  Timer? _countdownTimer;
+  int successCount = 0; // 성공 횟수
+  int stars = 0; // 별 갯수
+  int failCount = 0; // 실패 횟수
+
+  List<String> dialogues = [
+    "이제 문어의 꼬인 다리를 풀어줄거야",
+    "문어를 7초 동안 누르고 있다가 빠르게 아래로 내리면 돼!",
+    "기회는 4번! 실패하면 문어의 화가 더 날거야.",
+  ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onLongPressStart: (details) {
-          // 길게 눌렀을 때
-          setState(() {
-            isLongPressed = true;
-            _startPosition = details.globalPosition; // 드래그의 시작 위치 저장
-          });
+  void initState() {
+    super.initState();
+  }
 
-          startCountdown();
-        },
-        onLongPressEnd: (details) {
-          // 눌렀다 뗐을 때
-          if (isLongPressed) {
-            double verticalDistance = details.globalPosition.dy - _startPosition.dy;
-            double horizontalDistance = details.globalPosition.dx - _startPosition.dx;
+  void nextDialogue() {
+    setState(() {
+      dialogueIndex++;
+      if (dialogueIndex >= dialogues.length) {
+        isDialogueActive = false;
+        startGame();
+      }
+    });
+  }
 
-            if (verticalDistance > 0 && countdown == 0) {
-              // 아래로 이동한 경우 및 5초 동안 누르고 있었을 때
-              showNotification('화가 풀렸어요!');
-            }  
-            else if (verticalDistance > 0 && countdown != 0) {
-              // 아래로 이동한 경우
-              showNotification('아래쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
-            } 
-            else if (verticalDistance < 0 && countdown != 0) {
-              // 위로 이동한 경우
-              showNotification('위쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
-            } 
-            else if (verticalDistance < 10 && horizontalDistance > 0 && countdown != 0) {
-              // 오른쪽으로 이동한 경우
-              showNotification('오른쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
-            } 
-            else if (horizontalDistance < 0 && countdown != 0) {
-              // 왼쪽으로 이동한 경우
-              showNotification('왼쪽으로 이동했어요! 5초 동안 누르고 있어야해요!');
-            }
+  void startGame() {
+    setState(() {
+      isGameActive = true;
+    });
+  }
 
-            setState(() {
-              isLongPressed = false;
-              countdown = 5; // 초기화
-            });
-          }
-        },
-        child: Stack(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/bg_stage.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            //상단 스테이지번호
-          Positioned(
-              left: 0,
-              top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
-                width: 150, 
-                height: 150,
-              ),
-            ),
-            Positioned(
-              left: 36, 
-              top: 65,
-              child: Text(
-                '#stage 4',
-                style: TextStyle(
-                  fontSize: 18, 
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black, 
-                ),
-              ),
-            ),
-            Center(
-              child: Image.asset(
-                'assets/images/mooner.png',
-                width: 300,
-                height: 300,
-                fit: BoxFit.cover,
-              ),
-            ),
-            if (isLongPressed) // isLongPressed가 true일 때만 countdown을 표시
-              Positioned(
-                top: 20.0,
-                child: Container(
-                  padding: EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Text(
-                    '$countdown',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
+  void restartGame() {
+    setState(() {
+      successCount = 0; // 성공 횟수 초기화
+      stars = 0; // 별 갯수 초기화
+      failCount = 0; // 실패 횟수 초기화
+      isGameActive = true;
+      startGame();
+    });
   }
 
   void startCountdown() {
-    const oneSecond = Duration(seconds: 1);
+    setState(() {
+      countdown = 7;
+    });
 
-    Timer.periodic(oneSecond, (timer) {
-      if (!isLongPressed) {
-        timer.cancel(); // 누르는 도중에 눌린 것이 해제된 경우 카운트 다운 중단
-      } else if (countdown == 0) {
-        timer.cancel();
-        // 5초 동안 누르고 있었을 때
-        setState(() {
-          isLongPressed = false;
-        });
-        showNotification('5초 동안 눌렀어요!');
-      } else {
+    _countdownTimer?.cancel();
+
+    _countdownTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (countdown > 0) {
         setState(() {
           countdown--;
         });
+      } else {
+        timer.cancel();
+        if (isLongPressed) {
+          setState(() {
+            isLongPressed = false;
+            showNotification("7초 동안 누르고 아래로 이동하세요!");
+          });
+        }
       }
     });
   }
@@ -171,5 +135,265 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
       },
     );
   }
+
+  void updateStars() {
+    if (successCount >= 4) {
+      stars = 3;
+    } else if (successCount >= 3) {
+      stars = 2;
+    } else if (successCount >= 2) {
+      stars = 1;
+    } else {
+      stars = 0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _countdownTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        onLongPressStart: (details) {
+          setState(() {
+            isLongPressed = true;
+            _startPosition = details.globalPosition;
+            startCountdown();
+          });
+        },
+        onLongPressEnd: (details) {
+          if (isLongPressed) {
+            double verticalDistance = details.globalPosition.dy - _startPosition.dy;
+
+            if (verticalDistance > 0 && countdown == 0) {
+              setState(() {
+                successCount++;
+              });
+
+              if (successCount >= 4) {
+                // Move to GameWinScreen
+                updateStars();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => GameWinScreen(stars: stars),
+                  ),
+                );
+              } else {
+                updateStars();
+                showNotification('성공했어요!');
+              }
+            } else {
+              setState(() {
+                failCount++;
+              });
+
+              if (failCount >= 3) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => GameOverScreen(),
+                  ),
+                );
+              } else {
+                showNotification('7초 동안 누르고 이동해야해요! 다시 한 번 해보세요!');
+              }
+            }
+
+            setState(() {
+              isLongPressed = false;
+            });
+          }
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/new_bg_stage_test.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150,
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36,
+              top: 65,
+              child: Text(
+                '#stage 4',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Center(
+              child: Image.asset(
+                'assets/images/new_mooner.png',
+                width: 200,
+                height: 270,
+                fit: BoxFit.cover,
+              ),
+            ),
+            if (!isGameActive && !isDialogueActive)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Game Over',
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      ElevatedButton(
+                        onPressed: restartGame,
+                        child: Text('다시하기'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            Positioned(
+              top: 10,
+              left: 50,
+              right: 0,
+              child: AppBar(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    StarWidget(stars),
+                  ],
+                ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      print('Settings button pressed');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            if (isDialogueActive)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  color: Colors.black.withOpacity(0.7),
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        dialogues[dialogueIndex],
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      ElevatedButton(
+                        onPressed: nextDialogue,
+                        child: Text('다음'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            if (isLongPressed)
+              Positioned(
+                top: 50.0,
+                right: 40.0,
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Text(
+                    '$countdown',
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
+class GameOverScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '문어가 도망가버렸어요...',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MusclereleaseGameApp()),
+                );
+              },
+              child: Text('홈으로 돌아가기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class GameWinScreen extends StatelessWidget {
+  final int stars;
+  GameWinScreen({required this.stars});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('축하합니다!'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '화가 풀렸어요',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            StarWidget(stars),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MusclereleaseGameApp()),
+                );
+              },
+              child: Text('다음 스테이지로...'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

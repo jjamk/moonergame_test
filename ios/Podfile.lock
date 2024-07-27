@@ -15,6 +15,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - sensors (0.0.1):
+    - Flutter
   - sensors_plus (0.0.1):
     - Flutter
   - simple_animation_progress_bar (0.0.1):
@@ -33,6 +35,7 @@ DEPENDENCIES:
   - flutter_sensors (from `.symlinks/plugins/flutter_sensors/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - sensors (from `.symlinks/plugins/sensors/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - simple_animation_progress_bar (from `.symlinks/plugins/simple_animation_progress_bar/ios`)
   - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
@@ -58,6 +61,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  sensors:
+    :path: ".symlinks/plugins/sensors/ios"
   sensors_plus:
     :path: ".symlinks/plugins/sensors_plus/ios"
   simple_animation_progress_bar:
@@ -72,8 +77,9 @@ SPEC CHECKSUMS:
   camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_sensors: dc6eed3291e7724bf8f4138d7d14c4071b42bd29
-  image_picker_ios: b545a5f16c0fa88e3ecbbce3ed4de45567a8ec18
-  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  sensors: 84eb7a30e47a649e4172b71d6e81be614c280336
   sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
   simple_animation_progress_bar: 3f818acdbd78de0a8c48ddd7fdc88e1998a7b33f
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mooner_interface/Secret.dart';
 import 'package:mooner_interface/breathe.dart';
 import 'package:mooner_interface/conversation.dart';
 import 'package:mooner_interface/countnumber.dart';
@@ -16,7 +17,9 @@ import 'molegame.dart';
 class NewStage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(home: new NewStageScreen());
+    return new MaterialApp(
+      theme: ThemeData(fontFamily: 'BMJUA'),
+      home: new NewStageScreen());
   }
 }
 
@@ -88,7 +91,7 @@ class _NewStageScreenState extends State<NewStageScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/bg_stage_test.png"),
+                image: AssetImage("assets/images/new_bg_stage_test.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -167,6 +170,12 @@ class _NewStageScreenState extends State<NewStageScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ConversationGameApp()),
+                      );
+                    } else if (index == 11) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SecretGameApp()),
                       );
                     } else {
                       // 다른 버튼 클릭 시 실행할 액션

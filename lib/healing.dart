@@ -13,6 +13,7 @@ class HealingGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'BMJUA'),
       home: HealingGameScreen(),
     );
   }
@@ -22,7 +23,7 @@ class OctopusImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/normal_mooner_x.png', //문어 이미지 경로
+      'assets/images/new_mooner.png', //문어 이미지 경로
       fit: BoxFit.contain, // 이미지가 위젯에 맞게 조정
     );
   }

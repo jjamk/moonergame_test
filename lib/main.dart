@@ -10,7 +10,9 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyAppScreen());
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'BMJUA'),
+      home: MyAppScreen());
   }
 }
 

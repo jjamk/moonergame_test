@@ -9,6 +9,7 @@ class BreatheGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'BMJUA'),
       home: BreatheGameScreen(),
     );
   }
