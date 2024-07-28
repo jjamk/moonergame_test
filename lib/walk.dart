@@ -1,145 +1,339 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:pedometer/pedometer.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(WalkGameapp());
 
-class MyApp extends StatelessWidget {
+class WalkGameapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'BMJUA'),
-      home: walkGame(),
+      home: WalkGame(),
     );
   }
 }
 
-class walkGame extends StatefulWidget {
+class WalkGame extends StatefulWidget {
   @override
-  _walkGameState createState() => _walkGameState();
+  _WalkGameState createState() => _WalkGameState();
 }
 
-class _walkGameState extends State<walkGame> {
-  double yPos = 0; // T-Rex의 수직 위치
-  bool isJumping = false;
-  double gravity = -3.0;
-  double velocity = 0;
-  Timer? _jumpTimer;
-  double obstacleX = 1; // 장애물의 위치
-  int score = 0; // 점수
-  bool isGameOver = false; // 게임 오버 상태
+class _WalkGameState extends State<WalkGame> {
+  bool _isDialogShown = false;
 
-  void startJump() {
-  if (!isJumping && !isGameOver) {
-    isJumping = true;
-    velocity = 50; // 초기 점프 속도를 증가
-    _jumpTimer = Timer.periodic(Duration(milliseconds: 20), (timer) {
-      final double newVelocity = velocity + gravity; // 속도 업데이트
-      setState(() {
-        yPos += velocity + 0.5 * gravity;
-        velocity = newVelocity;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isDialogShown) {
+      _isDialogShown = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        initDialog();
       });
-      if (yPos <= 0) { // 바닥에 닿으면 점프 중지
-        yPos = 0;
-        isJumping = false;
-        timer.cancel();
-      }
-    });
-  }
-}
-
-  void startGame() {
-    isGameOver = false;
-    yPos = 0;
-    score = 0;
-    obstacleX = 1;
-    _jumpTimer?.cancel();
-    startObstacleMovement();
-  }
-
-  void startObstacleMovement() {
-  Timer.periodic(Duration(milliseconds: 20), (timer) {
-    if (!isGameOver) {
-      setState(() {
-        obstacleX -= 0.02; // 장애물의 이동 속도 증가
-      });
-      if (obstacleX < -0.2) {
-        obstacleX = 1;
-        score += 10; // 장애물을 피할 때마다 점수 증가
-      }
-
-      // 충돌 검사
-      if (obstacleX < 0.2 && obstacleX > 0 && yPos < 50) {
-        timer.cancel();
-        isGameOver = true;
-        // 게임 오버 시 추가적인 처리를 여기에 구현할 수 있습니다.
-      }
-    } else {
-      timer.cancel();
     }
-  });
-}
-
-
-  @override
-  void initState() {
-    super.initState();
-    startGame();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter T-Rex Game"),
+      body: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bg_stage.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150,
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36,
+              top: 65,
+              child: Text(
+                '#stage 1',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // 장애물
-                AnimatedContainer(
-                  alignment: Alignment(obstacleX, 1),
-                  duration: Duration(milliseconds: 0),
-                  child: Container(
-                    width: 20,
-                    height: 50,
-                    color: Colors.red,
+    );
+  }
+
+  Future<void> initDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            width: 600,
+            height: 430,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/result_background.png'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 130, 0, 0),
+                  child: Text(
+                    '  너무너의 화를 가라앉혀보자! \n너무너와 함께 바다산책을 해줘',
+                    style: TextStyle(fontSize: 22.0),
                   ),
                 ),
-                // T-Rex
-                AnimatedPositioned(
-                  duration: Duration(milliseconds: 0),
-                  bottom: yPos,
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.green,
-                  ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // 다이얼로그 닫기
+                    nextDialog();
+                  },
+                  child: Text('알겠어'),
                 ),
               ],
             ),
           ),
-          Text("Score: $score", style: TextStyle(fontSize: 20)),
-          if (isGameOver)
-            Text(
-              "Game Over",
-              style: TextStyle(color: Colors.red, fontSize: 24),
+        );
+      },
+    );
+  }
+
+  Future<void> nextDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            width: 600,
+            height: 430,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/result_background.png'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(12),
             ),
-          ElevatedButton(
-            onPressed: isGameOver ? startGame : startJump,
-            child: Text(isGameOver ? 'Restart' : 'Jump'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 130, 0, 0),
+                  child: Text(
+                    '지금 몸을 자유롭게 움직일 수 있어?',
+                    style: TextStyle(fontSize: 21.0),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // 다이얼로그 닫기
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FirstOptionScreen()),
+                        );
+                      },
+                      child: Text('응'),
+                    ),
+                    SizedBox(width: 20), // 버튼 사이의 간격 추가
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // 다이얼로그 닫기
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SecondOptionScreen()),
+                        );
+                      },
+                      child: Text('아니'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+        );
+      },
+    );
+  }
+}
+
+class FirstOptionScreen extends StatefulWidget {
+  @override
+  _FirstOptionScreenState createState() => _FirstOptionScreenState();
+}
+
+class _FirstOptionScreenState extends State<FirstOptionScreen> {
+  int _stepCount = 0;
+  late StreamSubscription<StepCount> _subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    startListening();
+  }
+
+  void startListening() {
+    _subscription = Pedometer.stepCountStream.listen(
+      (StepCount event) {
+        setState(() {
+          _stepCount = event.steps;
+        });
+      },
+      onError: (error) {
+        print("Error: $error");
+      },
+      onDone: () {
+        print("Pedometer done.");
+      },
+      cancelOnError: true,
     );
   }
 
   @override
   void dispose() {
-    _jumpTimer?.cancel();
+    _subscription.cancel();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bg_stage.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150,
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36,
+              top: 65,
+              child: Text(
+                '#stage 1',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            
+            Center(
+              child: Image.asset(
+                'assets/images/normal_mooner_x.png',
+                width: 250,
+                height: 270,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              bottom: 280,
+              child: Text(
+                '문찌와 같이 걸으면서 화를 달래주자!',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 180,
+              child: Text(
+                '걸음 수: $_stepCount',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondOptionScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bg_stage.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset(
+                'assets/images/stage_background.png',
+                width: 150,
+                height: 150,
+              ),
+            ),
+            Positioned(
+              left: 36,
+              top: 65,
+              child: Text(
+                '#stage 1',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Center(
+              child: Image.asset(
+                'assets/images/new_mooner.png',
+                width: 200,
+                height: 270,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

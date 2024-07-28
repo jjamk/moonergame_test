@@ -63,7 +63,7 @@ class _NewStageScreenState extends State<NewStageScreen> {
     '심호흡하기',
     '숫자세기',
     '자장가',
-    '색칠하기',
+    '소리듣기',
     '주의 분산',
     '대화하기',
     '나만의 스토리'
@@ -91,7 +91,7 @@ class _NewStageScreenState extends State<NewStageScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/new_bg_stage_test.png"),
+                image: AssetImage("assets/images/bg_stage.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -113,11 +113,11 @@ class _NewStageScreenState extends State<NewStageScreen> {
                         context,
                         MaterialPageRoute(builder: (context) => MoleGame()),
                       );
-                      // } else if (index == 1) {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(builder: (context) => walkGame()),
-                      //   );
+                      } else if (index == 1) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => WalkGameapp()),
+                        );
                     } else if (index == 2) {
                       Navigator.push(
                         context,
