@@ -95,13 +95,11 @@ flutter:
     - assets/images/new_mooner.png #새로운 문어
     - assets/images/anger_mooner.gif #화난 문어
     - assets/images/mooner.png
-    - assets/images/doodeo.png
     - assets/images/bg_stage.png
     - assets/images/hook.png
     - assets/images/speechbubble.png
     - assets/images/stage_background.png
     - assets/images/result_background.png
-    - assets/images/cat.png
     - assets/json/animation_example.json
     - assets/json/loading.json
 
@@ -120,6 +118,10 @@ flutter:
     - assets/images/bg_secret.png
     - assets/images/scroll_background.png
     - assets/images/bottle.png
+    - assets/images/dialog_background.png
+    - assets/images/fisher.png
+    - assets/images/jellyfish.png
+
   fonts:
     - family: BMJUA
       fonts:

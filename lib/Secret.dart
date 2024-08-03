@@ -7,7 +7,7 @@ import 'package:mooner_interface/conversation.dart';
 import 'package:mooner_interface/countnumber.dart';
 import 'package:mooner_interface/exercise.dart';
 import 'package:mooner_interface/healing.dart';
-import 'package:mooner_interface/molegame.dart';
+import 'package:mooner_interface/moonerhit.dart';
 import 'package:mooner_interface/musclerelease.dart';
 import 'package:mooner_interface/piano.dart';
 import 'package:mooner_interface/takepicture.dart';
