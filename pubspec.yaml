@@ -91,6 +91,10 @@ flutter:
     - assets/images/bend.png
     - assets/images/wound.png
     - assets/images/bandage.png
+    - assets/images/bg_home_test.png
+    - assets/images/bg_stage_test.png
+    - assets/images/new_bg_stage_test.png #바꾼 배경
+    - assets/images/new_mooner.svg #새로운 문어
     - assets/images/bg_home.png
     - assets/images/new_mooner.png #새로운 문어
     - assets/images/anger_mooner.gif #화난 문어
