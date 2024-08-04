@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 void main() => runApp(ExerciseGameApp());
 
@@ -253,7 +255,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
-              child: Image.asset('assets/images/new_mooner.png',
+              child: SvgPicture.asset('assets/images/new_mooner.svg',
                   width: 200, height: 270, fit: BoxFit.cover),
             ),
           ),
@@ -488,8 +490,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
-              child: Image.asset(
-                'assets/images/new_mooner.png',
+              child: SvgPicture.asset(
+                'assets/images/new_mooner.svg',
                 width: 200,
                 height: 270,
                 fit: BoxFit.cover,
@@ -729,7 +731,7 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
-              child: Image.asset('assets/images/new_mooner.png',
+              child: SvgPicture.asset('assets/images/new_mooner.svg',
                   width: 200, height: 270, fit: BoxFit.cover),
             ),
           ),
