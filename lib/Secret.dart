@@ -7,7 +7,7 @@ import 'package:mooner_interface/conversation.dart';
 import 'package:mooner_interface/countnumber.dart';
 import 'package:mooner_interface/exercise.dart';
 import 'package:mooner_interface/healing.dart';
-import 'package:mooner_interface/molegame.dart';
+import 'package:mooner_interface/moonerhit.dart';
 import 'package:mooner_interface/musclerelease.dart';
 import 'package:mooner_interface/piano.dart';
 import 'package:mooner_interface/takepicture.dart';
@@ -64,7 +64,7 @@ class _SecretGameAppScreenState extends State<SecretGameAppScreen> {
     String title = 'Default Title';
     String description = 'Default description for the stage.';
     String scrollImage = 'assets/images/bottle.png';
-    String octopusImage = 'assets/images/mooner.png';
+    String octopusImage = 'assets/images/new_mooner.png';
     Widget? nextPage;
 
     switch (index) {

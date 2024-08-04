@@ -57,6 +57,7 @@
 </array>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>This app needs access to your photo library to allow you to select images for analysis.</string>
-
+<key>NSMotionUsageDescription</key>
+<string>We need access to your step count for health tracking purposes.</string>
 </dict>
 </plist>
