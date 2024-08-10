@@ -35,9 +35,9 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
 
   // 대화 스크립트 정의 (여기서는 예시로 간단한 대화만 추가)
   List<String> dialogues = [
-    "이제 문어 잡을 시간이야. 다른 생물은 잡으면 안 돼.",
-    "잡는 방법은 튀어나오는 문어를 터치만 하면 돼. 쉽지? 한번 해볼래?",
-    "3번 잘못 잡는다면 문어들이 다 도망가서 다시 잡아야 해.",
+    "어부\n     이제 문어 잡을 시간이야.\n    다른 생물은 잡으면 안 돼.",
+    "어부\n     잡는 방법은 튀어나오는 \n     문어를 터치만 하면 돼.\n     쉽지? 한번 해볼래?",
+    "어부\n     3번 잘못 잡는다면 문어들이\n     다 도망가서 다시 잡아야 해.",
   ];
 
   @override
@@ -61,16 +61,16 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
     if (!isGameActive) {
       return;
     }
-    // 게임 타이머 설정
-    gameTimer = Timer(Duration(seconds: duration), () {
-      if (!mounted) return;
-      setState(() {
-        gameTimer?.cancel();
-        gameTimer = null;
-        isGameActive = false; // 게임 종료
-        showEndDialog();
-      });
-    });
+    // // 게임 타이머 설정
+    // gameTimer = Timer(Duration(seconds: duration), () {
+    //   if (!mounted) return;
+    //   setState(() {
+    //     gameTimer?.cancel();
+    //     gameTimer = null;
+    //     isGameActive = false; // 게임 종료
+    //     showEndDialog();
+    //   });
+    // });
 
     // 1초마다 두더지 생성
     Timer.periodic(Duration(milliseconds: 500), (timer) {
@@ -90,8 +90,8 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
     if (!mounted) return;
     if (score >= 5) {
       gameTimer?.cancel();
-        gameTimer = null;
-        isGameActive = false; // 게임 종료
+        // gameTimer = null;
+        // isGameActive = false; // 게임 종료
       showBossDialogue();
       return;
     }
@@ -423,8 +423,8 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
               ),
               child: Text(
                 dialogues[dialogueIndex],
-                style: TextStyle(fontSize: 18, color: Colors.black),
-                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: Colors.white),
+                textAlign: TextAlign.left,
               ),
             ),
           ),

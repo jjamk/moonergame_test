@@ -91,15 +91,12 @@ flutter:
     - assets/images/bend.png
     - assets/images/wound.png
     - assets/images/bandage.png
-    - assets/images/bg_home_test.png
-    - assets/images/bg_stage_test.png
-    - assets/images/new_bg_stage_test.png #바꾼 배경
     - assets/images/new_mooner.svg #새로운 문어
     - assets/images/bg_home.png
     - assets/images/new_mooner.png #새로운 문어
     - assets/images/anger_mooner.gif #화난 문어
     - assets/images/mooner.png
-    - assets/images/bg_stage.png
+    - assets/images/bg_stage.png #바꾼 배경
     - assets/images/hook.png
     - assets/images/speechbubble.png
     - assets/images/stage_background.png
@@ -116,7 +113,7 @@ flutter:
     - assets/audio/G.mp3
     - assets/audio/CC.mp3
     - assets/audio/bgm_test.mp3
-    - assets/images/normal_mooner_x.png
+    - assets/images/normal_mooner_x.png #진짜 새 문어
     - assets/audio/boxing.mp3
     - assets/images/result_background.png
     - assets/images/bg_secret.png
