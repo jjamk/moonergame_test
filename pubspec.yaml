@@ -122,6 +122,7 @@ flutter:
     - assets/images/dialog_background.png
     - assets/images/fisher.png
     - assets/images/jellyfish.png
+    - assets/images/star.png
 
   fonts:
     - family: BMJUA
