@@ -121,6 +121,8 @@ flutter:
     - assets/images/bg_secret.png
     - assets/images/scroll_background.png
     - assets/images/bottle.png
+    - assets/images/dialog_background.png
+    - assets/images/fisher.png
   fonts:
     - family: BMJUA
       fonts:
