@@ -75,7 +75,7 @@ class _BreatheGameScreenState extends State<BreatheGameScreen> {
                         ),
                         const SizedBox(height: 10), // 텍스트 간의 간격을 추가
                         const Text(
-                          '문찌와 함께 심호흡을 해보자!',
+                          '문찌와 함께 심호흡을 해보자!!!',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
