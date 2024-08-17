@@ -31,7 +31,7 @@ class MyAppScreen extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/bg_home_test.png"),
+              image: AssetImage("assets/images/bg_home.png"),
               fit: BoxFit.cover,
             ),
           ),

@@ -15,6 +15,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - pedometer (0.0.1):
+    - Flutter
   - sensors (0.0.1):
     - Flutter
   - sensors_plus (0.0.1):
@@ -35,6 +37,7 @@ DEPENDENCIES:
   - flutter_sensors (from `.symlinks/plugins/flutter_sensors/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - pedometer (from `.symlinks/plugins/pedometer/ios`)
   - sensors (from `.symlinks/plugins/sensors/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - simple_animation_progress_bar (from `.symlinks/plugins/simple_animation_progress_bar/ios`)
@@ -61,6 +64,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  pedometer:
+    :path: ".symlinks/plugins/pedometer/ios"
   sensors:
     :path: ".symlinks/plugins/sensors/ios"
   sensors_plus:
@@ -74,11 +79,12 @@ SPEC CHECKSUMS:
   assets_audio_player: edee322b9cb625571b830b35872ead1a295fd917
   assets_audio_player_web: 19826380c44375761aa0b9053665c1e3fbc3b86b
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
-  camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
+  camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_sensors: dc6eed3291e7724bf8f4138d7d14c4071b42bd29
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  pedometer: 381969883680ade42559782cc41a3bbd453d8234
   sensors: 84eb7a30e47a649e4172b71d6e81be614c280336
   sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
   simple_animation_progress_bar: 3f818acdbd78de0a8c48ddd7fdc88e1998a7b33f
