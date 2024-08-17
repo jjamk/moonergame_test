@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mooner_interface/Secret.dart';
+import 'package:mooner_interface/SoundQuiz.dart';
 import 'package:mooner_interface/breathe.dart';
 import 'package:mooner_interface/conversation.dart';
 import 'package:mooner_interface/countnumber.dart';
@@ -8,10 +9,10 @@ import 'package:mooner_interface/healing.dart';
 import 'package:mooner_interface/piano.dart';
 import 'package:mooner_interface/takepicture.dart';
 import 'package:mooner_interface/musclerelease.dart';
-import 'package:mooner_interface/coloring.dart';
 import 'package:mooner_interface/walk.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'SoundQuiz.dart';
 import 'moonerhit.dart';
 
 class NewStage extends StatelessWidget {
@@ -159,7 +160,7 @@ class _NewStageScreenState extends State<NewStageScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ColoringGame()),
+                            builder: (context) => Soundquiz()),
                       );
                     } else if (index == 9) {
                       Navigator.push(

@@ -325,7 +325,7 @@ class SecondOptionScreen extends StatelessWidget {
             ),
             Center(
               child: Image.asset(
-                'assets/images/new_mooner.png',
+                'assets/images/normal_mooner_x.png',
                 width: 200,
                 height: 270,
                 fit: BoxFit.cover,
