@@ -36,7 +36,7 @@ class ExerciseSelectionScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/new_bg_stage_test.png'),
+            image: AssetImage('assets/images/bg_stage.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -225,7 +225,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/new_bg_stage_test.png"),
+                image: AssetImage("assets/images/bg_stage.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -255,7 +255,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
-              child: SvgPicture.asset('assets/images/new_mooner.svg',
+              child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
                   width: 200, height: 270, fit: BoxFit.cover),
             ),
           ),
@@ -302,28 +302,42 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
               ],
             ),
           ),
-          if (isDialogueActive)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.black.withOpacity(0.7),
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      dialogues[dialogueIndex],
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    ElevatedButton(
-                      onPressed: nextDialogue,
-                      child: Text('다음'),
-                    ),
-                  ],
+          if (isDialogueActive) // 대화 창 표시
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: GestureDetector(
+                onTap: nextDialogue,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Image.asset(
+                      'assets/images/fisher.png',
+                      width: 130, // Set the width as needed
+                      height: 130, // Set the height as needed
+                      fit: BoxFit.cover,), // Add some space between the image and the dialog background
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(50),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/dialog_background.png"),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          child: Text(
+                          dialogues[dialogueIndex],
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 ),
               ),
-            ),
           Positioned(
             top: 20,
             right: 20,
@@ -363,11 +377,35 @@ class JumpRopeGameScreen extends StatefulWidget {
 class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
   int stars = 0;
   bool isGameActive = false;
+  int dialogueIndex = 0;
   int jumpCount = 0;
   double threshold = 2.0; // 점프 감지 임계값
   bool isJumping = false;
+  bool isDialogueActive = true;
   late Timer _timer;
   int _countDown = 30;
+
+  List<String> dialogues = [
+    "30초 안에 20개를 채우면 너문어를 진정시킬 수 있어!",
+    "이제 한 번 시작해볼까?",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _startListening();
+  }
+
+  void nextDialogue() {
+    setState(() {
+      dialogueIndex++;
+      if (dialogueIndex >= dialogues.length) {
+        isDialogueActive = false;
+        startGame();
+        _startTimer();
+      }
+    });
+  }
 
   void startGame() {
     setState(() {
@@ -384,6 +422,12 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
       _startTimer();
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+  }  
 
   void _startListening() {
     userAccelerometerEvents.listen((UserAccelerometerEvent event) {
@@ -416,17 +460,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _startListening();
-  }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _timer.cancel();
-  }
 
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -460,7 +494,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/new_bg_stage_test.png"),
+                image: AssetImage("assets/images/bg_stage.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -491,7 +525,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
           Positioned(
             child: Center(
               child: SvgPicture.asset(
-                'assets/images/new_mooner.svg',
+                'assets/images/normal_mooner_o.svg',
                 width: 200,
                 height: 270,
                 fit: BoxFit.cover,
@@ -543,6 +577,42 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
               ],
             ),
           ),
+          if (isDialogueActive) // 대화 창 표시
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: GestureDetector(
+                onTap: nextDialogue,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Image.asset(
+                      'assets/images/fisher.png',
+                      width: 130, // Set the width as needed
+                      height: 130, // Set the height as needed
+                      fit: BoxFit.cover,), // Add some space between the image and the dialog background
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(50),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/dialog_background.png"),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          child: Text(
+                          dialogues[dialogueIndex],
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ),
+              ),
           // 남은 시간 표시
           Positioned(
             top: 20,
@@ -701,7 +771,7 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/new_bg_stage_test.png"),
+                image: AssetImage("assets/images/bg_stage.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -731,7 +801,7 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
-              child: SvgPicture.asset('assets/images/new_mooner.svg',
+              child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
                   width: 200, height: 270, fit: BoxFit.cover),
             ),
           ),
@@ -778,28 +848,42 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
               ],
             ),
           ),
-          if (isDialogueActive)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.black.withOpacity(0.7),
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      dialogues[dialogueIndex],
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    ElevatedButton(
-                      onPressed: nextDialogue,
-                      child: Text('다음'),
-                    ),
-                  ],
+          if (isDialogueActive) // 대화 창 표시
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: GestureDetector(
+                onTap: nextDialogue,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Image.asset(
+                      'assets/images/fisher.png',
+                      width: 130, // Set the width as needed
+                      height: 130, // Set the height as needed
+                      fit: BoxFit.cover,), // Add some space between the image and the dialog background
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(50),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/dialog_background.png"),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          child: Text(
+                          dialogues[dialogueIndex],
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 ),
               ),
-            ),
           Positioned(
             top: 20,
             right: 20,
