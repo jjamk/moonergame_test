@@ -204,6 +204,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             } else {
               setState(() {
                 failCount++;
+                // 실패 시 프로그레스바 감소
+                _progress -= 0.25;  // 4번 시도 중 한 번 실패하면 25% 감소
+                if (_progress < 0) _progress = 0;                
               });
 
               if (failCount >= 3) {
@@ -315,6 +318,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                         backgroundColor: Colors.grey,
                         foregrondColor: Colors.red,
                         ratio: (successCount / 4).clamp(0.0, 1.0), // 이 부분을 수정했습니다.
+                        //ratio: _progress,  // 성공 및 실패에 따라 업데이트되는 비율
                         direction: Axis.horizontal,
                         curve: Curves.fastLinearToSlowEaseIn,
                         duration: const Duration(seconds: 1),
