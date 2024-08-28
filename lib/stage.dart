@@ -29,30 +29,30 @@ class NewStageScreen extends StatefulWidget {
 }
 
 // 배경음을 관리하는 클래스
-class AudioManager {
-  static final AudioPlayer _audioPlayer = AudioPlayer();
-  static ValueNotifier<bool> isPlaying = ValueNotifier(true);
-  static bool _initialized = false;
+// class AudioManager {
+//   static final AudioPlayer _audioPlayer = AudioPlayer();
+//   static ValueNotifier<bool> isPlaying = ValueNotifier(true);
+//   static bool _initialized = false;
 
-  static void toggleBackgroundSound(bool value) {
-    if (value) {
-      _audioPlayer.resume(); // 이전에 이미 load되어 있다고 가정
-      isPlaying.value = true;
-    } else {
-      _audioPlayer.pause();
-      isPlaying.value = false;
-    }
-    print(isPlaying);
-  }
+//   static void toggleBackgroundSound(bool value) {
+//     if (value) {
+//       _audioPlayer.resume(); // 이전에 이미 load되어 있다고 가정
+//       isPlaying.value = true;
+//     } else {
+//       _audioPlayer.pause();
+//       isPlaying.value = false;
+//     }
+//     print(isPlaying);
+//   }
 
-  static void initialize() async {
-    if (_initialized) return;
-    await _audioPlayer.setSourceAsset('audio/bgm_test.mp3');
-    _audioPlayer.setReleaseMode(ReleaseMode.loop);
-    if (isPlaying.value) _audioPlayer.resume();
-    _initialized = true;
-  }
-}
+//   static void initialize() async {
+//     if (_initialized) return;
+//     await _audioPlayer.setSourceAsset('audio/bgm_test.mp3');
+//     _audioPlayer.setReleaseMode(ReleaseMode.loop);
+//     if (isPlaying.value) _audioPlayer.resume();
+//     _initialized = true;
+//   }
+// }
 
 class _NewStageScreenState extends State<NewStageScreen> {
   bool isSwitched = true;
@@ -74,7 +74,7 @@ class _NewStageScreenState extends State<NewStageScreen> {
   @override
   void initState() {
     super.initState();
-    AudioManager.initialize(); // 앱 시작 시 배경음 재생 초기화
+    //AudioManager.initialize(); // 앱 시작 시 배경음 재생 초기화
     isSwitched = AudioManager.isPlaying.value;
   }
 

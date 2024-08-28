@@ -20,29 +20,29 @@ class MusclereleaseGameApp extends StatelessWidget {
   }
 }
 
-class StarWidget extends StatelessWidget {
-  final int starsCount;
-  StarWidget(this.starsCount);
+// class StarWidget extends StatelessWidget {
+//   final int starsCount;
+//   StarWidget(this.starsCount);
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(3, (index) {
-        if (index < starsCount) {
-          return Icon(
-            Icons.star,
-            color: Colors.yellow,
-          );
-        } else {
-          return Icon(
-            Icons.star_border,
-            color: Colors.grey,
-          );
-        }
-      }),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: List.generate(3, (index) {
+//         if (index < starsCount) {
+//           return Icon(
+//             Icons.star,
+//             color: Colors.yellow,
+//           );
+//         } else {
+//           return Icon(
+//             Icons.star_border,
+//             color: Colors.grey,
+//           );
+//         }
+//       }),
+//     );
+//   }
+// }
 
 class MusclereleaseGameScreen extends StatefulWidget {
   @override
@@ -241,7 +241,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             Positioned(
               child: Center(
                 child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
-                    width: 200, height: 270, fit: BoxFit.cover),
+                     width: 200, height: 270, fit: BoxFit.cover),
               ),
             ),
               if (!isLongPressed & !isDialogueActive) // 게임이 시작되기 전일 때만 빨간색 원과 화살표 표시
@@ -294,7 +294,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
               ),
             ),
             Positioned(
-              left: 200, 
+              left: 150, 
               top: 65, 
               child: Text(
                 '근육 이완하기', 
@@ -302,65 +302,65 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                   fontSize: 18, 
                   fontWeight: FontWeight.bold, 
                   color: Colors.black),)),
-            // 별 프로그레스 바
-            Positioned(
-              left: 56,
-              top: 200,
-              child: Center(
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Positioned(
-                      child: SimpleAnimationProgressBar(
-                        height: 30,
-                        width: 330,
-                        backgroundColor: Colors.grey,
-                        foregrondColor: Colors.red,
-                        ratio: (successCount / 4).clamp(0.0, 1.0), // 이 부분을 수정했습니다.
-                        //ratio: _progress,  // 성공 및 실패에 따라 업데이트되는 비율
-                        direction: Axis.horizontal,
-                        curve: Curves.fastLinearToSlowEaseIn,
-                        duration: const Duration(seconds: 1),
-                        borderRadius: BorderRadius.circular(10),
-                        gradientColor: const LinearGradient(
-                          colors: [Colors.red, Colors.orange],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: -45,
-                      top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
-                        width: 110,
-                        height: 110,
-                      ),
-                    ),
-                    Positioned(
-                      left: 105,
-                      top: -40, // 중앙 별 이미지의 위치
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
-                        width: 110,
-                        height: 110,
-                      ),
-                    ),
-                    Positioned(
-                      right: -45,
-                      top: -40, // 오른쪽 끝 별 이미지의 위치
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
-                        width: 110,
-                        height: 110,
-                      ),
-                    ),
+                  // 별 프로그레스 바
+                  Positioned(
+                    left: 30,
+                    top: 150,
+                    child: Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            child: SimpleAnimationProgressBar(
+                              height: 30,
+                              width: 300,
+                              backgroundColor: Colors.grey,
+                              foregrondColor: Colors.red,
+                              //ratio: (successCount / 4).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              direction: Axis.horizontal,
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              duration: const Duration(seconds: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              gradientColor: const LinearGradient(
+                                colors: [Colors.red, Colors.orange],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: -45,
+                            top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            left: 105,
+                            top: -40, // 중앙 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            right: -45,
+                            top: -40, // 오른쪽 끝 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
                   ],
                 ),
               ),
-            ),                       
+            ), 
             if (!isGameActive && !isDialogueActive)
               Container(
                 color: Colors.black.withOpacity(0.5),
@@ -380,30 +380,30 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                   ),
                 ),
               ),
-            Positioned(
-              top: 10,
-              left: 50,
-              right: 0,
-              child: AppBar(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    StarWidget(stars)
-                  ],
-                ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.settings),
-                    onPressed: () {
-                      print('Settings button pressed');
-                    },
-                  ),
-                ],
-              ),
-            ),
+            // Positioned(
+            //   top: 10,
+            //   left: 50,
+            //   right: 0,
+            //   child: AppBar(
+            //     title: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: <Widget>[
+            //         StarWidget(stars)
+            //       ],
+            //     ),
+            //     backgroundColor: Colors.transparent,
+            //     elevation: 0,
+            //     automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
+            //     actions: <Widget>[
+            //       IconButton(
+            //         icon: Icon(Icons.settings),
+            //         onPressed: () {
+            //           print('Settings button pressed');
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
           if (isDialogueActive) // 대화 창 표시
               Align(
                 alignment: Alignment.bottomCenter,
@@ -416,16 +416,18 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [Image.asset(
                       'assets/images/fisher.png',
-                      width: 130, // Set the width as needed
-                      height: 130, // Set the height as needed
+                      width: 120, // Set the width as needed
+                      height: 120, // Set the height as needed
                       fit: BoxFit.cover,), // Add some space between the image and the dialog background
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.all(50),
+                          width: 200,
+                          height: 130,
+                          padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/dialog_background.png"),
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           child: Text(
@@ -452,74 +454,233 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   }
 }
 
+// class GameOverScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             // Stack to place text and button inside the image
+//             Stack(
+//               alignment: Alignment.center,
+//               children: <Widget>[
+//                 Image.asset(
+//                   'assets/images/ink.png',
+//                   width: 600,
+//                   height: 700,
+//                   fit: BoxFit.contain,
+//                 ),
+                
+//                 Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Text(
+//                       'TRY \n AGAIN',
+//                       style: TextStyle(
+//                         fontSize: 30.0, // Adjust the font size as needed
+//                         color: Colors.white, // Text color
+//                         fontWeight: FontWeight.bold,
+//                         shadows: [
+//                           Shadow(
+//                             blurRadius: 10.0,
+//                             color: Colors.black,
+//                             offset: Offset(5.0, 5.0),
+//                           ),
+//                         ],
+//                       ),
+//                       textAlign: TextAlign.center,
+//                     ),
+//                     SizedBox(height: 5.0), // Space between text and button
+//                     ElevatedButton(
+//                       onPressed: () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(builder: (context) => NewStage()),
+//                         );
+//                       },
+//                       child: Text('홈으로 돌아가기'),
+//                     ),
+//                     SizedBox(height: 5.0), // Space between buttons
+//                     ElevatedButton(
+//                       onPressed: () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => MusclereleaseGameApp()),
+//                         );
+//                       },
+//                       child: Text('광고보고 재도전하기'),
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 class GameOverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Stack to place text and button inside the image
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/ink.png',
-                  width: 600,
-                  height: 700,
-                  fit: BoxFit.contain,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'TRY \n AGAIN',
-                      style: TextStyle(
-                        fontSize: 48.0, // Adjust the font size as needed
-                        color: Colors.white, // Text color
-                        fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 10.0,
-                            color: Colors.black,
-                            offset: Offset(5.0, 5.0),
-                          ),
-                        ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_stage.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Stack to place text and button inside the image
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/ink.png',
+                    width: 600,
+                    height: 700,
+                    fit: BoxFit.contain,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'TRY \n AGAIN',
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10.0,
+                              color: Colors.black,
+                              offset: Offset(5.0, 5.0),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 20.0), // Space between text and button
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NewStage()),
-                        );
-                      },
-                      child: Text('홈으로 돌아가기'),
-                    ),
-                    SizedBox(height: 10.0), // Space between buttons
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MusclereleaseGameApp()),
-                        );
-                      },
-                      child: Text('광고보고 재도전하기'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                      SizedBox(height: 5.0), // Space between text and button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewStage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('홈으로 돌아가기'),
+                      ),
+                      SizedBox(height: 5.0), // Space between buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MusclereleaseGameApp()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('광고보고 재도전하기'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
+
+// class GameWinScreen extends StatelessWidget {
+//   final int stars;
+//   GameWinScreen({required this.stars});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             // Stack to place text and button inside the image
+//             Stack(
+//               alignment: Alignment.center,
+//               children: <Widget>[
+//                 Image.asset(
+//                   'assets/images/result_background.png',
+//                   width: 400,
+//                   height: 500,
+//                   fit: BoxFit.contain,
+//                 ),
+//                 Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Text(
+//                       '! STAGE CLEAR !',
+//                       style: TextStyle(
+//                         fontSize: 30.0, // Adjust the font size as needed
+//                         color: Colors.white, // Text color
+//                         fontWeight: FontWeight.bold,
+//                         shadows: [
+//                           Shadow(
+//                             blurRadius: 10.0,
+//                             color: Colors.black,
+//                             offset: Offset(5.0, 5.0),
+//                           ),
+//                         ],
+//                       ),
+//                       textAlign: TextAlign.center,
+//                     ),
+//                     SizedBox(height: 15.0), // Space between text and button
+//                     ElevatedButton(
+//                       onPressed: () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(builder: (context) => NewStage()),
+//                         );
+//                       },
+//                       child: Text('다음 스테이지로'),
+//                     ),
+//                     SizedBox(height: 15.0), // Space between buttons
+//                     ElevatedButton(
+//                       onPressed: () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => MusclereleaseGameApp()),
+//                         );
+//                       },
+//                       child: Text('광고보고 재도전하기'),
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class GameWinScreen extends StatelessWidget {
   final int stars;
@@ -528,65 +689,81 @@ class GameWinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Stack to place text and button inside the image
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/result_background.png',
-                  width: 400,
-                  height: 500,
-                  fit: BoxFit.contain,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '! STAGE CLEAR !',
-                      style: TextStyle(
-                        fontSize: 30.0, // Adjust the font size as needed
-                        color: Colors.white, // Text color
-                        fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 10.0,
-                            color: Colors.black,
-                            offset: Offset(5.0, 5.0),
-                          ),
-                        ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_stage.png"), // 배경 이미지 추가
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Stack to place text and button inside the image
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/result_background.png',
+                    width: 400,
+                    height: 500,
+                    fit: BoxFit.contain,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '! STAGE CLEAR !',
+                        style: TextStyle(
+                          fontSize: 30.0, // Adjust the font size as needed
+                          color: Colors.white, // Text color
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10.0,
+                              color: Colors.black,
+                              offset: Offset(5.0, 5.0),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 20.0), // Space between text and button
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NewStage()),
-                        );
-                      },
-                      child: Text('다음 스테이지로'),
-                    ),
-                    SizedBox(height: 10.0), // Space between buttons
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MusclereleaseGameApp()),
-                        );
-                      },
-                      child: Text('광고보고 재도전하기'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                      SizedBox(height: 5.0), // Space between text and button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewStage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('다음 스테이지로'),
+                      ),
+                      SizedBox(height: 5.0), // Space between buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MusclereleaseGameApp()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('광고보고 재도전하기'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
