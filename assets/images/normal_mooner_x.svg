@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1920">
+  <defs>
+    <radialGradient id="_무제_그라디언트_18" data-name="무제 그라디언트 18" cx="665.83" cy="876.74" fx="665.83" fy="876.74" r="142" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffbac0"/>
+      <stop offset=".17" stop-color="#ffbac0" stop-opacity=".99"/>
+      <stop offset=".3" stop-color="#ffbac0" stop-opacity=".95"/>
+      <stop offset=".42" stop-color="#ffbac0" stop-opacity=".88"/>
+      <stop offset=".53" stop-color="#ffbac0" stop-opacity=".79"/>
+      <stop offset=".63" stop-color="#ffbac0" stop-opacity=".67"/>
+      <stop offset=".74" stop-color="#ffbac0" stop-opacity=".52"/>
+      <stop offset=".84" stop-color="#ffbac0" stop-opacity=".35"/>
+      <stop offset=".93" stop-color="#ffbac0" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#ffbac0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="_무제_그라디언트_18-2" data-name="무제 그라디언트 18" cx="1280.25" cy="727.44" fx="1280.25" fy="727.44" r="54" gradientTransform="translate(-823.59 -44.7) scale(1.37 1)" xlink:href="#_무제_그라디언트_18"/>
+    <radialGradient id="_무제_그라디언트_18-3" data-name="무제 그라디언트 18" cx="1276.83" cy="753.74" fx="1276.83" fy="753.74" r="142" xlink:href="#_무제_그라디언트_18"/>
+  </defs>
+  <path d="M560.13,201.08l-56.4,48.58-41.42,49.67-41.13,70.69-23.41,59.95-20.57,90.07-5.95,44.37v55.83l10.86,70.45,17.56,53.81,17.16,58.25s1,59,0,63-11.46,50.87-10.23,57.94c1.23,7.06,6.23,45.38,3.23,52.72-3,7.34,21.25,60.27,21.62,63.8.38,3.54,34.24,50.87,34.24,50.87l48.92,36.52-47.28,11.65-57.28,32.96-43.02,34.82-30.7,26.22-37.27,42.62-61.6,93.99-36.91,106.76-30.22,75.63-28,39v42.5l23.94,29.8,78.22,10.88,126.75-45.68,193.37-120.54,130.71-121.96,12.19-9.39-31.27,86.84-9.92,87.55,13.16,76.69,9.43,79.9,4.39,67.75,14.22,35.06,24.31,12.63,78.5-12.02,57.48-22.83,63.02-57.67,51.25-70.32,49.55-94.03,30.86-103.58,7.49-70.39,15.3,35.32,62.3,118.3,52.62,64.16,77.41,70.78,75.83,48.18,63.78,27.05,56.6,9.35,34.28-10.8,25.97-37.82,10.25-63.68-10-75-16.96-81.54-19.04-70.46,4.5-7.5,14,9,63.78,48.5,103.45,52.2,62.9,6.96,30.98-18.42,2.89-37.24-13-43.12-19.75-71.07-16.05-89.6-25.52-87.19-42.86-68.57-48.07-47.21-67.2-42.83-76.57-20.97-63.94-1.45-50.72,4.44h-30l67.57-48.87,47.3-60.23,29.19-88.53-5.39-88.46-39.44-88.3-17.12-70.72-26.16-138.69-53.29-129.63-88.67-97.66-89.6-54.12-92.24-31.75-60.17-15.01-72.33-3.47h-65.67s-58.33,5-64.33,10-57.34,13.96-59.67,14.98c-2.33,1.02-66.97,25.47-66.97,25.47l-49.36,22.54-48.76,23.05-11.94,8.3" fill="#ffd2d6" stroke-width="0"/>
+  <path d="M520.33,1124.17c-86-42.01-127.52-129.11-110-237.04,19-117.02-18.81-135.67-35-227.04-14-79.01-20-516.09,479-557.09,499-41.01,548.5,381.56,554.5,458.58,6,77.01,13.5,50.51,50,157.03,70.24,204.97-160,314.05-160,314.05,0,0,166.5-73.58,300.5,27.5,118,89.01,126,177.03,142,269.04s24,99.02,29,114.02,24,83.01-27,93.02c-51,10-172-50.01-247-131.02" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="13"/>
+  <circle cx="707.33" cy="644.24" r="86" fill="#fff" stroke="#000" stroke-miterlimit="10" stroke-width="8"/>
+  <circle cx="707.33" cy="644.24" r="59" stroke-width="0"/>
+  <circle cx="744.33" cy="612.24" r="21" fill="#fff" stroke-width="0"/>
+  <circle cx="1118.33" cy="561.24" r="86" fill="#fff" stroke="#000" stroke-miterlimit="10" stroke-width="8"/>
+  <circle cx="1118.33" cy="561.24" r="59" stroke-width="0"/>
+  <circle cx="1155.33" cy="529.24" r="21" fill="#fff" stroke-width="0"/>
+  <ellipse cx="647.83" cy="502.24" rx="29" ry="19.5" transform="translate(-158.85 356.62) rotate(-27.55)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="13"/>
+  <ellipse cx="1098.83" cy="407.24" rx="19.5" ry="29" transform="translate(549.93 1442.6) rotate(-82.41)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="13"/>
+  <path d="M1186.33,1220.24s160-44,241,57,86,204,99,274,32,157-14,200-167-21-221-60c-51.6-37.27-189.74-154.5-221-319" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="13"/>
+  <path d="M1057.33,1244.24s42,176-27,325c-69,149-139.29,218.94-220,242-70,20-91,9-91,9,0,0-30-8-30-90s-16.04-116.32-23-179c-7-63,37-239.08,173.5-340.54" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="13"/>
+  <path d="M750.33,1150.24s-207-86-355,33-172,216-188,270-19,74-38,96-39,52-26,90,97.08,59.06,227.92-10.5c125.08-66.5,255.56-141.52,370.82-313.51" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="13"/>
+  <path d="M869.25,819.39l-17.21,4.11c.04.33.1.66.17.99,1.15,4.83,6.02,7.82,10.84,6.66,4.18-1,6.98-4.78,6.9-8.92-.21-.78-.41-1.57-.6-2.36-.04-.16-.07-.33-.11-.49Z" fill="none" stroke-width="0"/>
+  <path d="M869.03,818.42c-1.82-3.68-6-5.77-10.16-4.77-4.5,1.07-7.4,5.37-6.84,9.86l17.21-4.11c-.08-.32-.15-.65-.22-.97Z" fill="none" stroke-width="0"/>
+  <circle cx="665.83" cy="876.74" r="142" fill="url(#_무제_그라디언트_18)" stroke-width="0"/>
+  <ellipse cx="930.83" cy="682.74" rx="74" ry="54" transform="translate(-122.39 210.19) rotate(-12.09)" fill="url(#_무제_그라디언트_18-2)" stroke-width="0"/>
+  <circle cx="1276.83" cy="753.74" r="142" fill="url(#_무제_그라디언트_18-3)" stroke-width="0"/>
+  <circle cx="608.83" cy="801.74" r="12" fill="#fff" stroke-width="0"/>
+  <circle cx="1299.83" cy="668.74" r="12" fill="#fff" stroke-width="0"/>
+  <circle cx="974.83" cy="816.24" r="82" fill="#ffbec4" stroke="#000" stroke-miterlimit="10" stroke-width="8"/>
+  <circle cx="974.83" cy="816.24" r="16" fill="#ffd2d6" stroke="#000" stroke-miterlimit="10" stroke-width="8"/>
+</svg>
