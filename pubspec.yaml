@@ -134,6 +134,8 @@ flutter:
     - assets/images/fisher.png #어부
     - assets/images/jellyfish.png #해파리
     - assets/images/star.png #별
+    - assets/images/correct.png # O표시
+    - assets/images/incorrect.png # X표시
 
   fonts:
     - family: BMJUA
