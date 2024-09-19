@@ -2,10 +2,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
+import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+
 
 void main() => runApp(CountNumberGameApp());
 
@@ -317,6 +320,75 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
               ),
             ),
           ),
+            Positioned(
+              left: 150, 
+              top: 65, 
+              child: Text(
+                '숫자세기 - 말할 수 있는 상황', 
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold, 
+                  color: Colors.black),)),
+                  // 별 프로그레스 바
+                  Positioned(
+                    left: 30,
+                    top: 150,
+                    child: Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            child: SimpleAnimationProgressBar(
+                              height: 30,
+                              width: 300,
+                              backgroundColor: Colors.grey,
+                              foregrondColor: Colors.red,
+                              ratio: (successCount / 10).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              //ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              direction: Axis.horizontal,
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              duration: const Duration(seconds: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              gradientColor: const LinearGradient(
+                                colors: [Colors.red, Colors.orange],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: -45,
+                            top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            left: 105,
+                            top: -40, // 중앙 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            right: -45,
+                            top: -40, // 오른쪽 끝 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ), 
+
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
@@ -392,18 +464,20 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Image.asset(
-                      'assets/images/fisher.png',
-                      width: 130, // Set the width as needed
-                      height: 130, // Set the height as needed
+                    children: [SvgPicture.asset(
+                      'assets/images/fisherman_front.svg',
+                      width: 120, // Set the width as needed
+                      height: 120, // Set the height as needed
                       fit: BoxFit.cover,), // Add some space between the image and the dialog background
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.all(50),
+                          width: 200,
+                          height: 130,
+                          padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/dialog_background.png"),
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           child: Text(
@@ -418,41 +492,14 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                 ),
                 ),
               ),
-          // 별 개수 표시
-          Positioned(
-            top: 10,
-            left: 50,
-            right: 0,
-            child: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  StarWidget(stars),
-                ],
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    print('Settings button pressed');
-                  },
-                ),
-              ],
-            ),
-          ),
-
           // 타이머 표시
           Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
+            top: 200,
+            right: 20,
             child: Center(
               child: Text(
-                'Time left: ${_remainingTime ~/ 60}:${(_remainingTime % 60).toString().padLeft(2, '0')}',
-                style: TextStyle(fontSize: 20),
+                '남은 시간: ${_remainingTime ~/ 60}:${(_remainingTime % 60).toString().padLeft(2, '0')}',
+                style: TextStyle(fontSize: 18),
               ),
             ),
           ),
@@ -625,6 +672,74 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
               ),
             ),
           ),
+            Positioned(
+              left: 150, 
+              top: 65, 
+              child: Text(
+                '숫자세기 - 말할 수 없는 상황', 
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold, 
+                  color: Colors.black),)),
+                  // 별 프로그레스 바
+                  Positioned(
+                    left: 30,
+                    top: 150,
+                    child: Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            child: SimpleAnimationProgressBar(
+                              height: 30,
+                              width: 300,
+                              backgroundColor: Colors.grey,
+                              foregrondColor: Colors.red,
+                              ratio: (successCount / 10).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              //ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              direction: Axis.horizontal,
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              duration: const Duration(seconds: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              gradientColor: const LinearGradient(
+                                colors: [Colors.red, Colors.orange],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: -45,
+                            top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            left: 105,
+                            top: -40, // 중앙 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            right: -45,
+                            top: -40, // 오른쪽 끝 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),          
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
@@ -705,18 +820,20 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Image.asset(
-                      'assets/images/fisher.png',
-                      width: 130, // Set the width as needed
-                      height: 130, // Set the height as needed
+                    children: [SvgPicture.asset(
+                      'assets/images/fisherman_front.svg',
+                      width: 120, // Set the width as needed
+                      height: 120, // Set the height as needed
                       fit: BoxFit.cover,), // Add some space between the image and the dialog background
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.all(50),
+                          width: 200,
+                          height: 130,
+                          padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/dialog_background.png"),
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           child: Text(
@@ -732,20 +849,13 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
                 ),
               ),
 
-          // 상단에 별을 표시
-          Positioned(
-            top: 50,
-            right: 20,
-            child: StarWidget(stars),
-          ),
-
           // 타이머 표시
           Positioned(
-            top: 20,
-            left: 20,
+            top: 200,
+            right: 20,
             child: Text(
               '남은 시간: ${_remainingTime ~/ 60}:${(_remainingTime % 60).toString().padLeft(2, '0')}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -762,25 +872,81 @@ class GameOverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '문어가 도망가버렸어요...',
-              style: TextStyle(fontSize: 24.0),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                restartGame();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NewStage()),
-                );
-              },
-              child: Text('홈으로 돌아가기'),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_stage.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Stack to place text and button inside the image
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  SvgPicture.asset(
+                    'assets/images/big_ink.svg',
+                    width: 600,
+                    height: 700,
+                    fit: BoxFit.contain,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'TRY \n AGAIN',
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10.0,
+                              color: Colors.black,
+                              offset: Offset(5.0, 5.0),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 5.0), // Space between text and button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewStage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('홈으로 돌아가기'),
+                      ),
+                      SizedBox(height: 5.0), // Space between buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CountNumberGameApp()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('광고보고 재도전하기'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -795,28 +961,81 @@ class GameWinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Congratulations!'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '문어의 화가 풀렸어요!',
-              style: TextStyle(fontSize: 24.0),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                restartGame();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NewStage()),
-                );
-              },
-              child: Text('다음 스테이지로...'),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_stage.png"), // 배경 이미지 추가
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Stack to place text and button inside the image
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/result_background.png',
+                    width: 400,
+                    height: 500,
+                    fit: BoxFit.contain,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '! STAGE CLEAR !',
+                        style: TextStyle(
+                          fontSize: 30.0, // Adjust the font size as needed
+                          color: Colors.white, // Text color
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10.0,
+                              color: Colors.black,
+                              offset: Offset(5.0, 5.0),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 5.0), // Space between text and button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewStage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('다음 스테이지로'),
+                      ),
+                      SizedBox(height: 5.0), // Space between buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CountNumberGameApp()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('광고보고 재도전하기'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
