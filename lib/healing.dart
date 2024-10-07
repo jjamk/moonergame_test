@@ -54,7 +54,9 @@ class _InitialDialogueScreenState extends State<HealingGameScreen> {
     ["응, 아프겠다.. 내가 치료해줄게."],
     []
   ];
+  // 처음 시작 화면 
 
+  // 대화 넘기기 -> 다 넘기면 게임창으로 옴
   void nextDialogue(int choiceIndex) {
     setState(() {
       if (dialogueIndex < dialogues.length - 1) {
@@ -77,6 +79,7 @@ class _InitialDialogueScreenState extends State<HealingGameScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/bg_stage.png"),
+            // 게임 스테이지 테마 
             fit: BoxFit.cover,
           ),
         ),
@@ -139,6 +142,12 @@ class _InitialDialogueScreenState extends State<HealingGameScreen> {
   }
 }
 
+
+
+
+
+
+// 리얼 게임 시작 
 class HealingGamesScreen extends StatefulWidget {
   @override
   _HealingGamesScreenState createState() => _HealingGamesScreenState();
@@ -161,7 +170,7 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
   double hookTop = 260; // 낚싯대의 초기 위쪽 위치
 
   List<String> dialogues = [
-    "너무너가 아파하고 있어.\n 치료해주고 너무너가 아프지 않게 도와쥬자.",
+    "너무너가 아파하고 있어.\n 치료해주고 너무너가 아프지 않게 도와주자.",
   ];
 
   @override

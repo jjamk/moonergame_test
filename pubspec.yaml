@@ -123,6 +123,9 @@ flutter:
     - assets/images/fisher.png
     - assets/images/jellyfish.png
     - assets/images/star.png
+    - assets/images/note.png
+    - assets/images/orangenote.png
+
 
   fonts:
     - family: BMJUA
