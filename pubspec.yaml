@@ -123,9 +123,12 @@ flutter:
     - assets/images/normal_mooner_o.svg 
     - assets/images/normal_mooner_x.svg
 
+    - assets/images/fisherman_front.svg
+
+
     - assets/images/normal_mooner_x.png #진짜 새 문어
     - assets/images/result_background.png
-    - assets/images/ink.png #먹물
+    - assets/images/big_ink.svg #먹물
     
     - assets/images/bg_secret.png #해변의 비밀 배경
     - assets/images/scroll_background.png
