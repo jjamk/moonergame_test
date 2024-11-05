@@ -1,11 +1,13 @@
-
-
-    import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:mooner_interface/stage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mooner_interface/stage.dart';
+import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(OpeningGameApp());
 
-class MyApp extends StatelessWidget {
+class OpeningGameApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

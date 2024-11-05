@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mooner_interface/stage.dart';
-import 'package:mooner_interface/stage.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';

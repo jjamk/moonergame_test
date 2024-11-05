@@ -130,6 +130,7 @@ flutter:
     - assets/images/result_background.png
     - assets/images/big_ink.svg #먹물
     
+    - assets/images/bg_openclosing.png #오프닝클로징 배경
     - assets/images/bg_secret.png #해변의 비밀 배경
     - assets/images/scroll_background.png
     - assets/images/bottle.png #병
