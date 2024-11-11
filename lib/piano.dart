@@ -105,8 +105,15 @@ class _PianoGamesScreenState extends State<PianoGamesScreen> {
       appBar: AppBar(
         title: Text('Piano Game'),
       ),
-      body: Center(
-        child: Column(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_stage.png'), // 배경 이미지 경로
+            fit: BoxFit.cover,  // 이미지를 화면 크기에 맞게 조정
+          ),
+        ),
+        child: Center(
+          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
@@ -126,6 +133,7 @@ class _PianoGamesScreenState extends State<PianoGamesScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -184,23 +192,32 @@ class FirstGameScreen extends StatefulWidget {
   @override
   _FirstGameScreenState createState() => _FirstGameScreenState();
 }
-
 class _FirstGameScreenState extends State<FirstGameScreen> {
-  List<String> melody = ['도', '도', '솔', '솔', '라', '라', '솔']; // 멜로디 정의
-  List<String> userInput = []; // 사용자가 입력한 음을 저장할 리스트
-  List<String> buttonImages = List.filled(8, 'assets/images/orangenote.png'); // 각 버튼의 이미지 경로를 저장하는 리스트
+  final List<List<String>> melodies = [
+    ['도', '도', '솔', '솔', '라', '라', '솔'],
+    ['파', '파', '미', '미', '레', '레', '도'],
+    ['솔', '솔', '파', '파', '미', '미', '레'],
+    ['솔', '솔', '파', '파', '미', '미', '레'],
+    ['도', '도', '솔', '솔', '라', '라', '솔'],
+    ['파', '솔', '파', '미', '솔', '미', '레', '레', '미', '도'],
+  ];
+
+  int currentMelodyIndex = 0;
+  List<String> userInput = [];
+  List<String> buttonImages = List.filled(8, 'assets/images/orangenote.png');
 
   @override
   void initState() {
     super.initState();
-    playMelody(); // 게임 시작 시 멜로디 재생
+    playMelody(); // 첫 멜로디 재생
   }
 
   void playMelody() {
+    List<String> melody = melodies[currentMelodyIndex];
     for (int i = 0; i < melody.length; i++) {
       Future.delayed(Duration(seconds: i), () {
         int noteIndex = getNoteIndex(melody[i]);
-        _playNoteAndShowFeedback(noteIndex); // 멜로디 재생 및 피드백
+        _playNoteAndShowFeedback(noteIndex);
       });
     }
   }
@@ -230,7 +247,7 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('First Game'),
+        title: Text('첫 번째 게임'),
       ),
       body: Center(
         child: Column(
@@ -268,8 +285,8 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
       ),
     );
   }
-
-  Widget _buildImageButton(String buttonText, int noteIndex) {
+  
+Widget _buildImageButton(String buttonText, int noteIndex) {
     return GestureDetector(
       onTap: () {
         userTapped(buttonText); // 사용자가 클릭한 음을 처리
@@ -333,15 +350,15 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
     checkUserInput(); // 입력 확인
   }
 
-  void checkUserInput() {
-    if (userInput.length > melody.length) {
+    void checkUserInput() {
+    if (userInput.length > melodies[currentMelodyIndex].length) {
       // 사용자의 입력이 멜로디 길이를 초과하면 다시 초기화
       userInput = [];
       return;
     }
 
     for (int i = 0; i < userInput.length; i++) {
-      if (userInput[i] != melody[i]) {
+      if (userInput[i] != melodies[currentMelodyIndex][i]) {
         // 잘못된 입력일 경우
         showDialog(
           context: context,
@@ -366,56 +383,517 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
     }
 
     // 모든 입력이 맞는 경우
-    if (userInput.length == melody.length) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('성공!'),
-            content: Text('멜로디를 성공적으로 재생했습니다.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  userInput = []; // 입력 초기화
-                  Navigator.pop(context); // 이전 화면으로 이동
-                },
-                child: Text('확인'),
-              ),
-            ],
-          );
-        },
-      );
+    if (userInput.length == melodies[currentMelodyIndex].length) {
+      if (currentMelodyIndex < melodies.length - 1) {
+        // 다음 멜로디로 이동
+        setState(() {
+          currentMelodyIndex++;
+          userInput = [];
+        });
+
+        // 1초 후에 다음 마디 시작
+        Future.delayed(Duration(seconds: 1), () {
+          playMelody(); // 다음 마디 재생
+        });
+
+      } else {
+        // 모든 멜로디 성공
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('모든 멜로디 성공!'),
+              content: Text('축하합니다! 모든 멜로디를 성공적으로 재생했습니다.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pop(context); // 메인 화면으로 이동
+                  },
+                  child: Text('확인'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
-  }
+    }
 }
 
+
 // 두 번째 게임 화면
-class SecondGameScreen extends StatelessWidget {
+class SecondGameScreen extends StatefulWidget {
+  @override
+  _SecondGameScreenState createState() => _SecondGameScreenState();
+}
+
+class _SecondGameScreenState extends State<SecondGameScreen> {
+final List<List<String>> melodies = [
+    ['미', '미', '솔', '미', '미', '솔', '미', '미', '솔', '미', '미', '솔'],
+    ['미', '솔', '도', '시', '라', '라', '솔', '미', '솔', '도', '시'],
+    ['라', '라', '솔', '레', '미', '파', '레', '레', '미', '파'],
+    ['레', '파', '시', '라', '솔', '시', '도'],
+    ['레', '파', '시', '라', '솔', '시', '도'],
+    ['도', '도', '도', '라', '파', '솔'],
+    ['미', '도', '파', '솔', '라', '솔'],
+    ['도', '도', '도', '라', '파', '솔'],
+    ['미', '도', '파', '미', '레', '도'],
+  ];
+
+  int currentMelodyIndex = 0;
+  List<String> userInput = [];
+  List<String> buttonImages = List.filled(8, 'assets/images/orangenote.png');
+
+  @override
+  void initState() {
+    super.initState();
+    playMelody(); // 첫 멜로디 재생
+  }
+
+  void playMelody() {
+    List<String> melody = melodies[currentMelodyIndex];
+    for (int i = 0; i < melody.length; i++) {
+      Future.delayed(Duration(seconds: i), () {
+        int noteIndex = getNoteIndex(melody[i]);
+        _playNoteAndShowFeedback(noteIndex);
+      });
+    }
+  }
+
+  int getNoteIndex(String note) {
+    switch (note) {
+      case '도':
+        return 0;
+      case '레':
+        return 1;
+      case '미':
+        return 2;
+      case '파':
+        return 3;
+      case '솔':
+        return 4;
+      case '라':
+        return 5;
+      case '시':
+        return 6;
+      default:
+        return 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Second Game'),
+        title: Text('두 번째 게임'),
       ),
       body: Center(
-        child: Text('Second Game Screen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 첫 번째 Row (1, 2, 3, 4 버튼)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildImageButton('도', 0),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('레', 1),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('미', 2),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('파', 3),
+              ],
+            ),
+            SizedBox(height: 10), // 두 Row 사이의 간격
+            // 두 번째 Row (5, 6, 7, 8 버튼)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildImageButton('솔', 4),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('라', 5),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('시', 6),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('도', 7),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+  
+Widget _buildImageButton(String buttonText, int noteIndex) {
+    return GestureDetector(
+      onTap: () {
+        userTapped(buttonText); // 사용자가 클릭한 음을 처리
+        _playNoteAndShowFeedback(noteIndex); // 음을 재생하고 피드백을 표시
+      },
+      child: Container(
+        width: 60, // 버튼의 너비 설정
+        height: 50, // 버튼의 높이 설정
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(buttonImages[noteIndex]), // 현재 이미지
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            buttonText,
+            style: TextStyle(
+              color: Colors.black, // 텍스트 색상
+              fontSize: 16, // 텍스트 크기
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _playNoteAndShowFeedback(int noteIndex) {
+    // 각 음의 파일 경로를 설정합니다.
+    List<String> notePaths = [
+      'assets/audio/C.mp3',
+      'assets/audio/D.mp3',
+      'assets/audio/E.mp3',
+      'assets/audio/F.mp3',
+      'assets/audio/G.mp3',
+      'assets/audio/A.mp3',
+      'assets/audio/B.mp3',
+      'assets/audio/CC.mp3',
+    ];
+
+    // 음을 재생합니다.
+    final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
+    audioPlayer.open(Audio(notePaths[noteIndex]));
+
+    // 버튼 이미지 변경
+    setState(() {
+      buttonImages[noteIndex] = 'assets/images/note.png'; // note 이미지로 변경
+    });
+
+    // 1초 후에 원래 이미지로 복구
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        buttonImages[noteIndex] = 'assets/images/orangenote.png'; // orangenote 이미지로 복구
+      });
+    });
+  }
+
+  void userTapped(String note) {
+    userInput.add(note); // 사용자가 입력한 음 추가
+    checkUserInput(); // 입력 확인
+  }
+
+    void checkUserInput() {
+    if (userInput.length > melodies[currentMelodyIndex].length) {
+      // 사용자의 입력이 멜로디 길이를 초과하면 다시 초기화
+      userInput = [];
+      return;
+    }
+
+    for (int i = 0; i < userInput.length; i++) {
+      if (userInput[i] != melodies[currentMelodyIndex][i]) {
+        // 잘못된 입력일 경우
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('오답입니다!'),
+              content: Text('멜로디를 다시 시도해 주세요.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    userInput = []; // 입력 초기화
+                  },
+                  child: Text('확인'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+    }
+
+    // 모든 입력이 맞는 경우
+    if (userInput.length == melodies[currentMelodyIndex].length) {
+      if (currentMelodyIndex < melodies.length - 1) {
+        // 다음 멜로디로 이동
+        setState(() {
+          currentMelodyIndex++;
+          userInput = [];
+        });
+
+        // 1초 후에 다음 마디 시작
+        Future.delayed(Duration(seconds: 1), () {
+          playMelody(); // 다음 마디 재생
+        });
+
+      } else {
+        // 모든 멜로디 성공
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('모든 멜로디 성공!'),
+              content: Text('축하합니다! 모든 멜로디를 성공적으로 재생했습니다.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pop(context); // 메인 화면으로 이동
+                  },
+                  child: Text('확인'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+    }
 }
 
 // 세 번째 게임 화면
-class ThirdGameScreen extends StatelessWidget {
+class ThirdGameScreen extends StatefulWidget {
+  @override
+  _ThirdGameScreenState createState() => _ThirdGameScreenState();
+}
+
+class _ThirdGameScreenState extends State<ThirdGameScreen> {
+  final List<List<String>> melodies = [
+    ['미', '파', '미', '레', '도', '레', '도'],
+    ['도', '파', '파', '파', '솔', '라', '솔'],
+    ['레', '도', '레', '레', '도', '레', '파'],
+    ['미', '미', '미', '파', '미', '파', '솔'],
+    ['라', '라', '라', '라', '솔', '라', '도'],
+    ['솔', '솔', '솔', '솔', '파', '솔', '도'],
+    ['파', '솔', '파', '미', '파', '솔', '레'],
+    ['미', '파', '미', '레', '도', '레', '도'],
+  ];
+
+
+  int currentMelodyIndex = 0;
+  List<String> userInput = [];
+  List<String> buttonImages = List.filled(8, 'assets/images/orangenote.png');
+
+  @override
+  void initState() {
+    super.initState();
+    playMelody(); // 첫 멜로디 재생
+  }
+
+  void playMelody() {
+    List<String> melody = melodies[currentMelodyIndex];
+    for (int i = 0; i < melody.length; i++) {
+      Future.delayed(Duration(seconds: i), () {
+        int noteIndex = getNoteIndex(melody[i]);
+        _playNoteAndShowFeedback(noteIndex);
+      });
+    }
+  }
+
+  int getNoteIndex(String note) {
+    switch (note) {
+      case '도':
+        return 0;
+      case '레':
+        return 1;
+      case '미':
+        return 2;
+      case '파':
+        return 3;
+      case '솔':
+        return 4;
+      case '라':
+        return 5;
+      case '시':
+        return 6;
+      default:
+        return 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Third Game'),
+        title: Text('두 번째 게임'),
       ),
       body: Center(
-        child: Text('Third Game Screen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 첫 번째 Row (1, 2, 3, 4 버튼)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildImageButton('도', 0),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('레', 1),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('미', 2),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('파', 3),
+              ],
+            ),
+            SizedBox(height: 10), // 두 Row 사이의 간격
+            // 두 번째 Row (5, 6, 7, 8 버튼)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildImageButton('솔', 4),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('라', 5),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('시', 6),
+                SizedBox(width: 10), // 버튼 간의 간격
+                _buildImageButton('도', 7),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+  
+Widget _buildImageButton(String buttonText, int noteIndex) {
+    return GestureDetector(
+      onTap: () {
+        userTapped(buttonText); // 사용자가 클릭한 음을 처리
+        _playNoteAndShowFeedback(noteIndex); // 음을 재생하고 피드백을 표시
+      },
+      child: Container(
+        width: 60, // 버튼의 너비 설정
+        height: 50, // 버튼의 높이 설정
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(buttonImages[noteIndex]), // 현재 이미지
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            buttonText,
+            style: TextStyle(
+              color: Colors.black, // 텍스트 색상
+              fontSize: 16, // 텍스트 크기
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _playNoteAndShowFeedback(int noteIndex) {
+    // 각 음의 파일 경로를 설정합니다.
+    List<String> notePaths = [
+      'assets/audio/C.mp3',
+      'assets/audio/D.mp3',
+      'assets/audio/E.mp3',
+      'assets/audio/F.mp3',
+      'assets/audio/G.mp3',
+      'assets/audio/A.mp3',
+      'assets/audio/B.mp3',
+      'assets/audio/CC.mp3',
+    ];
+
+    // 음을 재생합니다.
+    final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
+    audioPlayer.open(Audio(notePaths[noteIndex]));
+
+    // 버튼 이미지 변경
+    setState(() {
+      buttonImages[noteIndex] = 'assets/images/note.png'; // note 이미지로 변경
+    });
+
+    // 1초 후에 원래 이미지로 복구
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        buttonImages[noteIndex] = 'assets/images/orangenote.png'; // orangenote 이미지로 복구
+      });
+    });
+  }
+
+  void userTapped(String note) {
+    userInput.add(note); // 사용자가 입력한 음 추가
+    checkUserInput(); // 입력 확인
+  }
+
+    void checkUserInput() {
+    if (userInput.length > melodies[currentMelodyIndex].length) {
+      // 사용자의 입력이 멜로디 길이를 초과하면 다시 초기화
+      userInput = [];
+      return;
+    }
+
+    for (int i = 0; i < userInput.length; i++) {
+      if (userInput[i] != melodies[currentMelodyIndex][i]) {
+        // 잘못된 입력일 경우
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('오답입니다!'),
+              content: Text('멜로디를 다시 시도해 주세요.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    userInput = []; // 입력 초기화
+                  },
+                  child: Text('확인'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+    }
+
+    // 모든 입력이 맞는 경우
+    if (userInput.length == melodies[currentMelodyIndex].length) {
+      if (currentMelodyIndex < melodies.length - 1) {
+        // 다음 멜로디로 이동
+        setState(() {
+          currentMelodyIndex++;
+          userInput = [];
+        });
+
+        // 1초 후에 다음 마디 시작
+        Future.delayed(Duration(seconds: 1), () {
+          playMelody(); // 다음 마디 재생
+        });
+
+      } else {
+        // 모든 멜로디 성공
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('모든 멜로디 성공!'),
+              content: Text('축하합니다! 모든 멜로디를 성공적으로 재생했습니다.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pop(context); // 메인 화면으로 이동
+                  },
+                  child: Text('확인'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+    }
 }
