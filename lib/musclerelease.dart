@@ -134,6 +134,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   String _notificationText = ''; // 실패 알림 텍스트를 담는 변수
   String _successnotificationText=''; //성공 텍스트를 담는 변수
 
+  // 원의 크기를 저장할 변수
+  double _circleSize = 60.0; // 초기 원 크기
+  Offset _circlePosition = Offset(0, 0); // 초기 위치
 
   List<String> dialogues = [
     '문찌가 화를 내다가 다리가 다 꼬였어\n 근육을 풀어줘야 할 것 같아',
@@ -155,6 +158,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
     '방금은 도움이 하나도 안 됐어!',
     '저리가!',
   ]; 
+
 
   @override
   void initState() {
@@ -200,6 +204,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   void startCountdown() {
     setState(() {
       countdown = 7;
+      _circleSize = 60.0; // 원의 크기를 초기화
     });
 
     _countdownTimer?.cancel();
@@ -208,6 +213,10 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
       if (countdown > 0) {
         setState(() {
           countdown--;
+          // 7초가 끝날 때 원을 0으로 만들기
+          if (countdown == 0) {
+            _circleSize = 0;
+          }
         });
       } else {
         timer.cancel();
@@ -219,7 +228,6 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
       }
     });
   }
-
 
   void updateStars() {
     if (successCount >= 4) {
@@ -247,9 +255,24 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
           setState(() {
             isLongPressed = true;
             _startPosition = details.globalPosition;
+            _circlePosition = _startPosition; // 원의 위치도 터치 시작 위치로 설정
             startCountdown();
           });
         },
+        onLongPressMoveUpdate: (details) {
+          if (isLongPressed) {
+            setState(() {
+              // 터치 위치에 따라 원의 위치 업데이트
+              _circlePosition = details.localPosition;
+              // countdown이 0보다 클 때만 크기 변화
+              if (countdown > 0) {
+                // 7초 동안 누를 때마다 원이 커짐
+                _circleSize = 60 + (90 * (1 - (countdown / 7)));
+              }
+            });
+          }
+        },
+
         onLongPressEnd: (details) {
           if (isLongPressed) {
             double verticalDistance = details.globalPosition.dy - _startPosition.dy;
@@ -298,9 +321,11 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
 
             setState(() {
               isLongPressed = false;
+            _circleSize = 0; // 손을 떼면 원을 없앰
             });
           }
         },
+
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
@@ -313,6 +338,24 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 ),
               ),
             ),
+
+            // 터치한 위치에 원을 그리는 부분
+            Positioned(
+              left: _circlePosition.dx - _circleSize / 2,
+              top: _circlePosition.dy - _circleSize / 2,
+              child: Container(
+                width: _circleSize,
+                height: _circleSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.yellow,  // 테두리 색상
+                    width: 4.0,  // 테두리 두께
+                  ),
+                ),
+              ),
+            ),
+
             // 중앙에 문어 이미지를 표시
             Positioned(
               child: Center(
