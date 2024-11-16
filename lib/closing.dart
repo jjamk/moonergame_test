@@ -89,6 +89,7 @@ class _DialogueGameState extends State<DialogueGame> {
                         fit: BoxFit.cover,
                       ),
                     ),
+                    
                     child: Center(
                       child: Text(
                         messages[_currentMessageIndex],
