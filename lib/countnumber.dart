@@ -402,7 +402,7 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
             top: 120,
             child: Stack(
               children: <Widget>[
-                Image.asset('assets/images/speechbubble.png',
+                SvgPicture.asset('assets/images/speech_bubble.svg',
                     width: 100, height: 100, fit: BoxFit.cover),
                 Positioned(
                   left: 30,
@@ -752,7 +752,7 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
             top: 120,
             child: Stack(
               children: <Widget>[
-                Image.asset('assets/images/speechbubble.png',
+                SvgPicture.asset('assets/images/speech_bubble.svg',
                     width: 100, height: 100, fit: BoxFit.cover),
                 Positioned(
                   left: 30,

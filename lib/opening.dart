@@ -33,7 +33,7 @@ class _DialogueGameState extends State<DialogueGame> {
     "button": "아하"},
     {"text": "어부\n 근데 내 소개를 들었으면 너도 얘기해야지.\n 넌 누군데?", 
     "button": "응 나는 말이야.."},
-    {"text": "어부\n 아~. 이구나. 일단 환영해! \n 어디 갈 곳은 있어?", 
+    {"text": "어부\n 아~. 이구나. \n 일단 환영해! \n 어디 갈 곳은 있어?", 
     "button": "아니.."},
     {"text": "어부\n 아…. 갈 곳이 없어?", 
     "button": "응"},
@@ -143,21 +143,48 @@ Widget build(BuildContext context) {
                     fit: BoxFit.cover,
                   ),
                 ),
-              ] else ...[
+              ]
+
+              else ...[
                 // 기본 대화 UI
-                SvgPicture.asset(
-                  'assets/images/fisherman_front.svg',
-                  width: 250,
-                  height: 250,
-                  fit: BoxFit.cover,
-                ),
+                // SvgPicture.asset(
+                //   'assets/images/fisherman_front.svg',
+                //   width: 250,
+                //   height: 250,
+                //   fit: BoxFit.cover,
+                // ),
+
+                if(scriptIndex == 0) ...<Widget>[
+                  SvgPicture.asset(
+                    'assets/images/fisherman_shadow.svg',
+                    width: 250,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  )
+                ]              
+                else if(scriptIndex == 1) ...<Widget>[
+                  SvgPicture.asset(
+                    'assets/images/fisherman_shadow.svg',
+                    width: 250,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  )
+                ]
+                else...[
+                  SvgPicture.asset(
+                    'assets/images/fisherman_front.svg',
+                    width: 250,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  ),
+                ],                 
                 SizedBox(height: 16.0),
                 Stack(
                   children: [
                     // dialog_background 이미지
                     Container(
                       width: MediaQuery.of(context).size.width * 2,
-                      height: 130,
+                      height: 150,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("assets/images/dialog_background.png"),

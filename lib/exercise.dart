@@ -1,4 +1,4 @@
-//복싱 줄넘기 아령
+//복싱 덤벨 스쿼트
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,19 +47,19 @@ class ExerciseSelectionScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/boxing');
                 },
-                child: Text('복싱하기'),
+                child: Text('복싱'),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/jumpRope');
                 },
-                child: Text('줄넘기하기'),
+                child: Text('스쿼트'),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/dumbel');
                 },
-                child: Text('아령하기'),
+                child: Text('뎀벨'),
               ),
             ],
           ),
@@ -391,7 +391,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
   }
 }
 
-//줄넘기
+//스쿼트
 class JumpRopeGameScreen extends StatefulWidget {
   @override
   _JumpRopeGameScreenState createState() => _JumpRopeGameScreenState();
@@ -546,7 +546,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
               left: 150, 
               top: 65, 
               child: Text(
-                '운동하기 - 줄넘기', 
+                '운동하기 - 스쿼트', 
                 style: TextStyle(
                   fontSize: 18, 
                   fontWeight: FontWeight.bold, 
@@ -844,7 +844,7 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
               left: 150, 
               top: 65, 
               child: Text(
-                '운동하기 - 아령', 
+                '운동하기 - 덤벨', 
                 style: TextStyle(
                   fontSize: 18, 
                   fontWeight: FontWeight.bold, 
