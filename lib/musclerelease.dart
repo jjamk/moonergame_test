@@ -141,7 +141,8 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   List<String> dialogues = [
     '문찌가 화를 내다가 다리가 다 꼬였어\n 근육을 풀어줘야 할 것 같아',
     '꼬인 다리는 급하게 풀려고 하면 더 안 풀려! \n 힘을 천천히 줬다가 한번에 툭!하고 풀어보자',
-    '문찌의 다리르 7초 동안 꾹 눌렀다가 아래로 툭 내려서 힘을 풀어줄거야. \n 한번 해보자',
+    '문찌의 다리를 7초 동안 꾹 눌렀다가 아래로 툭 내려서 힘을 풀어줄거야. \n 한번 해보자'
+    '꾹 눌러서 문찌가 팔에 힘을 주게 할거야!',
   ];
 
    //성공 메시지 목록
@@ -177,7 +178,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
 
   void startGame() {
     setState(() {
-      isGameActive = true;
+      isGameActive = true; //게임시작
     });
   }
 
@@ -252,6 +253,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
     return Scaffold(
       body: GestureDetector(
         onLongPressStart: (details) {
+
+          if (isDialogueActive) return;  // 대화가 끝나지 않았다면 동작을 막음
+
           setState(() {
             isLongPressed = true;
             _startPosition = details.globalPosition;
@@ -260,6 +264,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
           });
         },
         onLongPressMoveUpdate: (details) {
+          if (isDialogueActive) return;  // 대화가 끝나지 않았다면 동작을 막음
+
+
           if (isLongPressed) {
             setState(() {
               // 터치 위치에 따라 원의 위치 업데이트
@@ -274,6 +281,8 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
         },
 
         onLongPressEnd: (details) {
+          if (isDialogueActive) return;  // 대화가 끝나지 않았다면 동작을 막음
+
           if (isLongPressed) {
             double verticalDistance = details.globalPosition.dy - _startPosition.dy;
 
@@ -281,7 +290,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
               setState(() {
                 successCount++;
                 _isFailed = false; // 성공 시 실패 상태 해제
-                // _isSuccess = true;
+                _isSuccess = true;
                 _notificationText = ''; // 성공 시 알림 텍스트 제거
                 _successnotificationText = successMessages[successCount - 1]; // 성공 메시지 출력                                
 
@@ -302,6 +311,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
               setState(() {
                 failCount++;
                 _isFailed = true; // 실패 상태 설정
+                _isSuccess = false; // 실패 시 성공 상태 해제
                 // 실패 시 프로그레스바 감소
                 _progress -= 0.25;  // 4번 시도 중 한 번 실패하면 25% 감소
                 if (_progress < 0) _progress = 0;
@@ -359,16 +369,29 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             // 중앙에 문어 이미지를 표시
             Positioned(
               child: Center(
-                child: SvgPicture.asset('assets/images/3angry_mooner_o.svg',
-                     width: 200, height: 270, fit: BoxFit.cover),
+                child: SvgPicture.asset(
+                  _isFailed
+                      ? 'assets/images/3angry_mooner_o.svg' // 실패 시 이미지
+                      : _isSuccess
+                          ? (successCount == 1
+                              ? 'assets/images/2angry_mooner_o.svg' // 첫 번째 성공 시 이미지
+                              : successCount == 2
+                                  ? 'assets/images/1angry_mooner_o.svg' // 두 번째 성공 시 이미지
+                                  : 'assets/images/normal_mooner_o.svg') // 세 번째 성공 이후 이미지
+                          : 'assets/images/3angry_mooner_x.svg', // 기본 이미지
+                  width: 200,
+                  height: 270,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
+
             //성공 알림 텍스트 표시
             if (_successnotificationText.isNotEmpty)
               Align(
                 alignment: Alignment.bottomCenter,
                 child: GestureDetector(
-                // onTap: nextDialogue,
+                //onTap: nextDialogue,
                 child: Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
