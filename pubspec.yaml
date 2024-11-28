@@ -91,14 +91,11 @@ flutter:
     - assets/images/bend.png
     - assets/images/wound.png
     - assets/images/bandage.png
-    - assets/images/new_mooner.svg #새로운 문어
     - assets/images/bg_home.png
-    - assets/images/new_mooner.png #새로운 문어
     - assets/images/anger_mooner.gif #화난 문어
     - assets/images/mooner.png
     - assets/images/bg_stage.png #바꾼 배경
     - assets/images/hook.png
-    - assets/images/speechbubble.png
     - assets/images/stage_background.png
     - assets/images/result_background.png
     - assets/json/animation_example.json
@@ -113,18 +110,41 @@ flutter:
     - assets/audio/G.mp3
     - assets/audio/CC.mp3
     - assets/audio/bgm_test.mp3
-    - assets/images/normal_mooner_x.png #진짜 새 문어
     - assets/audio/boxing.mp3
+
+    - assets/images/1angry_mooner_o.svg
+    - assets/images/1angry_mooner_x.svg 
+    - assets/images/2angry_mooner_o.svg 
+    - assets/images/2angry_mooner_x.svg 
+    - assets/images/3angry_mooner_o.svg 
+    - assets/images/3angry_mooner_x.svg 
+
+    - assets/images/normal_mooner_o.svg 
+    - assets/images/normal_mooner_x.svg
+
+    - assets/images/fisherman_front.svg
+    - assets/images/fisherman_shadow.svg
+
+    - assets/images/boxing.svg
+    - assets/images/dumbbell.svg
+
+    - assets/images/speech_bubble.svg
+
+
+    - assets/images/normal_mooner_x.png #진짜 새 문어
     - assets/images/result_background.png
-    - assets/images/bg_secret.png
+    - assets/images/big_ink.svg #먹물
+    - assets/images/bg_openclosing.png #오프닝클로징 배경
+    - assets/images/bg_secret.png #해변의 비밀 배경
     - assets/images/scroll_background.png
-    - assets/images/bottle.png
+    - assets/images/bottle.png #병
     - assets/images/dialog_background.png
-    - assets/images/fisher.png
-    - assets/images/jellyfish.png
-    - assets/images/star.png
     - assets/images/note.png
     - assets/images/orangenote.png
+    - assets/images/fisher.png #어부
+    - assets/images/jellyfish.png #해파리
+    - assets/images/star.png #별
+    - assets/images/correct.png # O표시
 
 
   fonts:
