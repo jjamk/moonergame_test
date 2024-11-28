@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1920">
+  <defs>
+    <radialGradient id="_무제_그라디언트_32" data-name="무제 그라디언트 32" cx="1068.38" cy="1231.13" fx="1068.38" fy="1231.13" r="640.25" gradientTransform="translate(-519.44 -141.81) scale(1.33 .89)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
+      <stop offset=".41" stop-color="#fefefe" stop-opacity=".31"/>
+      <stop offset=".56" stop-color="#fcfdfe" stop-opacity=".34"/>
+      <stop offset=".66" stop-color="#f9fafc" stop-opacity=".39"/>
+      <stop offset=".75" stop-color="#f4f6fb" stop-opacity=".46"/>
+      <stop offset=".82" stop-color="#eef2f8" stop-opacity=".56"/>
+      <stop offset=".88" stop-color="#e7ecf5" stop-opacity=".68"/>
+      <stop offset=".94" stop-color="#dee5f2" stop-opacity=".82"/>
+      <stop offset=".99" stop-color="#d4ddee" stop-opacity=".97"/>
+      <stop offset="1" stop-color="#d3dcee"/>
+    </radialGradient>
+    <radialGradient id="_무제_그라디언트_28" data-name="무제 그라디언트 28" cx="1671.32" cy="1393.08" fx="1671.32" fy="1393.08" r="76.89" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
+      <stop offset=".26" stop-color="#fefefe" stop-opacity=".31"/>
+      <stop offset=".42" stop-color="#fcfcfd" stop-opacity=".35"/>
+      <stop offset=".55" stop-color="#f8f9fc" stop-opacity=".41"/>
+      <stop offset=".67" stop-color="#f2f5fa" stop-opacity=".5"/>
+      <stop offset=".77" stop-color="#ebeff7" stop-opacity=".61"/>
+      <stop offset=".87" stop-color="#e2e8f4" stop-opacity=".75"/>
+      <stop offset=".96" stop-color="#d8e0f0" stop-opacity=".91"/>
+      <stop offset="1" stop-color="#d3dcee"/>
+    </radialGradient>
+    <radialGradient id="_무제_그라디언트_28-2" data-name="무제 그라디언트 28" cx="1819.98" cy="1481.51" fx="1819.98" fy="1481.51" r="48.7" xlink:href="#_무제_그라디언트_28"/>
+  </defs>
+  <ellipse cx="904.87" cy="960" rx="853.54" ry="573" fill="url(#_무제_그라디언트_32)" stroke-width="0"/>
+  <circle cx="1671.32" cy="1393.08" r="76.89" fill="url(#_무제_그라디언트_28)" stroke-width="0"/>
+  <ellipse cx="1631.12" cy="1348.08" rx="15.08" ry="10.88" transform="translate(-465.18 1636.87) rotate(-47.42)" fill="#fff" stroke-width="0"/>
+  <circle cx="1819.98" cy="1481.51" r="48.7" fill="url(#_무제_그라디언트_28-2)" stroke-width="0"/>
+  <ellipse cx="1798.12" cy="1460.08" rx="15.08" ry="10.88" transform="translate(-493.65 1796.05) rotate(-47.42)" fill="#fff" stroke-width="0"/>
+</svg>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_1" data-name="레이어_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1920">
+  <rect x="1186.25" y="797.33" width="64" height="325.35" rx="30" ry="30" fill="#ddd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <polygon points="965.25 840.35 954.25 840.35 733.25 840.35 733.25 1079.65 954.25 1079.65 965.25 1079.65 1186.25 1079.65 1186.25 840.35 965.25 840.35" fill="#303030" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <path d="M287.75,840.35h51.22c16.56,0,30,13.44,30,30v179.31c0,16.56-13.44,30-30,30h-51.22v-239.31h0Z" transform="translate(656.72 1920) rotate(180)" fill="#ddd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <rect x="669.25" y="797.33" width="64" height="325.35" rx="30" ry="30" transform="translate(1402.5 1920) rotate(180)" fill="#ddd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <rect x="368.97" y="646.75" width="300.28" height="626.5" rx="30" ry="30" transform="translate(1038.22 1920) rotate(180)" fill="#303030" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <path d="M1551.03,840.35h51.22c16.56,0,30,13.44,30,30v179.31c0,16.56-13.44,30-30,30h-51.22v-239.31h0Z" fill="#ddd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <rect x="1250.75" y="646.75" width="300.28" height="626.5" rx="30" ry="30" fill="#303030" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+</svg>

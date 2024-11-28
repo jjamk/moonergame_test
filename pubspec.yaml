@@ -96,7 +96,6 @@ flutter:
     - assets/images/mooner.png
     - assets/images/bg_stage.png #바꾼 배경
     - assets/images/hook.png
-    - assets/images/speechbubble.png
     - assets/images/stage_background.png
     - assets/images/result_background.png
     - assets/json/animation_example.json
@@ -123,10 +122,20 @@ flutter:
     - assets/images/normal_mooner_o.svg 
     - assets/images/normal_mooner_x.svg
 
+    - assets/images/fisherman_front.svg
+    - assets/images/fisherman_shadow.svg
+
+    - assets/images/boxing.svg
+    - assets/images/dumbbell.svg
+
+    - assets/images/speech_bubble.svg
+
+
     - assets/images/normal_mooner_x.png #진짜 새 문어
     - assets/images/result_background.png
-    - assets/images/ink.png #먹물
+    - assets/images/big_ink.svg #먹물
     
+    - assets/images/bg_openclosing.png #오프닝클로징 배경
     - assets/images/bg_secret.png #해변의 비밀 배경
     - assets/images/scroll_background.png
     - assets/images/bottle.png #병
@@ -135,7 +144,7 @@ flutter:
     - assets/images/jellyfish.png #해파리
     - assets/images/star.png #별
     - assets/images/correct.png # O표시
-    - assets/images/incorrect.png # X표시
+
 
   fonts:
     - family: BMJUA

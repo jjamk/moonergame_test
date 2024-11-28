@@ -1,10 +1,12 @@
-//복싱 줄넘기 아령
+//복싱 덤벨 스쿼트
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sensors/sensors.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 
 void main() => runApp(ExerciseGameApp());
@@ -30,9 +32,6 @@ class ExerciseSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('운동 선택'),
-      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -48,19 +47,19 @@ class ExerciseSelectionScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/boxing');
                 },
-                child: Text('복싱하기'),
+                child: Text('복싱'),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/jumpRope');
                 },
-                child: Text('줄넘기하기'),
+                child: Text('스쿼트'),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/dumbel');
                 },
-                child: Text('아령하기'),
+                child: Text('뎀벨'),
               ),
             ],
           ),
@@ -87,7 +86,7 @@ class StarWidget extends StatelessWidget {
         } else {
           return Icon(
             Icons.star_border,
-            color: Colors.grey,
+            //color: Colors.grey,
           );
         }
       }),
@@ -95,6 +94,7 @@ class StarWidget extends StatelessWidget {
   }
 }
 
+//복싱
 class BoxingGameScreen extends StatefulWidget {
   @override
   _BoxingGameScreenState createState() => _BoxingGameScreenState();
@@ -113,7 +113,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
   late AudioPlayer _audioPlayer;
 
   List<String> dialogues = [
-    "30초 안에 20개를 채우면 너문어를 진정시킬 수 있어!",
+    "30초 안에 20개를 채우면 문찌를 진정시킬 수 있어!",
     "이제 한 번 시작해볼까?",
   ];
 
@@ -129,9 +129,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
       dialogueIndex++;
       if (dialogueIndex >= dialogues.length) {
         isDialogueActive = false;
-        startGame();
+        startGame(); //다이얼로그가 끝나면 게임 시작
         _startTimer();
-
       }
     });
   }
@@ -252,54 +251,79 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
               ),
             ),
           ),
+            Positioned(
+              left: 150, 
+              top: 65, 
+              child: Text(
+                '운동하기-복싱', 
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold, 
+                  color: Colors.black),)),
+                  // 별 프로그레스 바
+                  Positioned(
+                    left: 30,
+                    top: 150,
+                    child: Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            child: SimpleAnimationProgressBar(
+                              height: 30,
+                              width: 300,
+                              backgroundColor: Colors.grey,
+                              foregrondColor: Colors.red,
+                              ratio: (exCount / 30).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              //ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              direction: Axis.horizontal,
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              duration: const Duration(seconds: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              gradientColor: const LinearGradient(
+                                colors: [Colors.red, Colors.orange],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: -45,
+                            top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            left: 105,
+                            top: -40, // 중앙 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            right: -45,
+                            top: -40, // 오른쪽 끝 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ), 
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
               child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
                   width: 200, height: 270, fit: BoxFit.cover),
-            ),
-          ),
-          if (!isGameActive && !isDialogueActive)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Game Over',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                    ElevatedButton(
-                      onPressed: restartGame,
-                      child: Text('다시하기'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          Positioned(
-            top: 10,
-            left: 50,
-            right: 0,
-            child: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  StarWidget(stars),
-                ],
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    print('Settings button pressed');
-                  },
-                ),
-              ],
             ),
           ),
           if (isDialogueActive) // 대화 창 표시
@@ -312,18 +336,20 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Image.asset(
-                      'assets/images/fisher.png',
-                      width: 130, // Set the width as needed
-                      height: 130, // Set the height as needed
+                    children: [SvgPicture.asset(
+                      'assets/images/fisherman_front.svg',
+                      width: 120, // Set the width as needed
+                      height: 120, // Set the height as needed
                       fit: BoxFit.cover,), // Add some space between the image and the dialog background
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.all(50),
+                          width: 200,
+                          height: 130,
+                          padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/dialog_background.png"),
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           child: Text(
@@ -337,38 +363,35 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                   ),
                 ),
                 ),
+              ),          
+              Positioned(
+                top: 200,
+                right: 20,
+                child: Text(
+                  '남은 시간: $_countDown 초',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
-          Positioned(
-            top: 20,
-            right: 20,
-            child: Text(
-              '남은 시간: $_countDown 초',
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
-          ),
-          Positioned(
-            bottom: 50,
-            left: MediaQuery.of(context).size.width / 2 - 150,
-            child: Column(
-              children: <Widget>[
-                Text(
-                  '운동 횟수:',
-                  style: TextStyle(fontSize: 24.0),
+              Positioned(
+                top: 220,
+                //left: MediaQuery.of(context).size.width / 2 - 150,
+                right: 20,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      '운동 횟수: $exCount', 
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ],
                 ),
-                Text(
-                  '$exCount',
-                  style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }
 
-
+//스쿼트
 class JumpRopeGameScreen extends StatefulWidget {
   @override
   _JumpRopeGameScreenState createState() => _JumpRopeGameScreenState();
@@ -460,8 +483,6 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
     });
   }
 
-
-
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_countDown == 0) {
@@ -513,7 +534,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
             left: 36,
             top: 65,
             child: Text(
-              '#stage 3',
+              '#stage 6',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -521,6 +542,74 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
               ),
             ),
           ),
+            Positioned(
+              left: 150, 
+              top: 65, 
+              child: Text(
+                '운동하기 - 스쿼트', 
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold, 
+                  color: Colors.black),)),
+                  // 별 프로그레스 바
+                  Positioned(
+                    left: 30,
+                    top: 150,
+                    child: Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            child: SimpleAnimationProgressBar(
+                              height: 30,
+                              width: 300,
+                              backgroundColor: Colors.grey,
+                              foregrondColor: Colors.red,
+                              ratio: (jumpCount / 30).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              //ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              direction: Axis.horizontal,
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              duration: const Duration(seconds: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              gradientColor: const LinearGradient(
+                                colors: [Colors.red, Colors.orange],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: -45,
+                            top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            left: 105,
+                            top: -40, // 중앙 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            right: -45,
+                            top: -40, // 오른쪽 끝 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),          
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
@@ -532,51 +621,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
               ),
             ),
           ),
-          // 게임 종료 화면
-          if (!isGameActive)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Game Over',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                    ElevatedButton(
-                      onPressed: restartGame,
-                      child: Text('다시하기'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          // 앱 바
-          Positioned(
-            top: 10,
-            left: 50,
-            right: 0,
-            child: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  StarWidget(stars),
-                ],
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    print('Settings button pressed');
-                  },
-                ),
-              ],
-            ),
-          ),
+
           if (isDialogueActive) // 대화 창 표시
               Align(
                 alignment: Alignment.bottomCenter,
@@ -587,18 +632,20 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Image.asset(
-                      'assets/images/fisher.png',
-                      width: 130, // Set the width as needed
-                      height: 130, // Set the height as needed
+                    children: [SvgPicture.asset(
+                      'assets/images/fisherman_front.svg',
+                      width: 120, // Set the width as needed
+                      height: 120, // Set the height as needed
                       fit: BoxFit.cover,), // Add some space between the image and the dialog background
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.all(50),
+                          width: 200,
+                          height: 130,
+                          padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/dialog_background.png"),
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           child: Text(
@@ -613,32 +660,27 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                 ),
                 ),
               ),
-          // 남은 시간 표시
-          Positioned(
-            top: 20,
-            right: 20,
-            child: Text(
-              '남은 시간: $_countDown 초',
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
-          ),
-          // 점프 수 표시
-          Positioned(
-            bottom: 50,
-            left: MediaQuery.of(context).size.width / 2 - 150,
-            child: Column(
-              children: <Widget>[
-                Text(
-                  '점프 수:',
-                  style: TextStyle(fontSize: 24.0),
+              Positioned(
+                top: 200,
+                right: 20,
+                child: Text(
+                  '남은 시간: $_countDown 초',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                Text(
-                  '$jumpCount',
-                  style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+              ),
+              Positioned(
+                top: 220,
+                //left: MediaQuery.of(context).size.width / 2 - 150,
+                right: 20,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      '운동 횟수: $jumpCount', 
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
         ],
       ),
     );
@@ -798,6 +840,74 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
               ),
             ),
           ),
+            Positioned(
+              left: 150, 
+              top: 65, 
+              child: Text(
+                '운동하기 - 덤벨', 
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold, 
+                  color: Colors.black),)),
+                  // 별 프로그레스 바
+                  Positioned(
+                    left: 30,
+                    top: 150,
+                    child: Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            child: SimpleAnimationProgressBar(
+                              height: 30,
+                              width: 300,
+                              backgroundColor: Colors.grey,
+                              foregrondColor: Colors.red,
+                              ratio: (dumbelcount / 30).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              //ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              direction: Axis.horizontal,
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              duration: const Duration(seconds: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              gradientColor: const LinearGradient(
+                                colors: [Colors.red, Colors.orange],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: -45,
+                            top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            left: 105,
+                            top: -40, // 중앙 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                          Positioned(
+                            right: -45,
+                            top: -40, // 오른쪽 끝 별 이미지의 위치
+                            child: Image.asset(
+                              'assets/images/star.png', // 별 이미지 경로
+                              width: 110,
+                              height: 110,
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),          
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
@@ -805,50 +915,7 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                   width: 200, height: 270, fit: BoxFit.cover),
             ),
           ),
-          if (!isGameActive && !isDialogueActive)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Game Over',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                    ElevatedButton(
-                      onPressed: restartGame,
-                      child: Text('다시하기'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          Positioned(
-            top: 10,
-            left: 50,
-            right: 0,
-            child: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  StarWidget(stars),
-                ],
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              automaticallyImplyLeading: false, // 이 부분을 추가하여 뒤로가기 화살표 없앰
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    print('Settings button pressed');
-                  },
-                ),
-              ],
-            ),
-          ),
-          if (isDialogueActive) // 대화 창 표시
+            if (isDialogueActive) // 대화 창 표시
               Align(
                 alignment: Alignment.bottomCenter,
                 child: GestureDetector(
@@ -858,18 +925,20 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Image.asset(
-                      'assets/images/fisher.png',
-                      width: 130, // Set the width as needed
-                      height: 130, // Set the height as needed
+                    children: [SvgPicture.asset(
+                      'assets/images/fisherman_front.svg',
+                      width: 120, // Set the width as needed
+                      height: 120, // Set the height as needed
                       fit: BoxFit.cover,), // Add some space between the image and the dialog background
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.all(50),
+                          width: 200,
+                          height: 130,
+                          padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/dialog_background.png"),
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           child: Text(
@@ -884,30 +953,27 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                 ),
                 ),
               ),
-          Positioned(
-            top: 20,
-            right: 20,
-            child: Text(
-              '남은 시간: $_countDown 초',
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
-          ),
-          Positioned(
-            bottom: 50,
-            left: MediaQuery.of(context).size.width / 2 - 150,
-            child: Column(
-              children: <Widget>[
-                Text(
-                  '운동 횟수:',
-                  style: TextStyle(fontSize: 24.0),
+              Positioned(
+                top: 200,
+                right: 20,
+                child: Text(
+                  '남은 시간: $_countDown 초',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                Text(
-                  '$dumbelcount',
-                  style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+              ),
+              Positioned(
+                top: 220,
+                //left: MediaQuery.of(context).size.width / 2 - 150,
+                right: 20,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      '운동 횟수: $dumbelcount', 
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
         ],
       ),
     );
@@ -923,24 +989,81 @@ class GameOverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Game Over'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '문어가 도망가버렸어요...',
-              style: TextStyle(fontSize: 24.0),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '//');
-              },
-              child: Text('홈으로 돌아가기'),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_stage.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Stack to place text and button inside the image
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  SvgPicture.asset(
+                    'assets/images/big_ink.svg',
+                    width: 600,
+                    height: 700,
+                    fit: BoxFit.contain,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'TRY \n AGAIN',
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10.0,
+                              color: Colors.black,
+                              offset: Offset(5.0, 5.0),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 5.0), // Space between text and button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewStage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('홈으로 돌아가기'),
+                      ),
+                      SizedBox(height: 5.0), // Space between buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ExerciseGameApp()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('광고보고 재도전하기'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -948,7 +1071,6 @@ class GameOverScreen extends StatelessWidget {
 }
 
 class GameWinScreen extends StatelessWidget {
-
   final VoidCallback restartGame;
 
   GameWinScreen(this.restartGame);
@@ -956,24 +1078,84 @@ class GameWinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('축하합니다!'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '문어의 화가 풀렸어요!',
-              style: TextStyle(fontSize: 24.0),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '//');
-              },
-              child: Text('다음 스테이지로...'),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_stage.png"), // 배경 이미지 추가
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Stack to place text and button inside the image
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/result_background.png',
+                    width: 400,
+                    height: 500,
+                    fit: BoxFit.contain,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30.0), // 텍스트 아래로 내리기 위해 여백 추가
+                        child: Text(
+                          '! STAGE CLEAR !',
+                          style: TextStyle(
+                            fontSize: 30.0, // Adjust the font size as needed
+                            color: Colors.white, // Text color
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 10.0,
+                                color: Colors.black,
+                                offset: Offset(5.0, 5.0),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 5.0), // Space between text and button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewStage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('다음 스테이지로'),
+                      ),
+                      SizedBox(height: 5.0), // Space between buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ExerciseGameApp()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
+                          minimumSize: Size(80, 20), // Reduce button size
+                        ),
+                        child: Text('광고보고 재도전하기'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
