@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:mooner_interface/countnumber.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mooner_interface/stage.dart';
@@ -95,6 +96,7 @@ class _DialogueGameState extends State<DialogueGame> {
               onPressed: () {
               // 사용자가 입력한 텍스트를 다음 스크립트 텍스트로 설정
               String userInput = _textEditingController.text;
+
               // 다음 대화 스크립트 인덱스 확인 및 업데이트
               int nextScriptIndex = scriptIndex + 1;
               if (nextScriptIndex < script.length) {
@@ -104,8 +106,18 @@ class _DialogueGameState extends State<DialogueGame> {
                   scriptIndex++;
                 });
               }
+
               Navigator.of(context).pop(); // 다이얼로그 닫기
               _textEditingController.clear(); // 입력 필드 초기화
+
+              // 이름을 SpeakableCountNumberGameScreen으로 전달
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => SpeakableCountNumberGameScreen(userInput: userInput),
+              //   ),
+              // );
+
             },
             ),
           ],

@@ -9,15 +9,107 @@ import 'dart:async';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 
-void main() => runApp(CountNumberGameApp());
+class BackgroundScreen extends StatefulWidget {
+  final VoidCallback onBackgroundTap; // 배경 클릭 시 호출되는 콜백 함수
+
+  BackgroundScreen({required this.onBackgroundTap});
+
+  @override
+  _BackgroundScreenState createState() => _BackgroundScreenState();
+}
+
+class _BackgroundScreenState extends State<BackgroundScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          // 배경 이미지(bg_stage.png)
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg_stage.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // 클릭 가능한 result_background.png
+          GestureDetector(
+            onTap: widget.onBackgroundTap,
+            child: Stack(
+              alignment: Alignment.center, // 텍스트를 이미지 중앙에 위치
+              children: [
+                // result_background.png 이미지
+                Container(
+                  width: 400, 
+                  height: 300, 
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/result_background.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                // 이미지 위에 표시할 텍스트
+                Positioned(
+                  top: 135, 
+                  child: Text(
+                    'STAGE 6', 
+                    style: TextStyle(
+                      fontSize: 25, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 165, 
+                  child: Text(
+                    '숫자세기', 
+                    style: TextStyle(
+                      fontSize: 25, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 200, 
+                  child: Text(
+                    '\t 하나~ 둘~ 셋~ \n 문찌를 차분하게 달래주자', 
+                    style: TextStyle(
+                      fontSize: 20, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class CountNumberGameApp extends StatelessWidget {
   @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'BMJUA'),
-      home: ChoiceScreen(),
+      home: BackgroundScreen(
+        onBackgroundTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChoiceScreen(),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -46,7 +138,7 @@ class ChoiceScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SpeakableCountNumberGameScreen()),
+                    MaterialPageRoute(builder: (context) => SpeakableCountNumberGameScreen(userInput: '')),
                   );
                 },
                 child: Text('I can speak'),
@@ -93,6 +185,11 @@ class StarWidget extends StatelessWidget {
 }
 
 class SpeakableCountNumberGameScreen extends StatefulWidget {
+
+  final String userInput; // 사용자 입력 값 추가
+
+  SpeakableCountNumberGameScreen({required this.userInput});
+
   @override
   _SpeakableCountNumberGameScreenState createState() => _SpeakableCountNumberGameScreenState();
 }
@@ -109,16 +206,20 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
   final TextEditingController _controller = TextEditingController();
   late Timer _timer;
   int _remainingTime = 180; // 3분
-
-  List<String> dialogues = [
-    "3분 안에 10개 이상 성공하면 돼",
-    "이제 한 번 시작해볼까?",
-  ];
+  List<String> dialogues = []; // 대화 스크립트
 
   @override
   void initState() {
     super.initState();
     _speech = stt.SpeechToText();
+
+    // 사용자 이름 포함한 대화 스크립트 초기화
+    dialogues = [
+      "어부\n 문찌가 말하는 숫자를 똑같이 \n 말하면서 문찌를 달래줄거야.",
+      "어부\n 예를 들어 문찌가 1이라고 말했다면 \n ${widget.userInput}도 1이라고 말해야 해.",
+      "어부\n 명심해! \n 꼭 같은 숫자를 말해야 하는 것을!!",
+      "어부\n 자, 그럼 이제 시작할게."
+    ];
   }
 
   @override
@@ -194,6 +295,7 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                 recognizedNumber = '3';
                 break;
               case '넷':
+              case '네':
               case '사':
               case '4':
                 recognizedNumber = '4';
@@ -481,7 +583,7 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                           ),
                           child: Text(
                           dialogues[dialogueIndex],
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                           textAlign: TextAlign.center,
                           ),
                         ),
@@ -522,13 +624,12 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
   int dialogueIndex = 0;
   int _bubbleNumber = 1;
   late Timer _timer;
-  int _remainingTime = 180;
+  int _remainingTime = 60;
   List<int> _numberPad = List.generate(10, (index) => index + 1);
 
   List<String> dialogues = [
-    "화면에 있는 숫자와 같은 숫자를 찾아봐",
-    "3분 안에 10개 이상 성공하면 돼",
-    "이제 한 번 시작해볼까?",
+    "어부\n 랜덤하게 나오는 키보드를 사용해서 \n 문찌가 말하는 숫자를 \n 따라서 입력해주면 돼",
+    "어부\n 자, 그럼 이제 시작할게",
   ];
 
   @override
@@ -772,42 +873,38 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
 
           // 중앙 하단에 숫자 키패드 표시
           Positioned(
-            bottom: 50,
+            bottom: 20,
             left: 0,
             right: 0,
             child: Column(
               children: [
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 4; i++) // 4개의 행으로 나누어 키패드 생성
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      for (int j = 0; j < 3; j++)
+                      for (int j = 0; j < 3; j++) // 각 행에 3개의 숫자 버튼을 배치
                         if (i * 3 + j < _numberPad.length)
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(3.0),
                             child: ElevatedButton(
                               onPressed: () => _onNumberPress(_numberPad[i * 3 + j]),
                               child: Text(
                                 _numberPad[i * 3 + j].toString(),
                                 style: TextStyle(fontSize: 24),
                               ),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(60, 60), // 버튼 크기
+                                backgroundColor: Colors.transparent, // 배경을 투명하게
+                                elevation: 0, // 그림자 제거
+                              ),
+                            ),
                           ),
-                        ),
                     ],
                   ),
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: ElevatedButton(
-                //     onPressed: () => _onNumberPress(_numberPad[9]),
-                //     child: Text(
-                //       _numberPad[9].toString(),
-                //       style: TextStyle(fontSize: 24),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
+      
 
           if (isDialogueActive) // 대화 창 표시
               Align(
@@ -837,7 +934,7 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
                           ),
                           child: Text(
                           dialogues[dialogueIndex],
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                           textAlign: TextAlign.center,
                           ),
                         ),
