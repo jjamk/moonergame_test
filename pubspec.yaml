@@ -51,7 +51,7 @@ dependencies:
   flutter_state_notifier: ^1.0.0
   scribble: ^0.10.0+1
   shake: ^2.2.0
-  audioplayers: ^6.0.0
+  audioplayers: ^6.1.0
   flutter_switch: ^0.3.2
   bubble: ^1.2.1
 

@@ -133,23 +133,25 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   bool _isSuccess = false; //성공 상태를 나타내는 변수
   String _notificationText = ''; // 실패 알림 텍스트를 담는 변수
   String _successnotificationText=''; //성공 텍스트를 담는 변수
+  Offset _redCirclePosition = Offset(60, 420); // 초기 빨간색 원 위치
+
 
   // 원의 크기를 저장할 변수
   double _circleSize = 60.0; // 초기 원 크기
   Offset _circlePosition = Offset(0, 0); // 초기 위치
 
   List<String> dialogues = [
-    '문찌가 화를 내다가 다리가 다 꼬였어\n 근육을 풀어줘야 할 것 같아',
-    '꼬인 다리는 급하게 풀려고 하면 더 안 풀려! \n 힘을 천천히 줬다가 한번에 툭!하고 풀어보자',
-    '문찌의 다리를 7초 동안 꾹 눌렀다가 아래로 툭 내려서 힘을 풀어줄거야. \n 한번 해보자'
-    '꾹 눌러서 문찌가 팔에 힘을 주게 할거야!',
+    '어부\n 문찌가 화를 내다가 다리가 다 꼬였어\n 근육을 풀어줘야 할 것 같아',
+    '어부\n 꼬인 다리는 급하게 풀려고 하면 더 안 풀려! \n 힘을 천천히 줬다가 한번에 툭!하고 풀어보자',
+    '어부\n 문찌의 다리를 7초 동안 꾹 눌렀다가 아래로 툭 내려서 힘을 풀어줄거야. \n 한번 해보자'
+    '어부\n 꾹 눌러서 문찌가 팔에 힘을 주게 할거야!',
   ];
 
    //성공 메시지 목록
    List<String> successMessages = [
-    '잘했어!\n문찌의 화가 거의 누그러진 것 같은데?',
-    '문찌의 다른 팔들도 편하게 풀어줘 볼까?',
-    '좋아!\n문찌가 진정되는게 보여!',
+    '어부\n 잘했어!\n문찌의 화가 거의 누그러진 것 같은데?',
+    '어부\n 문찌의 다른 팔들도 편하게 풀어줘 볼까?',
+    '어부\n 좋아!\n문찌가 진정되는게 보여!',
     ''
    ];
 
@@ -242,6 +244,25 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
     }
   }
 
+    void updateRedCirclePosition() {
+    // 성공 횟수에 따라 위치 변경
+    setState(() {
+      switch (successCount) {
+        case 1:
+          _redCirclePosition = Offset(130, 430);
+          break;
+        case 2:
+          _redCirclePosition = Offset(200, 420);
+          break;
+        case 3:
+          _redCirclePosition = Offset(240, 400);
+          break;
+        default:
+          _redCirclePosition = Offset(60, 420); // 초기 위치
+      }
+    });
+  }
+
   @override
   void dispose() {
     _countdownTimer?.cancel();
@@ -295,6 +316,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 _successnotificationText = successMessages[successCount - 1]; // 성공 메시지 출력                                
 
               });
+
+              // 성공 시 빨간색 원 위치 업데이트
+              updateRedCirclePosition();
 
               if (successCount >= 4) {
                 // Move to GameWinScreen
@@ -416,7 +440,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                           child: Text(
                             _successnotificationText,
                             style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             ), 
@@ -452,28 +476,29 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                   ),
                 ),
               ),
+
               if (!isLongPressed & !isDialogueActive) // 게임이 시작되기 전일 때만 빨간색 원과 화살표 표시
                 Positioned(
-                  left: 120, // 조정이 필요할 수 있습니다.
-                  top: 420, // 조정이 필요할 수 있습니다.
+                  left: _redCirclePosition.dx, // 동적으로 위치 지정
+                  top: _redCirclePosition.dy,
                   child: Container(
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.yellow.withOpacity(0.5),
+                      color: Colors.red.withOpacity(0.5),
                     ),
                   ),
                 ),
               if (!isLongPressed & !isDialogueActive) // 게임이 시작되기 전일 때만 빨간색 화살표 표시
                 Positioned(
-                  left: 127, // 조정이 필요할 수 있습니다.
-                  top: 471, // 조정이 필요할 수 있습니다.
+                  left: _redCirclePosition.dx + 7, // 화살표 위치 조정
+                  top: _redCirclePosition.dy + 51,
                   child: Transform.rotate(
                     angle: -0.0, // 화살표 회전 (필요에 따라 조정)
                     child: Icon(
                       Icons.arrow_downward,
-                      color: Colors.yellow,
+                      color: Colors.red,
                       size: 50,
                     ),
                   ),
@@ -493,7 +518,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
               left: 36,
               top: 65,
               child: Text(
-                '#stage 4',
+                '#stage 3',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -616,7 +641,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                           ),
                           child: Text(
                           dialogues[dialogueIndex],
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                           textAlign: TextAlign.center,
                           ),
                         ),
