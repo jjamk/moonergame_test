@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart'; // 마이크
 import 'package:flutter/services.dart';
 
@@ -68,7 +69,7 @@ class _BreatheGameScreenState extends State<BreatheGameScreen> {
                           '문찌의 \n화를 가라앉혀보자!',
                           style: TextStyle(
                             fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                   
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
@@ -78,7 +79,7 @@ class _BreatheGameScreenState extends State<BreatheGameScreen> {
                           '문찌와 함께 심호흡을 해보자!!!',
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                           
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
@@ -108,6 +109,7 @@ class _BreatheGamesScreenState extends State<BreatheGamesScreen> {
   int _start = 180; // 3분 타이머를 초 단위로 설정
   int _setCount = 0; // 현재 세트 카운트
   String _instruction = "준비 됐어?"; // 화면에 표시할 텍스트
+  double _progress = 0.0;
 
   @override
   void initState() {
@@ -138,24 +140,39 @@ class _BreatheGamesScreenState extends State<BreatheGamesScreen> {
 
   Future<void> breathe() async {
     setState(() {
-      _instruction = "4초 동안 숨을 마셔줘";
+      _instruction = "4초 동안 \n 숨을 마셔줘";
+      _progress = 0.0;
     });
-    await Future.delayed(Duration(seconds: 4));
+    await _runTimer(4);
 
     setState(() {
-      _instruction = "6초 동안 숨을 뱉어줘";
+      _instruction = "6초 동안 \n 숨을 뱉어줘";
+      _progress = 0.0;
     });
-    await Future.delayed(Duration(seconds: 6));
+    await _runTimer(6); 
 
     setState(() {
       _instruction = "휴식 시간이야~";
+      _progress = 0.0;
     });
-    await Future.delayed(Duration(seconds: 3));
+    await _runTimer(3); 
 
     setState(() {
       _setCount++;
     });
   }
+
+  Future<void> _runTimer(int seconds) async {
+  for (int i = 0; i < seconds; i++) {
+    await Future.delayed(Duration(seconds: 2));  // 1초마다 대기
+    setState(() {
+      _instruction = "${seconds - i}초 남았어요!";  // 남은 시간 업데이트
+    });
+  }
+  setState(() {
+    _instruction = "타이머 종료!";
+  });
+}
 
   void _navigateToEndScreen() {
     Navigator.pushReplacement(
@@ -204,10 +221,10 @@ class _BreatheGamesScreenState extends State<BreatheGamesScreen> {
             left: 36,
             top: 65,
             child: const Text(
-              '#stage 2',
+              'STAGE 2',
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+         
                 color: Colors.black,
               ),
             ),
@@ -221,7 +238,6 @@ class _BreatheGamesScreenState extends State<BreatheGamesScreen> {
                 '4-6-3 법칙',
                 style: TextStyle(
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
@@ -235,59 +251,77 @@ class _BreatheGamesScreenState extends State<BreatheGamesScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 20),
-                Image.asset(
-                  'assets/images/normal_mooner_x.png',
-                  width: 350,
-                  height: 400,
-                ),
                 Text(
-                  "세트 완료: $_setCount / 10",
+                  "문찌와 함께 완료한 횟수 : $_setCount / 10 세트!",
                   style: const TextStyle(
                     fontSize: 18,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
+                const SizedBox(height: 15),
+                Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    // 문어 이미지
+                    Image.asset(
+                      'assets/images/normal_mooner_x.png',
+                      width: 300,
+                      height: 280,
+                    ),
+                    // 마이크 아이콘
+                    Positioned(
+                      top: 180, // 마이크 위치 조정
+                      child: Image.asset(
+                        'assets/images/microphone.png',
+                        width: 100,
+                        height: 100,
+                      ),
+                    ),
+                  ],
+                ),
+                
+                const SizedBox(height: 100),
                 Stack(
                   alignment: Alignment.center,
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.min,  // Row 크기를 내용에 맞춤
                       children: [
-                        Image.asset(
-                          'assets/images/fisher.png',
-                          width: 100,  // Fisher 이미지의 너비
-                          height: 160,  // Fisher 이미지의 높이
+                        SvgPicture.asset(
+                          'assets/images/fisherman_front.svg', // 추가된 이미지
+                          width: 0,
+                          height: 120,
                         ),
                         Image.asset(
                           'assets/images/dialog_background.png',
-                          width: 280,
+                          width: 270,
                         ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 60.0), // Fisher 이미지에 겹치지 않도록 텍스트를 오른쪽으로 이동
-                      child: Text(
-                        _instruction,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      child: GestureDetector(
+                        onTap: _startBreatheCycle, // "준비 됐어?" 텍스트 클릭 시 게임 시작
+                        child: Text(
+                          _instruction,
+                          style: const TextStyle(
+                            fontSize: 21,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
+                    
                   ],
                 ),
+
               ],
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _startBreatheCycle,
-        child: const Icon(Icons.play_arrow),
-      ),
+      
     );
   }
 }

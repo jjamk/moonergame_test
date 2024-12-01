@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 void main() => runApp(PianoGameApp());
 
@@ -64,7 +66,7 @@ class _PianoGameScreenState extends State<PianoGameScreen> {
                           'STAGE 7 \n문찌의 플레이리스트',
                           style: TextStyle(
                             fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                            // fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
@@ -74,7 +76,7 @@ class _PianoGameScreenState extends State<PianoGameScreen> {
                           '문찌가 진정할 수 있게 \n 자장가를 들려주자',
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
@@ -99,11 +101,54 @@ class PianoGamesScreen extends StatefulWidget {
 }
 
 class _PianoGamesScreenState extends State<PianoGamesScreen> {
+  // 문장 리스트로 관리
+  List<String> dialogTexts = [
+    "화를 진정시킬 때 다른 것보다도 \n 음악을 들으면 또 생각보다 금방 \n 차분해지기도 하지!",
+    "지금부터 자장가 3개를 문찌한테 \n 연주해줄거야!",
+    "이제 1번부터 눌러볼까?"
+  ];
+
+  int currentDialogIndex = 0; // 현재 보여지는 문장의 인덱스
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, // 상단바를 배경 뒤로 확장
       appBar: AppBar(
-        title: Text('Piano Game'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent, // 상단바 배경 투명
+        elevation: 0, // 상단바 그림자 없애기
+        title: Row(
+          children: [
+            Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                Image.asset(
+                  'assets/images/stage_background.png', // 상단바 왼쪽 이미지 경로
+                  height: 80, // 이미지 높이 조절
+                ),
+                Positioned(
+                  left: 35, // 이미지 내에서 텍스트 위치 조정
+                  child: Text(
+                    'STAGE 7',
+                    style: TextStyle(
+                      fontSize: 16, // 텍스트 크기
+                      color: Colors.black, // 텍스트 색상 (배경 이미지와 대비되게 설정)
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 10), // 이미지와 텍스트 간의 간격
+            Text(
+              '문찌의 플레이리스트',
+              style: TextStyle(
+                fontSize: 18, // 텍스트 크기
+                color: Colors.black, // 텍스트 색상
+              ),
+            ),
+          ],
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -116,9 +161,10 @@ class _PianoGamesScreenState extends State<PianoGamesScreen> {
           child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'test입니다',
-              style: TextStyle(fontSize: 24),
+             SizedBox(
+                width: 300, // 이미지의 가로 크기
+                height: 200, // 이미지의 세로 크기
+                child: Image.asset('assets/images/normal_mooner_x.png'),
             ),
             SizedBox(height: 20), // 버튼과 텍스트 간의 간격
             Row(
@@ -129,11 +175,57 @@ class _PianoGamesScreenState extends State<PianoGamesScreen> {
                 _buildGameButton(2, secondGame),
                 SizedBox(width: 20), // 버튼 간의 간격
                 _buildGameButton(3, thirdGame),
-              ],
-            ),
+              ]),
+              SizedBox(height: 20), // 버튼과 이미지 간의 간격
+            Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,  // Row 크기를 내용에 맞춤
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/fisherman_front.svg',
+                          width: 10,  // Fisher 이미지의 너비
+                          height: 110,  // Fisher 이미지의 높이
+                        ),
+                        Image.asset(
+                          'assets/images/dialog_background.png',
+                          width: 280,
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    ),
+            
+                    // 텍스트 오버레이
+              Positioned(
+                left: 145,
+                top: 28,
+                child: GestureDetector(
+                  onTap: () {
+                    // 클릭 시 다음 문장으로 변경
+                    if (currentDialogIndex < dialogTexts.length - 1) {
+                      setState(() {
+                        currentDialogIndex++;
+                      });
+                    }
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      dialogTexts[currentDialogIndex],
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ),
+          ),
           ],
-        ),
       ),
+          ],
+      ),
+    ),
       ),
     );
   }
@@ -157,7 +249,7 @@ class _PianoGamesScreenState extends State<PianoGamesScreen> {
             style: TextStyle(
               color: Colors.black, // 텍스트 색상
               fontSize: 24, // 텍스트 크기
-              fontWeight: FontWeight.bold,
+             
             ),
           ),
         ),
@@ -199,12 +291,20 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
     ['솔', '솔', '파', '파', '미', '미', '레'],
     ['솔', '솔', '파', '파', '미', '미', '레'],
     ['도', '도', '솔', '솔', '라', '라', '솔'],
-    ['파', '솔', '파', '미', '솔', '미', '레', '레', '미', '도'],
+    ['파', '파', '미', '미', '레', '레', '도'],
   ];
 
   int currentMelodyIndex = 0;
   List<String> userInput = [];
   List<String> buttonImages = List.filled(8, 'assets/images/orangenote.png');
+  int currentDialogIndex = 0;
+  bool gameStarted = false; // 게임 시작 여부
+
+  // Dialog 텍스트 목록
+  final List<String> dialogTexts = [
+    "이건 반짝 반짝 작은별이야!",
+    "들리는 음과 빛나는 음표를 \n 보고 따라 클릭해줘",
+  ];
 
   @override
   void initState() {
@@ -213,6 +313,7 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
   }
 
   void playMelody() {
+    if (!gameStarted) return;
     List<String> melody = melodies[currentMelodyIndex];
     for (int i = 0; i < melody.length; i++) {
       Future.delayed(Duration(seconds: i), () {
@@ -243,16 +344,73 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
     }
   }
 
+  void startGame(){
+    setState(() {
+      gameStarted = true;
+    });
+    playMelody();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, // 상단바를 배경 뒤로 확장
       appBar: AppBar(
-        title: Text('첫 번째 게임'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent, // 상단바 배경 투명
+        elevation: 0, // 상단바 그림자 없애기
+        title: Row(
+          children: [
+            Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                Image.asset(
+                  'assets/images/stage_background.png', // 상단바 왼쪽 이미지 경로
+                  height: 80, // 이미지 높이 조절
+                ),
+                Positioned(
+                  left: 35, // 이미지 내에서 텍스트 위치 조정
+                  child: Text(
+                    'STAGE 7',
+                    style: TextStyle(
+                      fontSize: 16, // 텍스트 크기
+                      color: Colors.black, // 텍스트 색상 (배경 이미지와 대비되게 설정)
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 10), // 이미지와 텍스트 간의 간격
+            Text(
+              '문찌의 플레이리스트',
+              style: TextStyle(
+                fontSize: 18, // 텍스트 크기
+                color: Colors.black, // 텍스트 색상
+              ),
+            ),
+          ],
+        ),
       ),
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_stage.png'), // 배경 이미지 설정
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Dialog 텍스트 표시
+            Positioned(
+                    top: 20,  // 문어 이미지의 Y 위치 조정
+                    left: 0,  // 문어 이미지의 X 위치 조정
+                    child: Image.asset(
+                      'assets/images/normal_mooner_x.png', // 문어 이미지
+                      width: 200,  // 문어 이미지 크기
+                      height: 300,
+                    ),
+                  ),
             // 첫 번째 Row (1, 2, 3, 4 버튼)
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -280,6 +438,57 @@ class _FirstGameScreenState extends State<FirstGameScreen> {
                 _buildImageButton('도', 7),
               ],
             ),
+            SizedBox(height: 50),
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                // 배경 이미지
+                Image.asset(
+                  'assets/images/dialog_background.png',
+                  width: 320,
+                  fit: BoxFit.cover,
+                ),
+                
+                // Fisherman 이미지
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/fisherman_front.svg', // 추가된 이미지
+                      width: 10,
+                      height: 110,
+                    ),
+                  ],
+                ),
+                // 텍스트 위젯
+                Positioned(
+                  top: 45,  // 텍스트의 Y 위치 조정
+                  left: 100,  // 텍스트의 X 위치 조정
+                  child: GestureDetector(
+                    onTap: () {
+                      if (currentDialogIndex < dialogTexts.length - 1) {
+                        setState(() {
+                          currentDialogIndex++;
+                        });
+                      } else {
+                        startGame(); // 마지막 텍스트 후 게임 시작
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        dialogTexts[currentDialogIndex],
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+
           ],
         ),
       ),
@@ -350,6 +559,15 @@ Widget _buildImageButton(String buttonText, int noteIndex) {
     checkUserInput(); // 입력 확인
   }
 
+  bool showEndText = false; // 텍스트 표시 여부 상태 변수 추가
+
+    // 게임 완료 후 텍스트 처리 함수
+    void showSuccessText() {
+      setState(() {
+        showEndText = true; // 텍스트 표시
+      });
+    }
+
     void checkUserInput() {
     if (userInput.length > melodies[currentMelodyIndex].length) {
       // 사용자의 입력이 멜로디 길이를 초과하면 다시 초기화
@@ -364,15 +582,15 @@ Widget _buildImageButton(String buttonText, int noteIndex) {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('오답입니다!'),
-              content: Text('멜로디를 다시 시도해 주세요.'),
+              title: Text('어부'),
+              content: Text('다시 한 번 쳐줘!'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     userInput = []; // 입력 초기화
                   },
-                  child: Text('확인'),
+                  child: Text('알겠어!'),
                 ),
               ],
             );
@@ -398,28 +616,32 @@ Widget _buildImageButton(String buttonText, int noteIndex) {
 
       } else {
         // 모든 멜로디 성공
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('모든 멜로디 성공!'),
-              content: Text('축하합니다! 모든 멜로디를 성공적으로 재생했습니다.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.pop(context); // 메인 화면으로 이동
-                  },
-                  child: Text('확인'),
-                ),
-              ],
-            );
-          },
+        // 모든 멜로디 성공
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('어부'),
+          content: Text('멋진연주였어! \n문찌가 조금 진정했네! \n다음으로 가볼까?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PianoGamesScreen()), // 게임 화면으로 이동
+                );
+              },
+              child: Text('좋아!'),
+            ),
+          ],
         );
+      },
+    );
+  }
+      }
       }
     }
-    }
-}
+
 
 
 // 두 번째 게임 화면
@@ -637,24 +859,46 @@ Widget _buildImageButton(String buttonText, int noteIndex) {
 
       } else {
         // 모든 멜로디 성공
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('모든 멜로디 성공!'),
-              content: Text('축하합니다! 모든 멜로디를 성공적으로 재생했습니다.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.pop(context); // 메인 화면으로 이동
-                  },
-                  child: Text('확인'),
+        // showDialog(
+        //   context: context,
+        //   builder: (context) {
+        //     return AlertDialog(
+        //       title: Text('모든 멜로디 성공!'),
+        //       content: Text('축하합니다! 모든 멜로디를 성공적으로 재생했습니다.'),
+        //       actions: [
+        //         TextButton(
+        //           onPressed: () {
+        //             Navigator.of(context).pop();
+        //             Navigator.pop(context); // 메인 화면으로 이동
+        //           },
+        //           child: Text('확인'),
+        //         ),
+        //       ],
+        //     );
+        //   },
+        // );
+        Positioned(
+              top: 125,
+              left: 60,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FirstGameScreen()),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    "멋진연주였어! \n 문찌가 조금 진정했네! \n 다음으로 가볼까?",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-              ],
+              ),
             );
-          },
-        );
       }
     }
     }
