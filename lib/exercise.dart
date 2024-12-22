@@ -98,7 +98,16 @@ class ExerciseGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'BMJUA'),
-      home: ExerciseSelectionScreen(),  // 최초 화면을 ExerciseSelectionScreen 설정
+      home: BackgroundScreen(
+        onBackgroundTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ExerciseSelectionScreen(),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -554,7 +563,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
           // 중앙에 플레이어 이미지를 표시
           Positioned(
             child: Center(
-              child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
+              child: SvgPicture.asset('assets/images/3angry_mooner_o.svg',
                   width: 200, height: 270, fit: BoxFit.cover),
             ),
           ),
@@ -1302,6 +1311,98 @@ class GameOverScreen extends StatelessWidget {
   }
 }
 
+// class GameWinScreen extends StatelessWidget {
+//   final VoidCallback restartGame;
+
+//   GameWinScreen(this.restartGame);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Container(
+//         decoration: BoxDecoration(
+//           image: DecorationImage(
+//             image: AssetImage("assets/images/bg_stage.png"), // 배경 이미지 추가
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//         child: Center(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: <Widget>[
+//               // Stack to place text and button inside the image
+//               Stack(
+//                 alignment: Alignment.center,
+//                 children: <Widget>[
+//                   Image.asset(
+//                     'assets/images/result_background.png',
+//                     width: 400,
+//                     height: 500,
+//                     fit: BoxFit.contain,
+//                   ),
+//                   Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Padding(
+//                         padding: const EdgeInsets.only(top: 30.0), // 텍스트 아래로 내리기 위해 여백 추가
+//                         child: Text(
+//                           '! STAGE CLEAR !',
+//                           style: TextStyle(
+//                             fontSize: 30.0, // Adjust the font size as needed
+//                             color: Colors.white, // Text color
+//                             fontWeight: FontWeight.bold,
+//                             shadows: [
+//                               Shadow(
+//                                 blurRadius: 10.0,
+//                                 color: Colors.black,
+//                                 offset: Offset(5.0, 5.0),
+//                               ),
+//                             ],
+//                           ),
+//                           textAlign: TextAlign.center,
+//                         ),
+//                       ),
+//                       SizedBox(height: 5.0), // Space between text and button
+//                       ElevatedButton(
+//                         onPressed: () {
+//                           Navigator.push(
+//                             context,
+//                             MaterialPageRoute(builder: (context) => NewStage()),
+//                           );
+//                         },
+//                         style: ElevatedButton.styleFrom(
+//                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
+//                           minimumSize: Size(100, 40), // Reduce button size
+//                         ),
+//                         child: Text('다음 스테이지로'),
+//                       ),
+//                       SizedBox(height: 5.0), // Space between buttons
+//                       ElevatedButton(
+//                         onPressed: () {
+//                           Navigator.push(
+//                             context,
+//                             MaterialPageRoute(
+//                                 builder: (context) => ExerciseGameApp()),
+//                           );
+//                         },
+//                         style: ElevatedButton.styleFrom(
+//                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
+//                           minimumSize: Size(80, 20), // Reduce button size
+//                         ),
+//                         child: Text('광고보고 재도전하기'),
+//                       ),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class GameWinScreen extends StatelessWidget {
   final VoidCallback restartGame;
 
@@ -1318,71 +1419,72 @@ class GameWinScreen extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            alignment: Alignment.center,
             children: <Widget>[
-              // Stack to place text and button inside the image
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/result_background.png',
-                    width: 400,
-                    height: 500,
-                    fit: BoxFit.contain,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30.0), // 텍스트 아래로 내리기 위해 여백 추가
-                        child: Text(
-                          '! STAGE CLEAR !',
-                          style: TextStyle(
-                            fontSize: 30.0, // Adjust the font size as needed
-                            color: Colors.white, // Text color
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 10.0,
-                                color: Colors.black,
-                                offset: Offset(5.0, 5.0),
-                              ),
-                            ],
+              // 1. SVG 이미지 (normal_mooner_o.svg) 먼저 표시
+              SvgPicture.asset(
+                'assets/images/normal_mooner_o.svg',
+                width: 200, // 크기 조정
+                height: 200, // 크기 조정
+              ),
+              // 2. PNG 이미지 (dialog_background.png)
+              Image.asset(
+                'assets/images/dialog_background.png',
+                width: 400,
+                height: 500,
+                fit: BoxFit.contain,
+              ),
+              // 3. 텍스트와 버튼들
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: Text(
+                      '! STAGE CLEAR !',
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 10.0,
+                            color: Colors.black,
+                            offset: Offset(5.0, 5.0),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
+                        ],
                       ),
-                      SizedBox(height: 5.0), // Space between text and button
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => NewStage()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
-                          minimumSize: Size(100, 40), // Reduce button size
-                        ),
-                        child: Text('다음 스테이지로'),
-                      ),
-                      SizedBox(height: 5.0), // Space between buttons
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ExerciseGameApp()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
-                          minimumSize: Size(80, 20), // Reduce button size
-                        ),
-                        child: Text('광고보고 재도전하기'),
-                      ),
-                    ],
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NewStage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      minimumSize: Size(100, 40),
+                    ),
+                    child: Text('다음 스테이지로'),
+                  ),
+                  SizedBox(height: 5.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ExerciseGameApp()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      minimumSize: Size(80, 20),
+                    ),
+                    child: Text('광고보고 재도전하기'),
                   ),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 void main() => runApp(Soundquiz());
 
@@ -68,8 +69,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),
