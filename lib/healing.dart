@@ -5,6 +5,8 @@ import 'package:mooner_interface/piano.dart';
 import 'package:bubble/bubble.dart';
 import 'dart:async';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:flutter_svg/svg.dart';
+
 
 void main() => runApp(HealingGameApp());
 //휴 드디어 된건가?
@@ -222,8 +224,8 @@ class _HealingGamesScreenState extends State<HealingGamesScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),

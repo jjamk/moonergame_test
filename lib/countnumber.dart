@@ -207,6 +207,8 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
   late Timer _timer;
   int _remainingTime = 180; // 3분
   List<String> dialogues = []; // 대화 스크립트
+  double _progress = 0.0; // 변수 선언 추가
+
 
   @override
   void initState() {
@@ -403,8 +405,8 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -445,8 +447,8 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                               width: 300,
                               backgroundColor: Colors.grey,
                               foregrondColor: Colors.red,
-                              ratio: (successCount / 10).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
-                              //ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              //ratio: (successCount / 10).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
                               direction: Axis.horizontal,
                               curve: Curves.fastLinearToSlowEaseIn,
                               duration: const Duration(seconds: 1),
@@ -461,8 +463,8 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -470,8 +472,8 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -479,8 +481,8 @@ class _SpeakableCountNumberGameScreenState extends State<SpeakableCountNumberGam
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.pnsvgg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -626,6 +628,8 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
   late Timer _timer;
   int _remainingTime = 60;
   List<int> _numberPad = List.generate(10, (index) => index + 1);
+  double _progress = 0.0; // 변수 선언 추가
+
 
   List<String> dialogues = [
     "어부\n 랜덤하게 나오는 키보드를 사용해서 \n 문찌가 말하는 숫자를 \n 따라서 입력해주면 돼",
@@ -696,45 +700,77 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
     });
   }
 
-
-
   void _onNumberPress(int number) {
-    if (number == _bubbleNumber) {
-      successCount++;
-      if (_bubbleNumber < 10) {
-        setState(() {
-          _bubbleNumber++;
-          _shuffleNumberPad();
-        });
-      }
-    }
+    setState(() {
+      if (number == _bubbleNumber) {
+        // 정답일 경우
+        successCount++;
+        _progress = successCount / 10; // 프로그레스 바 업데이트
+      } 
+      // 오답일 경우에도 다음 숫자로 이동
+      _bubbleNumber++; 
+      _shuffleNumberPad(); // 키패드 셔플
 
-    if (successCount >= 9) {
-      setState(() {
+      // 별 개수 설정
+      if (successCount >= 9) {
         stars = 3;
-      });
-    } else if (successCount >= 7) {
-      setState(() {
+      } else if (successCount >= 7) {
         stars = 2;
-      });
-    } else if (successCount >= 5) {
-      setState(() {
+      } else if (successCount >= 5) {
         stars = 1;
-      });
-    } else {
-      setState(() {
+      } else {
         stars = 0;
-      });
-    }
+      }
 
-    if (successCount >= 10) {
-      _timer.cancel();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => GameWinScreen(restartGame)),
-      );
-    }
+      // 게임 승리 조건 확인
+      if (_bubbleNumber > 10) {
+        _timer.cancel();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => GameWinScreen(restartGame)),
+        );
+      }
+    });
   }
+
+
+  // void _onNumberPress(int number) {
+  //   if (number == _bubbleNumber) {
+  //     successCount++;
+  //     if (_bubbleNumber < 10) {
+  //       setState(() {
+  //         _bubbleNumber++;
+  //         _shuffleNumberPad();
+  //       });
+  //     }
+  //   }
+
+  //   if (successCount >= 9) {
+  //     setState(() {
+  //       stars = 3;
+  //     });
+  //   } else if (successCount >= 7) {
+  //     setState(() {
+  //       stars = 2;
+  //     });
+  //   } else if (successCount >= 5) {
+  //     setState(() {
+  //       stars = 1;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       stars = 0;
+  //     });
+  //   }
+
+  //   if (successCount >= 10) {
+  //     _timer.cancel();
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => GameWinScreen(restartGame)),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -754,8 +790,8 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -796,8 +832,8 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
                               width: 300,
                               backgroundColor: Colors.grey,
                               foregrondColor: Colors.red,
-                              ratio: (successCount / 10).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
-                              //ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
+                              //ratio: (successCount / 10).clamp(0.0, 1.0), // 0~100% 채워지는거 이 부분을 수정했습니다.
+                              ratio: _progress,  // 100~0% 줄어드는거 성공 및 실패에 따라 업데이트되는 비율
                               direction: Axis.horizontal,
                               curve: Curves.fastLinearToSlowEaseIn,
                               duration: const Duration(seconds: 1),
@@ -812,8 +848,8 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -821,8 +857,8 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -830,8 +866,8 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -873,29 +909,30 @@ class _UnspeakableCountNumberGameScreenState extends State<UnspeakableCountNumbe
 
           // 중앙 하단에 숫자 키패드 표시
           Positioned(
-            bottom: 20,
+            bottom: 70,
             left: 0,
             right: 0,
             child: Column(
               children: [
-                for (int i = 0; i < 4; i++) // 4개의 행으로 나누어 키패드 생성
+                for (int i = 0; i < 2; i++) // 4개의 행으로 나누어 키패드 생성
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      for (int j = 0; j < 3; j++) // 각 행에 3개의 숫자 버튼을 배치
+                      for (int j = 0; j < 5; j++) // 각 행에 3개의 숫자 버튼을 배치
                         if (i * 3 + j < _numberPad.length)
                           Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: ElevatedButton(
-                              onPressed: () => _onNumberPress(_numberPad[i * 3 + j]),
+                              onPressed: () => _onNumberPress(_numberPad[i * 5 + j]),
                               child: Text(
-                                _numberPad[i * 3 + j].toString(),
-                                style: TextStyle(fontSize: 24),
+                                _numberPad[i * 5 + j].toString(),
+                                style: TextStyle(fontSize: 20),
                               ),
                               style: ElevatedButton.styleFrom(
-                                minimumSize: Size(60, 60), // 버튼 크기
+                                minimumSize: Size(45, 45), // 버튼 크기
                                 backgroundColor: Colors.transparent, // 배경을 투명하게
                                 elevation: 0, // 그림자 제거
+                                foregroundColor: Colors.black, // 숫자 색상을 검으색 설정
                               ),
                             ),
                           ),

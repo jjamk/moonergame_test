@@ -7,6 +7,7 @@ import 'package:mooner_interface/stage.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:lottie/lottie.dart';
 
 class BackgroundScreen extends StatefulWidget {
   final VoidCallback onBackgroundTap; // 배경 클릭 시 호출되는 콜백 함수
@@ -169,8 +170,8 @@ class _ExerciseSelectionScreenState extends State<ExerciseSelectionScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -474,8 +475,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -532,8 +533,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -541,8 +542,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -550,8 +551,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -561,12 +562,20 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
               ),
             ), 
           // 중앙에 플레이어 이미지를 표시
+          // Positioned(
+          //   child: Center(
+          //     child: SvgPicture.asset('assets/images/3angry_mooner_o.svg',
+          //         width: 200, height: 270, fit: BoxFit.cover),
+          //   ),
+          // ),
           Positioned(
-            child: Center(
-              child: SvgPicture.asset('assets/images/3angry_mooner_o.svg',
-                  width: 200, height: 270, fit: BoxFit.cover),
+            left: 30, top: 250,
+            child: Center(child: Lottie.asset(
+              'assets/json/exercise_boxing.json',
+              width: 200, height: 270, fit: BoxFit.cover
+              ),
             ),
-          ),
+          ),          
           if (isDialogueActive) // 대화 창 표시
               Align(
                 alignment: Alignment.bottomCenter,
@@ -765,8 +774,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -823,8 +832,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -832,8 +841,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -841,8 +850,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -1063,8 +1072,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -1121,8 +1130,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -1130,8 +1139,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -1139,8 +1148,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -1150,12 +1159,14 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
               ),
             ),          
           // 중앙에 플레이어 이미지를 표시
-          Positioned(
-            child: Center(
-              child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
-                  width: 200, height: 270, fit: BoxFit.cover),
+            Positioned(
+              left: 30, top: 250,
+              child: Center(child: Lottie.asset(
+                'assets/json/exercise_dumbbell.json',
+                width: 200, height: 270, fit: BoxFit.cover
+                ),
+              ),
             ),
-          ),
             if (isDialogueActive) // 대화 창 표시
               Align(
                 alignment: Alignment.bottomCenter,
@@ -1311,98 +1322,6 @@ class GameOverScreen extends StatelessWidget {
   }
 }
 
-// class GameWinScreen extends StatelessWidget {
-//   final VoidCallback restartGame;
-
-//   GameWinScreen(this.restartGame);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         decoration: BoxDecoration(
-//           image: DecorationImage(
-//             image: AssetImage("assets/images/bg_stage.png"), // 배경 이미지 추가
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//         child: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               // Stack to place text and button inside the image
-//               Stack(
-//                 alignment: Alignment.center,
-//                 children: <Widget>[
-//                   Image.asset(
-//                     'assets/images/result_background.png',
-//                     width: 400,
-//                     height: 500,
-//                     fit: BoxFit.contain,
-//                   ),
-//                   Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       Padding(
-//                         padding: const EdgeInsets.only(top: 30.0), // 텍스트 아래로 내리기 위해 여백 추가
-//                         child: Text(
-//                           '! STAGE CLEAR !',
-//                           style: TextStyle(
-//                             fontSize: 30.0, // Adjust the font size as needed
-//                             color: Colors.white, // Text color
-//                             fontWeight: FontWeight.bold,
-//                             shadows: [
-//                               Shadow(
-//                                 blurRadius: 10.0,
-//                                 color: Colors.black,
-//                                 offset: Offset(5.0, 5.0),
-//                               ),
-//                             ],
-//                           ),
-//                           textAlign: TextAlign.center,
-//                         ),
-//                       ),
-//                       SizedBox(height: 5.0), // Space between text and button
-//                       ElevatedButton(
-//                         onPressed: () {
-//                           Navigator.push(
-//                             context,
-//                             MaterialPageRoute(builder: (context) => NewStage()),
-//                           );
-//                         },
-//                         style: ElevatedButton.styleFrom(
-//                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
-//                           minimumSize: Size(100, 40), // Reduce button size
-//                         ),
-//                         child: Text('다음 스테이지로'),
-//                       ),
-//                       SizedBox(height: 5.0), // Space between buttons
-//                       ElevatedButton(
-//                         onPressed: () {
-//                           Navigator.push(
-//                             context,
-//                             MaterialPageRoute(
-//                                 builder: (context) => ExerciseGameApp()),
-//                           );
-//                         },
-//                         style: ElevatedButton.styleFrom(
-//                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
-//                           minimumSize: Size(80, 20), // Reduce button size
-//                         ),
-//                         child: Text('광고보고 재도전하기'),
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class GameWinScreen extends StatelessWidget {
   final VoidCallback restartGame;
 
@@ -1419,72 +1338,71 @@ class GameWinScreen extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Stack(
-            alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // 1. SVG 이미지 (normal_mooner_o.svg) 먼저 표시
-              SvgPicture.asset(
-                'assets/images/normal_mooner_o.svg',
-                width: 200, // 크기 조정
-                height: 200, // 크기 조정
-              ),
-              // 2. PNG 이미지 (dialog_background.png)
-              Image.asset(
-                'assets/images/dialog_background.png',
-                width: 400,
-                height: 500,
-                fit: BoxFit.contain,
-              ),
-              // 3. 텍스트와 버튼들
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: Text(
-                      '! STAGE CLEAR !',
-                      style: TextStyle(
-                        fontSize: 30.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 10.0,
-                            color: Colors.black,
-                            offset: Offset(5.0, 5.0),
+              // Stack to place text and button inside the image
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/result_background.png',
+                    width: 400,
+                    height: 500,
+                    fit: BoxFit.contain,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30.0), // 텍스트 아래로 내리기 위해 여백 추가
+                        child: Text(
+                          '! STAGE CLEAR !',
+                          style: TextStyle(
+                            fontSize: 30.0, // Adjust the font size as needed
+                            color: Colors.white, // Text color
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 10.0,
+                                color: Colors.black,
+                                offset: Offset(5.0, 5.0),
+                              ),
+                            ],
                           ),
-                        ],
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 5.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NewStage()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                      minimumSize: Size(100, 40),
-                    ),
-                    child: Text('다음 스테이지로'),
-                  ),
-                  SizedBox(height: 5.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ExerciseGameApp()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                      minimumSize: Size(80, 20),
-                    ),
-                    child: Text('광고보고 재도전하기'),
+                      SizedBox(height: 5.0), // Space between text and button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewStage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
+                          minimumSize: Size(100, 40), // Reduce button size
+                        ),
+                        child: Text('다음 스테이지로'),
+                      ),
+                      SizedBox(height: 5.0), // Space between buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ExerciseGameApp()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Button padding
+                          minimumSize: Size(80, 20), // Reduce button size
+                        ),
+                        child: Text('광고보고 재도전하기'),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart'; // 마이크
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+
 
 void main() => runApp(BreatheGameApp());
 
@@ -194,8 +196,8 @@ class _BreatheGamesScreenState extends State<BreatheGamesScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),

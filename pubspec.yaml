@@ -98,8 +98,6 @@ flutter:
     - assets/images/hook.png
     - assets/images/stage_background.png
     - assets/images/result_background.png
-    - assets/json/animation_example.json
-    - assets/json/loading.json
 
     - assets/audio/A.mp3
     - assets/audio/B.mp3
@@ -110,7 +108,9 @@ flutter:
     - assets/audio/G.mp3
     - assets/audio/CC.mp3
     - assets/audio/bgm_test.mp3
+
     - assets/audio/boxing.mp3
+    - assets/images/star.svg #별
 
     - assets/images/1angry_mooner_o.svg
     - assets/images/1angry_mooner_x.svg 
@@ -118,6 +118,12 @@ flutter:
     - assets/images/2angry_mooner_x.svg 
     - assets/images/3angry_mooner_o.svg 
     - assets/images/3angry_mooner_x.svg 
+
+    - assets/images/mooner_left_arm.svg 
+    - assets/images/mooner_left_leg.svg 
+    - assets/images/mooner_right_arm.svg 
+    - assets/images/mooner_right_leg.svg 
+
 
     - assets/images/normal_mooner_o.svg 
     - assets/images/normal_mooner_x.svg
@@ -129,6 +135,24 @@ flutter:
     - assets/images/dumbbell.svg
 
     - assets/images/speech_bubble.svg
+
+    - assets/images/stage_background.svg
+
+
+    - assets/json/animation_example.json
+    - assets/json/loading.json
+    - assets/json/opening_loading.json #맨처음화면
+    - assets/json/opening_mooner_appear.json #문찌 등장
+
+
+    - assets/json/musclerelease_effect.json
+    - assets/json/musclerelease_effect_green.json
+    - assets/json/musclerelease_effect_yellow.json
+
+    - assets/json/exercise_boxing.json
+    - assets/json/exercise_dumbbell.json
+  
+   
 
 
     - assets/images/normal_mooner_x.png #진짜 새 문어
@@ -143,7 +167,6 @@ flutter:
     - assets/images/orangenote.png
     - assets/images/fisher.png #어부
     - assets/images/jellyfish.png #해파리
-    - assets/images/star.png #별
     - assets/images/correct.png # O표시
 
 

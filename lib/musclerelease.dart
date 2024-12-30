@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mooner_interface/exercise.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:lottie/lottie.dart';
 
 class BackgroundScreen extends StatefulWidget {
   final VoidCallback onBackgroundTap; // 배경 클릭 시 호출되는 콜백 함수
@@ -117,9 +118,10 @@ class MusclereleaseGameScreen extends StatefulWidget {
       _MusclereleaseGameScreenState();
 }
 
-class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
+class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> with SingleTickerProviderStateMixin {
   bool isLongPressed = false;
   late Offset _startPosition;
+  //late Offset _lottiePosition;  // Lottie 애니메이션 위치를 저장할 변수
   int countdown = 7;
   bool isGameActive = false;
   bool isDialogueActive = true;
@@ -140,6 +142,9 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   double _circleSize = 60.0; // 초기 원 크기
   Offset _circlePosition = Offset(0, 0); // 초기 위치
 
+  late AnimationController _animationController;
+
+
   List<String> dialogues = [
     '어부\n 문찌가 화를 내다가 다리가 다 꼬였어\n 근육을 풀어줘야 할 것 같아',
     '어부\n 꼬인 다리는 급하게 풀려고 하면 더 안 풀려! \n 힘을 천천히 줬다가 한번에 툭!하고 풀어보자',
@@ -149,7 +154,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
 
    //성공 메시지 목록
    List<String> successMessages = [
-    '어부\n 잘했어!\n문찌의 화가 거의 누그러진 것 같은데?',
+    '어부\n 잘했어!\n문찌의 화가 누그러지는 것 같은데?',
     '어부\n 문찌의 다른 팔들도 편하게 풀어줘 볼까?',
     '어부\n 좋아!\n문찌가 진정되는게 보여!',
     ''
@@ -166,6 +171,10 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 7),
+      );
   }
 
   void nextDialogue() {
@@ -208,6 +217,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
     setState(() {
       countdown = 7;
       _circleSize = 60.0; // 원의 크기를 초기화
+      //_animationController.repeat(); // Lottie 애니메이션 시작
     });
 
     _countdownTimer?.cancel();
@@ -219,6 +229,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
           // 7초가 끝날 때 원을 0으로 만들기
           if (countdown == 0) {
             _circleSize = 0;
+            //_animationController.stop(); // Lottie 애니메이션 정지
           }
         });
       } else {
@@ -356,6 +367,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             setState(() {
               isLongPressed = false;
             _circleSize = 0; // 손을 떼면 원을 없앰
+            //_animationController.stop(); // Lottie 애니메이션 정지
             });
           }
         },
@@ -372,6 +384,20 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 ),
               ),
             ),
+
+            // Lottie 애니메이션 표시
+            // if (isLongPressed)
+            //   Positioned(
+            //     left: _circlePosition.dx - 50,
+            //     top: _circlePosition.dy - 50,
+            //     child: Lottie.asset(
+            //       'assets/json/musclerelease_effect.json',
+            //       width: 200,
+            //       height: 200,
+            //       controller: _animationController,
+            //       repeat: true,
+            //     ),
+            //   ),
 
             // 터치한 위치에 원을 그리는 부분
             Positioned(
@@ -394,15 +420,13 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             Positioned(
               child: Center(
                 child: SvgPicture.asset(
-                  _isFailed
-                      ? 'assets/images/3angry_mooner_o.svg' // 실패 시 이미지
-                      : _isSuccess
-                          ? (successCount == 1
-                              ? 'assets/images/2angry_mooner_o.svg' // 첫 번째 성공 시 이미지
-                              : successCount == 2
-                                  ? 'assets/images/1angry_mooner_o.svg' // 두 번째 성공 시 이미지
-                                  : 'assets/images/normal_mooner_o.svg') // 세 번째 성공 이후 이미지
-                          : 'assets/images/3angry_mooner_x.svg', // 기본 이미지
+                  _isSuccess
+                      ? (successCount == 1
+                          ? 'assets/images/2angry_mooner_o.svg' // 첫 번째 성공 시 이미지
+                          : successCount == 2
+                              ? 'assets/images/1angry_mooner_o.svg' // 두 번째 성공 시 이미지
+                              : 'assets/images/normal_mooner_o.svg') // 세 번째 성공 이후 이미지
+                      : 'assets/images/3angry_mooner_o.svg', // 기본 이미지
                   width: 200,
                   height: 270,
                   fit: BoxFit.cover,
@@ -452,17 +476,7 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                 ),
                 ),
               ),
-              // Positioned(
-              //   bottom: 100,
-              //   child: Text(
-              //     _successnotificationText,
-              //     style: TextStyle(
-              //       fontSize: 18,
-              //       color: Colors.white,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // ),
+
             //실패 알림 텍스트 표시
             if (_notificationText.isNotEmpty)
               Positioned(
@@ -508,8 +522,8 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),
@@ -566,8 +580,8 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -575,8 +589,8 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -584,8 +598,8 @@ class _MusclereleaseGameScreenState extends State<MusclereleaseGameScreen> {
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),

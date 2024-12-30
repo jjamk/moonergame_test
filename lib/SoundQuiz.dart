@@ -116,8 +116,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
                     Positioned(
                       left: -45,
                       top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg', // 별 이미지 경로
                         width: 110,
                         height: 110,
                       ),
@@ -125,8 +125,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
                     Positioned(
                       left: 105,
                       top: -40, // 중앙 별 이미지의 위치
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg', // 별 이미지 경로
                         width: 110,
                         height: 110,
                       ),
@@ -134,8 +134,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
                     Positioned(
                       right: -45,
                       top: -40, // 오른쪽 끝 별 이미지의 위치
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg', // 별 이미지 경로
                         width: 110,
                         height: 110,
                       ),

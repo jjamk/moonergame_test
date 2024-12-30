@@ -5,6 +5,7 @@ import 'package:mooner_interface/stage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:lottie/lottie.dart';
 
 void main() => runApp(OpeningGameApp());
 
@@ -13,7 +14,40 @@ class OpeningGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'BMJUA'),
-      home: DialogueGame(),
+      //home: DialogueGame(),
+      home: SplashScreen(), // 초기 화면을 SplashScreen으로 설정
+
+    );
+  }
+}
+
+//오프닝 로딩
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // 3초 후에 대화 화면으로 이동
+    Timer(Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => DialogueGame()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black, // 배경색 설정
+      body: Center(
+        child: Lottie.asset('assets/json/opening_loading.json'), // 로딩 애니메이션
+      ),
     );
   }
 }
@@ -148,10 +182,8 @@ Widget build(BuildContext context) {
                 // 7번째 대화 전: 3angry_mooner_o.svg 터치 가능
                 GestureDetector(
                   onTap: nextScript, // 클릭 시 다음 대화로 넘어감
-                  child: SvgPicture.asset(
-                    'assets/images/3angry_mooner_o.svg',
-                    width: 250,
-                    height: 250,
+                  child: Lottie.asset(
+                    'assets/json/opening_mooner_appear.json',
                     fit: BoxFit.cover,
                   ),
                 ),
