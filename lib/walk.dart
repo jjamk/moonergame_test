@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:flutter_svg/svg.dart';
 
 void main() => runApp(WalkGameapp());
 
@@ -51,8 +52,8 @@ class _WalkGameState extends State<WalkGame> {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),
@@ -233,8 +234,8 @@ class _FirstOptionScreenState extends State<FirstOptionScreen> {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),
@@ -305,8 +306,8 @@ class SecondOptionScreen extends StatelessWidget {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),

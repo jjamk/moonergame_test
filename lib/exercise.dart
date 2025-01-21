@@ -7,67 +7,309 @@ import 'package:mooner_interface/stage.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:lottie/lottie.dart';
 
+class BackgroundScreen extends StatefulWidget {
+  final VoidCallback onBackgroundTap; // 배경 클릭 시 호출되는 콜백 함수
 
-void main() => runApp(ExerciseGameApp());
+  BackgroundScreen({required this.onBackgroundTap});
+
+  @override
+  _BackgroundScreenState createState() => _BackgroundScreenState();
+}
+
+class _BackgroundScreenState extends State<BackgroundScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          // 배경 이미지(bg_stage.png)
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg_stage.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // 클릭 가능한 result_background.png
+          GestureDetector(
+            onTap: widget.onBackgroundTap,
+            child: Stack(
+              alignment: Alignment.center, // 텍스트를 이미지 중앙에 위치
+              children: [
+                // result_background.png 이미지
+                Container(
+                  width: 400, 
+                  height: 300, 
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/result_background.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                // 이미지 위에 표시할 텍스트
+                Positioned(
+                  top: 135, 
+                  child: Text(
+                    'STAGE 4', 
+                    style: TextStyle(
+                      fontSize: 25, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 165, 
+                  child: Text(
+                    '운동하기', 
+                    style: TextStyle(
+                      fontSize: 25, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 200, 
+                  child: Text(
+                    '\t 운동을 시켜 \n 문찌를 힘들게 하자.', 
+                    style: TextStyle(
+                      fontSize: 20, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class ExerciseGameApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'BMJUA'),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => ExerciseSelectionScreen(),
-        '/boxing': (context) => BoxingGameScreen(),
-        '/jumpRope': (context) => JumpRopeGameScreen(),
-        '/dumbel':(context)=> DumbelGameScreen(),
-        '//':(context)=>NewStageScreen()
-      },
-    );
-  }
-}
-
-class ExerciseSelectionScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/bg_stage.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/boxing');
-                },
-                child: Text('복싱'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/jumpRope');
-                },
-                child: Text('스쿼트'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/dumbel');
-                },
-                child: Text('뎀벨'),
-              ),
-            ],
-          ),
-        ),
+      home: BackgroundScreen(
+        onBackgroundTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ExerciseSelectionScreen(),
+            ),
+          );
+        },
       ),
     );
   }
 }
+
+// 다이얼로그 + 운동 선택 화면
+class ExerciseSelectionScreen extends StatefulWidget {
+  @override
+  _ExerciseSelectionScreenState createState() => _ExerciseSelectionScreenState();
+}
+
+class _ExerciseSelectionScreenState extends State<ExerciseSelectionScreen> {
+  bool isGameActive = false;
+  bool isDialogueActive = true;
+  int dialogueIndex = 0;
+
+  List<String> dialogues = [
+    "어부\n 문찌의 기분을 풀어주기 위해 \n 같이 운동을 해보자",
+    "어부\n 다음 화면에 나오는 운동 중에 \n 마음에 드는 운동을 클릭해봐",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  // 다이얼로그 진행 함수
+  void nextDialogue() {
+    setState(() {
+      dialogueIndex++;
+      if (dialogueIndex >= dialogues.length) {
+        isDialogueActive = false;
+        startGame();
+      }
+    });
+  }
+
+  // 게임 시작 함수
+  void startGame() {
+    setState(() {
+      isGameActive = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          // 배경 이미지 표시
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/bg_stage.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // 상단 스테이지 번호
+          Positioned(
+            left: 0,
+            top: 0,
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
+              width: 150,
+              height: 150,
+            ),
+          ),
+          Positioned(
+            left: 36,
+            top: 65,
+            child: Text(
+              '#stage 4',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Positioned(
+            left: 150, 
+            top: 65, 
+            child: Text(
+              '운동하기', 
+              style: TextStyle(
+                fontSize: 18, 
+                fontWeight: FontWeight.bold, 
+                color: Colors.black),
+            )
+          ),         
+          // 문찌 이미지 중앙에 표시
+          Positioned(
+            child: Center(
+              child: SvgPicture.asset(
+                'assets/images/3angry_mooner_o.svg',
+                width: 200,
+                height: 270,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // 다이얼로그가 활성화된 경우
+          if (isDialogueActive)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: GestureDetector(
+                onTap: nextDialogue,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/images/fisherman_front.svg',
+                        width: 120,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: 200,
+                          height: 130,
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/dialog_background.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Text(
+                            dialogues[dialogueIndex],
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          // 게임이 활성화된 경우 운동 선택 화면
+          if (isGameActive)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(height: 40), // Mooner 이미지와 버튼 사이의 간격
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center, // 가로로 배치
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BoxingGameScreen()),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/boxing.svg',
+                          width: 80,
+                          height: 80,
+                        ),
+                      ),
+                      SizedBox(width: 20), // 버튼들 사이의 간격
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DumbelGameScreen()),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/dumbbell.svg',
+                          width: 80,
+                          height: 80,
+                        ),
+                      ),
+                      SizedBox(width: 20), // 버튼들 사이의 간격
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => JumpRopeGameScreen()),
+                          );
+                        },
+                        child: Text('스쿼트'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 80), // 버튼들 아래의 여백
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 
 
 class StarWidget extends StatelessWidget {
@@ -113,8 +355,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
   late AudioPlayer _audioPlayer;
 
   List<String> dialogues = [
-    "30초 안에 20개를 채우면 문찌를 진정시킬 수 있어!",
-    "이제 한 번 시작해볼까?",
+    "어부\n 문찌의 행동을 따라서 \n 같이 움직여보자",
+    "어부\n 3분 안에 000개를 채우면 \n 문찌를 진정시킬 수 있어",
   ];
 
   @override
@@ -233,8 +475,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -243,7 +485,7 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
             left: 36,
             top: 65,
             child: Text(
-              '#stage 6',
+              '#stage 4',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -291,8 +533,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -300,8 +542,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -309,8 +551,8 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -320,12 +562,20 @@ class _BoxingGameScreenState extends State<BoxingGameScreen> {
               ),
             ), 
           // 중앙에 플레이어 이미지를 표시
+          // Positioned(
+          //   child: Center(
+          //     child: SvgPicture.asset('assets/images/3angry_mooner_o.svg',
+          //         width: 200, height: 270, fit: BoxFit.cover),
+          //   ),
+          // ),
           Positioned(
-            child: Center(
-              child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
-                  width: 200, height: 270, fit: BoxFit.cover),
+            left: 30, top: 250,
+            child: Center(child: Lottie.asset(
+              'assets/json/exercise_boxing.json',
+              width: 200, height: 270, fit: BoxFit.cover
+              ),
             ),
-          ),
+          ),          
           if (isDialogueActive) // 대화 창 표시
               Align(
                 alignment: Alignment.bottomCenter,
@@ -409,8 +659,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
   int _countDown = 30;
 
   List<String> dialogues = [
-    "30초 안에 20개를 채우면 너문어를 진정시킬 수 있어!",
-    "이제 한 번 시작해볼까?",
+    "어부\n 문찌의 행동을 따라서 \n 같이 움직여보자",
+    "어부\n 3분 안에 000개를 채우면 \n 문찌를 진정시킬 수 있어",
   ];
 
   @override
@@ -524,8 +774,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -534,7 +784,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
             left: 36,
             top: 65,
             child: Text(
-              '#stage 6',
+              '#stage 4',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -582,8 +832,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -591,8 +841,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -600,8 +850,8 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -650,7 +900,7 @@ class _JumpRopeGameScreenState extends State<JumpRopeGameScreen> {
                           ),
                           child: Text(
                           dialogues[dialogueIndex],
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                           textAlign: TextAlign.center,
                           ),
                         ),
@@ -704,8 +954,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
   int _countDown = 30;
 
   List<String> dialogues = [
-    "30초 안에 20개를 채우면 너문어를 진정시킬 수 있어!",
-    "이제 한 번 시작해볼까?",
+    "어부\n 문찌의 행동을 따라서 \n 같이 움직여보자",
+    "어부\n 3분 안에 000개를 채우면 \n 문찌를 진정시킬 수 있어",
   ];
 
   @override
@@ -822,8 +1072,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
           Positioned(
             left: 0,
             top: 0,
-            child: Image.asset(
-              'assets/images/stage_background.png',
+            child: SvgPicture.asset(
+              'assets/images/stage_background.svg',
               width: 150,
               height: 150,
             ),
@@ -832,7 +1082,7 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
             left: 36,
             top: 65,
             child: Text(
-              '#stage 6',
+              '#stage 4',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -880,8 +1130,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                           Positioned(
                             left: -45,
                             top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -889,8 +1139,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                           Positioned(
                             left: 105,
                             top: -40, // 중앙 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -898,8 +1148,8 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                           Positioned(
                             right: -45,
                             top: -40, // 오른쪽 끝 별 이미지의 위치
-                            child: Image.asset(
-                              'assets/images/star.png', // 별 이미지 경로
+                            child: SvgPicture.asset(
+                              'assets/images/star.svg', // 별 이미지 경로
                               width: 110,
                               height: 110,
                             ),
@@ -909,12 +1159,14 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
               ),
             ),          
           // 중앙에 플레이어 이미지를 표시
-          Positioned(
-            child: Center(
-              child: SvgPicture.asset('assets/images/normal_mooner_o.svg',
-                  width: 200, height: 270, fit: BoxFit.cover),
+            Positioned(
+              left: 30, top: 250,
+              child: Center(child: Lottie.asset(
+                'assets/json/exercise_dumbbell.json',
+                width: 200, height: 270, fit: BoxFit.cover
+                ),
+              ),
             ),
-          ),
             if (isDialogueActive) // 대화 창 표시
               Align(
                 alignment: Alignment.bottomCenter,
@@ -943,7 +1195,7 @@ class _DumbelGameScreenState extends State<DumbelGameScreen> {
                           ),
                           child: Text(
                           dialogues[dialogueIndex],
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                           textAlign: TextAlign.center,
                           ),
                         ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter/material.dart';
 import 'package:mooner_interface/stage.dart';
@@ -255,8 +256,8 @@ class _MoleGameScreenState extends State<MoleGameScreen> {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),

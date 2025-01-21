@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mooner_interface/stage.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 void main() => runApp(ConversationGameApp());
 
@@ -126,8 +127,8 @@ class _ConversationGameScreenState extends State<ConversationGameScreen> {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),
@@ -173,8 +174,8 @@ class _ConversationGameScreenState extends State<ConversationGameScreen> {
                     Positioned(
                       left: -45,
                       top: -40,
-                      child: Image.asset(
-                        'assets/images/star.png',
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg',
                         width: 110,
                         height: 110,
                       ),
@@ -182,8 +183,8 @@ class _ConversationGameScreenState extends State<ConversationGameScreen> {
                     Positioned(
                       left: 105,
                       top: -40,
-                      child: Image.asset(
-                        'assets/images/star.png',
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg',
                         width: 110,
                         height: 110,
                       ),
@@ -191,8 +192,8 @@ class _ConversationGameScreenState extends State<ConversationGameScreen> {
                     Positioned(
                       right: -45,
                       top: -40,
-                      child: Image.asset(
-                        'assets/images/star.png',
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg',
                         width: 110,
                         height: 110,
                       ),

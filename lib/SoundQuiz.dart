@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 void main() => runApp(Soundquiz());
 
@@ -68,8 +69,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
             Positioned(
               left: 0,
               top: 0,
-              child: Image.asset(
-                'assets/images/stage_background.png',
+              child: SvgPicture.asset(
+                'assets/images/stage_background.svg',
                 width: 150,
                 height: 150,
               ),
@@ -115,8 +116,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
                     Positioned(
                       left: -45,
                       top: -40, // 별 이미지를 약간 위로 올리기 위해 top 값 조정
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg', // 별 이미지 경로
                         width: 110,
                         height: 110,
                       ),
@@ -124,8 +125,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
                     Positioned(
                       left: 105,
                       top: -40, // 중앙 별 이미지의 위치
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg', // 별 이미지 경로
                         width: 110,
                         height: 110,
                       ),
@@ -133,8 +134,8 @@ class _SoundquizAppState extends State<SoundquizApp> {
                     Positioned(
                       right: -45,
                       top: -40, // 오른쪽 끝 별 이미지의 위치
-                      child: Image.asset(
-                        'assets/images/star.png', // 별 이미지 경로
+                      child: SvgPicture.asset(
+                        'assets/images/star.svg', // 별 이미지 경로
                         width: 110,
                         height: 110,
                       ),
