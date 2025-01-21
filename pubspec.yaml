@@ -92,6 +92,7 @@ flutter:
     - assets/images/wound.png
     - assets/images/bandage.png
     - assets/images/bg_home.png
+    - assets/images/microphone.png
     - assets/images/anger_mooner.gif #화난 문어
     - assets/images/mooner.png
     - assets/images/bg_stage.png #바꾼 배경
